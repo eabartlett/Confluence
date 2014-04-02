@@ -3,6 +3,12 @@
 
     <string name="app_name">Confluence</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+	<string-array name="news_feed_questions">
+	    <item>Chameleon</item>
+	    <item>Table</item>
+	    <item>Lamp</item>
+	    <item>Gatorade</item>
+	    <item></item>
+	</string-array>
 
 </resources>
