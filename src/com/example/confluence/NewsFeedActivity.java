@@ -4,7 +4,9 @@ import com.example.confluence.newsfeed.*;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
+import android.view.MenuItem;
 
 public class NewsFeedActivity extends Activity {
 
@@ -40,4 +42,23 @@ public class NewsFeedActivity extends Activity {
 	private NewsArrayAdapter<NewsFeedQuestion> getQuestions() {
 		return new NewsArrayAdapter<NewsFeedQuestion>(this, R.array.news_feed_questions);
 	}
+	
+	
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+        if (id == R.id.action_ask) {
+            Intent askQuestionIntent = new Intent(NewsFeedActivity.this, AskQuestionActivity.class);
+            NewsFeedActivity.this.startActivity(askQuestionIntent);
+
+            return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
+	
 }
