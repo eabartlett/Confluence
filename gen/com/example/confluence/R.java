@@ -9,23 +9,51 @@ package com.example.confluence;
 
 public final class R {
     public static final class array {
-<<<<<<< HEAD
         public static final int languages_array=0x7f060000;
         public static final int type_array=0x7f060001;
-=======
-        public static final int news_feed_questions=0x7f060000;
->>>>>>> 48506854d08cdd8861e60e396c36cc5c267236b8
     }
     public static final class attr {
+        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int exampleColor=0x7f010002;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int exampleDimension=0x7f010001;
+        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+         */
+        public static final int exampleDrawable=0x7f010003;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int exampleString=0x7f010000;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
-<<<<<<< HEAD
-         */
-        public static final int activity_horizontal_margin=0x7f040000;
-        public static final int activity_vertical_margin=0x7f040001;
-        public static final int tag_text=0x7f040002;
-=======
+
+         Example customization of dimensions originally defined in res/values/dimens.xml
+         (such as screen margins) for screens with more than 820dp of available width. This
+         would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively).
+    
 
          Customize dimensions originally defined in res/values/dimens.xml (such as
          screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
@@ -33,13 +61,12 @@ public final class R {
          */
         public static final int activity_horizontal_margin=0x7f040000;
         public static final int activity_vertical_margin=0x7f040001;
->>>>>>> 48506854d08cdd8861e60e396c36cc5c267236b8
+        public static final int tag_text=0x7f040002;
     }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-<<<<<<< HEAD
         public static final int action_ask=0x7f09000a;
         public static final int action_post=0x7f090008;
         public static final int action_settings=0x7f090009;
@@ -56,6 +83,7 @@ public final class R {
         public static final int activity_ask_question=0x7f030000;
         public static final int activity_news_feed=0x7f030001;
         public static final int activity_posted_question=0x7f030002;
+        public static final int sample_news_feed_question_view=0x7f030003;
     }
     public static final class menu {
         public static final int ask_question=0x7f080000;
@@ -71,19 +99,6 @@ public final class R {
         public static final int tagged_in=0x7f050006;
         public static final int title_activity_ask_question=0x7f050002;
         public static final int title_activity_posted_question=0x7f050003;
-=======
-        public static final int action_settings=0x7f090000;
-    }
-    public static final class layout {
-        public static final int activity_news_feed=0x7f030000;
-    }
-    public static final class menu {
-        public static final int news_feed=0x7f080000;
-    }
-    public static final class string {
-        public static final int action_settings=0x7f050001;
-        public static final int app_name=0x7f050000;
->>>>>>> 48506854d08cdd8861e60e396c36cc5c267236b8
     }
     public static final class style {
         /** 
@@ -113,4 +128,82 @@ public final class R {
          */
         public static final int AppTheme=0x7f070001;
     }
+    public static final class styleable {
+        /** Attributes that can be used with a NewsFeedQuestionView.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #NewsFeedQuestionView_exampleColor com.example.confluence:exampleColor}</code></td><td></td></tr>
+           <tr><td><code>{@link #NewsFeedQuestionView_exampleDimension com.example.confluence:exampleDimension}</code></td><td></td></tr>
+           <tr><td><code>{@link #NewsFeedQuestionView_exampleDrawable com.example.confluence:exampleDrawable}</code></td><td></td></tr>
+           <tr><td><code>{@link #NewsFeedQuestionView_exampleString com.example.confluence:exampleString}</code></td><td></td></tr>
+           </table>
+           @see #NewsFeedQuestionView_exampleColor
+           @see #NewsFeedQuestionView_exampleDimension
+           @see #NewsFeedQuestionView_exampleDrawable
+           @see #NewsFeedQuestionView_exampleString
+         */
+        public static final int[] NewsFeedQuestionView = {
+            0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.example.confluence.R.attr#exampleColor}
+          attribute's value can be found in the {@link #NewsFeedQuestionView} array.
+
+
+          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.confluence:exampleColor
+        */
+        public static final int NewsFeedQuestionView_exampleColor = 2;
+        /**
+          <p>This symbol is the offset where the {@link com.example.confluence.R.attr#exampleDimension}
+          attribute's value can be found in the {@link #NewsFeedQuestionView} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.confluence:exampleDimension
+        */
+        public static final int NewsFeedQuestionView_exampleDimension = 1;
+        /**
+          <p>This symbol is the offset where the {@link com.example.confluence.R.attr#exampleDrawable}
+          attribute's value can be found in the {@link #NewsFeedQuestionView} array.
+
+
+          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+          @attr name com.example.confluence:exampleDrawable
+        */
+        public static final int NewsFeedQuestionView_exampleDrawable = 3;
+        /**
+          <p>This symbol is the offset where the {@link com.example.confluence.R.attr#exampleString}
+          attribute's value can be found in the {@link #NewsFeedQuestionView} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.confluence:exampleString
+        */
+        public static final int NewsFeedQuestionView_exampleString = 0;
+    };
 }

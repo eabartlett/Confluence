@@ -22,18 +22,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
-=======
-        <activity
-            android:name="com.example.confluence.AskQuestionActivity"
-            android:label="@string/app_name"
-            android:windowSoftInputMode="adjustResize" >
-        </activity>
-        <activity
-            android:name="com.example.confluence.PostedQuestionActivity"
-            android:label="@string/app_name" >
-        </activity>
->>>>>>> 48506854d08cdd8861e60e396c36cc5c267236b8
     </application>
 
 </manifest>
