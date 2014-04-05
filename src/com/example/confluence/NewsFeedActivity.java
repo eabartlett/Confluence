@@ -40,7 +40,7 @@ public class NewsFeedActivity extends Activity {
 	 * @return - Questions for feed (hard-coded for interactive prototype)
 	 */
 	private NewsArrayAdapter<NewsFeedQuestion> getQuestions() {
-		return new NewsArrayAdapter<NewsFeedQuestion>(this, R.array.news_feed_questions);
+		return new NewsArrayAdapter<NewsFeedQuestion>(this, mQuestions.getQuestions());
 	}
 	
 	
@@ -51,14 +51,16 @@ public class NewsFeedActivity extends Activity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-        if (id == R.id.action_ask) {
-            Intent askQuestionIntent = new Intent(NewsFeedActivity.this, AskQuestionActivity.class);
-            NewsFeedActivity.this.startActivity(askQuestionIntent);
-
-            return true;
-		}
+//        if (id == R.id.action_ask) {
+//            Intent askQuestionIntent = new Intent(NewsFeedActivity.this, AskQuestionActivity.class);
+//            NewsFeedActivity.this.startActivity(askQuestionIntent);
+//
+//            return true;
+//		}
 		return super.onOptionsItemSelected(item);
 	}
 	
+	//TODO remove once you're doing real-time question gets
+	StaticQuestions mQuestions = new StaticQuestions();
 	
 }
