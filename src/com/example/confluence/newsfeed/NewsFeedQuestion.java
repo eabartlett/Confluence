@@ -4,12 +4,17 @@ import java.util.List;
 
 public class NewsFeedQuestion {
 	
-	public NewsFeedQuestion(long id, String lang, String q, String audio, List<String> qType){
+	public NewsFeedQuestion(long id, String langTo, String langFrom, String q, String audio, List<String> qType){
 		this.id = id;
-		language = lang;
+		languageTo = langTo;
+		languageFrom = langFrom;
 		questionPhrase = q;
 		this.audio = audio;
 		questionType = qType;
+	}
+	
+	public void setAudioPath(String path){
+		audio = path;
 	}
 	
 	/**
@@ -22,8 +27,15 @@ public class NewsFeedQuestion {
 	/**
 	 * Access method for question's language
 	 */
-	public String getLanguage(){
-		return language;
+	public String getLanguageTo(){
+		return languageTo;
+	}
+	
+	/**
+	 * Access method for question's language
+	 */
+	public String getLanguageFrom(){
+		return languageFrom;
 	}
 	
 	/**
@@ -50,8 +62,11 @@ public class NewsFeedQuestion {
 	/* Unique id for this question */
 	private long id;
 	
-	/* Language of this question */
-	private String language;
+	/* Language this question is asked about */
+	private String languageTo;
+	
+	/* Language this question is asked in */
+	private String languageFrom;
 	
 	/* Word/Phrase of this question */
 	private String questionPhrase;

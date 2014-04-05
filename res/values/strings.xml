@@ -4,14 +4,6 @@
     <string name="app_name">Confluence</string>
     <string name="action_settings">Settings</string>
 
-    <string-array name="news_feed_questions">
-        <item>Chameleon</item>
-        <item>Table</item>
-        <item>Lamp</item>
-        <item>Gatorade</item>
-        <item></item>
-    </string-array>
-
     <string name="title_activity_ask_question">AskQuestionActivity</string>
     
     <string-array name="languages_array">
@@ -23,6 +15,7 @@
     <string-array name="type_array">
         <item>pronunciation</item>
         <item>grammar</item>
+        <item>translation</item>
     </string-array>
     
     <string name="title_activity_posted_question">PostedQuestionActivity</string>
