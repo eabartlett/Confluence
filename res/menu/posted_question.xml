@@ -3,4 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.confluence.PostedQuestionActivity" >
 
+<<<<<<< HEAD
+=======
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never"/>
+
+>>>>>>> 48506854d08cdd8861e60e396c36cc5c267236b8
 </menu>

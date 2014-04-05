@@ -9,22 +9,37 @@ package com.example.confluence;
 
 public final class R {
     public static final class array {
+<<<<<<< HEAD
         public static final int languages_array=0x7f060000;
         public static final int type_array=0x7f060001;
+=======
+        public static final int news_feed_questions=0x7f060000;
+>>>>>>> 48506854d08cdd8861e60e396c36cc5c267236b8
     }
     public static final class attr {
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
+<<<<<<< HEAD
          */
         public static final int activity_horizontal_margin=0x7f040000;
         public static final int activity_vertical_margin=0x7f040001;
         public static final int tag_text=0x7f040002;
+=======
+
+         Customize dimensions originally defined in res/values/dimens.xml (such as
+         screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
+    
+         */
+        public static final int activity_horizontal_margin=0x7f040000;
+        public static final int activity_vertical_margin=0x7f040001;
+>>>>>>> 48506854d08cdd8861e60e396c36cc5c267236b8
     }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
+<<<<<<< HEAD
         public static final int action_ask=0x7f09000a;
         public static final int action_post=0x7f090008;
         public static final int action_settings=0x7f090009;
@@ -56,6 +71,19 @@ public final class R {
         public static final int tagged_in=0x7f050006;
         public static final int title_activity_ask_question=0x7f050002;
         public static final int title_activity_posted_question=0x7f050003;
+=======
+        public static final int action_settings=0x7f090000;
+    }
+    public static final class layout {
+        public static final int activity_news_feed=0x7f030000;
+    }
+    public static final class menu {
+        public static final int news_feed=0x7f080000;
+    }
+    public static final class string {
+        public static final int action_settings=0x7f050001;
+        public static final int app_name=0x7f050000;
+>>>>>>> 48506854d08cdd8861e60e396c36cc5c267236b8
     }
     public static final class style {
         /** 

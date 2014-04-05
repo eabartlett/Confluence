@@ -40,7 +40,11 @@ public class NewsFeedActivity extends Activity {
 	 * @return - Questions for feed (hard-coded for interactive prototype)
 	 */
 	private NewsArrayAdapter<NewsFeedQuestion> getQuestions() {
+<<<<<<< HEAD
 		return new NewsArrayAdapter<NewsFeedQuestion>(this, R.layout.activity_news_feed, mQuestions.getQuestions());
+=======
+		return new NewsArrayAdapter<NewsFeedQuestion>(this, mQuestions.getQuestions());
+>>>>>>> 48506854d08cdd8861e60e396c36cc5c267236b8
 	}
 	
 	

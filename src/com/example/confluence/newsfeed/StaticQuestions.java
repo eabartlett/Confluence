@@ -57,7 +57,11 @@ public class StaticQuestions {
 		mQuestions[19] = q20;
 	}
 	
+<<<<<<< HEAD
 	public NewsFeedQuestion[] getQuestions(String filter){
+=======
+	public NewsFeedQuestion[] filter(String filter){
+>>>>>>> 48506854d08cdd8861e60e396c36cc5c267236b8
 		LinkedList<NewsFeedQuestion> questions;
 		if (cachedFilters.get(filter) == null) {
 			questions = new LinkedList<NewsFeedQuestion>();
@@ -71,8 +75,11 @@ public class StaticQuestions {
 		}
 		return cachedFilters.get(filter);
 	}
+<<<<<<< HEAD
 	
 	public NewsFeedQuestion[] getQuestions(){
 		return mQuestions;
 	}
+=======
+>>>>>>> 48506854d08cdd8861e60e396c36cc5c267236b8
 }
