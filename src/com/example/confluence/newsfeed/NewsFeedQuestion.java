@@ -2,85 +2,67 @@ package com.example.confluence.newsfeed;
 
 public class NewsFeedQuestion {
 	
-	public NewsFeedQuestion(long id, String langTo, String langFrom, String q, String audio, String qType){
-		this.id = id;
-		languageTo = langTo;
-		languageFrom = langFrom;
-		questionPhrase = q;
-		this.audio = audio;
-		questionType = qType;
-	}
-	
-	public void setAudioPath(String path){
-		audio = path;
+	public NewsFeedQuestion(long id, String lang, String q, String audio, int answers, boolean verified){
+		mId = id;
+		mLanguage = lang;
+		mQuestionPhrase = q;
+		mAudio = audio;
+		mNumAnswers = answers;
+		mVerified = verified;
 	}
 	
 	/**
 	 * Access method for Question id
 	 */
 	public long getId(){
-		return id;
+		return mId;
 	}
 	
 	/**
 	 * Access method for question's language
 	 */
-	public String getLanguageTo(){
-		return languageTo;
+	public String getLanguage(){
+		return mLanguage;
 	}
 	
-	/**
-	 * Access method for question's language
-	 */
-	public String getLanguageFrom(){
-		return languageFrom;
-	}
 	
 	/**
 	 * Access method for the question Text
 	 */
 	public String getQuestion(){
-		return questionPhrase;
+		return mQuestionPhrase;
 	}
 	
 	/**
 	 * @return - The path to question's audio, returns null if no audio
 	 */
 	public String getAudioPath(){
-		return audio;
-	}
-	
-	/**
-	 * Access method for the question type of this question
-	 */
-	public String getQuestionType(){
-		return questionType;
+		return mAudio;
 	}
 	
 	public String toString(){
-		String val = String.format("%s\nType: %s\nLanguage: %s ", 
-				getQuestion(), getQuestionType(), getLanguageTo());
+		String val = String.format("%s\nLanguage: %s ", 
+				getQuestion(), getLanguage());
 		
 		return val;
 	}
 	
 	/* Unique id for this question */
-	private long id;
+	private long mId;
 	
-	/* Language this question is asked about */
-	private String languageTo;
-	
-	/* Language this question is asked in */
-	private String languageFrom;
+	/* Language this question is asked in/about */
+	private String mLanguage;
 	
 	/* Word/Phrase of this question */
-	private String questionPhrase;
+	private String mQuestionPhrase;
 	
 	/* Path to audio file for this question, null if no audio with question */
-	private String audio;
+	private String mAudio;
 	
-	/* List of what type of question this question is
-	 * i.e pronunciation, grammar, etc.
-	 */
-	private String questionType;
+	
+	/* Integer of the number of answers posted */
+	int mNumAnswers;
+	
+	/* Boolean saying whether there has been a verified/accepted answer yet */
+	boolean mVerified;
 }
