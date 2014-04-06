@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="phrase">Phrase:</string>
+    <string name="lang">Lang:</string>
+    <string name="tag">Tag:</string>
+    
+    <string name="add_answer_hint">Add your answer here...</string>
+    
+</resources>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/com.example.android.view.compoundview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+    <RelativeLayout
+        android:id="@+id/answer_question_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="#AAAAAA"
+        >
+        
+        <TextView
+            android:id="@+id/question_phrase_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:paddingRight="10dp"
+            android:text="@string/phrase"
+            />
+        
+        <TextView
+            android:id="@+id/question_phrase_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/question_phrase_label"
+            />
+            
+        <TextView
+            android:id="@+id/question_lang_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+			android:padding="5dp"
+            android:paddingRight="10dp"
+            android:layout_below="@id/question_phrase_label"
+            android:text="@string/lang"
+            />
+        
+        
+        <TextView
+            android:id="@+id/question_tag_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/question_lang_label"
+            android:layout_alignBottom="@+id/question_lang_label"
+            android:layout_centerHorizontal="true"
+            android:text="@string/tag" />
+        
+        <TextView
+            android:id="@+id/question_tag_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/question_tag_label"
+            />
+
+        <TextView
+            android:id="@+id/question_lang_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/question_lang_label"
+            android:layout_toRightOf="@+id/question_phrase_label" />
+
+    </RelativeLayout>
+    
+    <ListView
+        android:id="@+id/answer_list"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/answer_question_box"
+        android:layout_above="@+id/answer_question_bar" >
+    </ListView>
+    
+    <EditText
+        android:id="@id/answer_question_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/answer_record_audio"
+        android:focusableInTouchMode="true"
+        android:hint="@string/add_answer_hint"
+        android:imeOptions="actionSend"
+        android:inputType="textAutoCorrect|text"
+        android:scrollHorizontally="true" />
+
+    <ImageButton
+        android:id="@+id/answer_record_audio"
+        android:src="@drawable/ic_action_mic_active"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/answer_question_bar" />
+
+</RelativeLayout>
