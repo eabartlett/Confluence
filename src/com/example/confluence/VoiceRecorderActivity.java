@@ -173,7 +173,7 @@ public class VoiceRecorderActivity extends Activity
     	Intent returnResultIntent = new Intent(Intent.ACTION_SEND);
     	Uri uri = Uri.parse(mFileName);
     	returnResultIntent.setType("audio/*");
-    	returnResultIntent.putExtra(Intent.EXTRA_STREAM, uri);
+    	returnResultIntent.putExtra(Intent.EXTRA_TEXT, mFileName);
     	setResult(Activity.RESULT_OK, returnResultIntent);
     	finish();
     }    
