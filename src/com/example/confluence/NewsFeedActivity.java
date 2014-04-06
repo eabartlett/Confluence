@@ -23,6 +23,8 @@ public class NewsFeedActivity extends Activity {
 		setContentView(R.layout.activity_news_feed);
 		loadFeed(null);
 		loadLanguages();
+		
+		setEditTextFocus();
 	}
 
 	@Override
@@ -33,6 +35,21 @@ public class NewsFeedActivity extends Activity {
 	}
 
 	
+	public void setEditTextFocus() {
+		View askInput = findViewById(R.id.ask_input);
+		
+		askInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+			
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				// TODO Auto-generated method stub
+				if (hasFocus) {
+		            Intent askQuestionIntent = new Intent(NewsFeedActivity.this, AskQuestionActivity.class);
+		            NewsFeedActivity.this.startActivity(askQuestionIntent);
+				}				
+			}
+		});
+	}
 	/**
 	 * Gets questions from getQuestions method and loads them into the ListView
 	 * in the main view. Allows getQuestions to worry about how to get the 
@@ -111,13 +128,6 @@ public class NewsFeedActivity extends Activity {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-        if (id == R.id.action_ask) {
-            Intent askQuestionIntent = new Intent(NewsFeedActivity.this, AskQuestionActivity.class);
-            NewsFeedActivity.this.startActivity(askQuestionIntent);
-
-            return true;
-		}
 		return super.onOptionsItemSelected(item);
 	}
 	

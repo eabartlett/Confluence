@@ -25,15 +25,13 @@ public class AskQuestionActivity extends Activity {
 		
         questionEditText = (EditText) findViewById(R.id.question_text);
 
+
         languageSpinner = (Spinner) findViewById(R.id.language_spinner);
         ArrayAdapter<CharSequence> languageAdapter = ArrayAdapter.createFromResource(this, R.array.languages_array, android.R.layout.simple_spinner_item);
         languageAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         languageSpinner.setAdapter(languageAdapter);
+        
 
-        typeSpinner = (Spinner) findViewById(R.id.type_spinner);
-        ArrayAdapter<CharSequence> typeAdapter = ArrayAdapter.createFromResource(this, R.array.type_array, android.R.layout.simple_spinner_item);
-        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        typeSpinner.setAdapter(typeAdapter);
 	}
 
 	@Override
@@ -75,7 +73,6 @@ public class AskQuestionActivity extends Activity {
         Log.d("DEBUG", "adding recording");
 
         //to test the post intent since action bar button doesn't work
-        postQuestion(questionEditText.getText().toString());
     }
 
 }
