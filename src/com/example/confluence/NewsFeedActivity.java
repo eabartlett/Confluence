@@ -44,11 +44,26 @@ public class NewsFeedActivity extends Activity {
 			public void onFocusChange(View v, boolean hasFocus) {
 				// TODO Auto-generated method stub
 				if (hasFocus) {
-		            Intent askQuestionIntent = new Intent(NewsFeedActivity.this, AskQuestionActivity.class);
-		            NewsFeedActivity.this.startActivity(askQuestionIntent);
-				}				
+					callAskQuestionActivity();
+				} else {
+					findViewById(R.id.ask_input).clearFocus();
+				}
 			}
 		});
+		
+		askInput.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				callAskQuestionActivity();
+			}
+		});
+	}
+	
+	public void callAskQuestionActivity() {
+        Intent askQuestionIntent = new Intent(NewsFeedActivity.this, AskQuestionActivity.class);
+        NewsFeedActivity.this.startActivity(askQuestionIntent);
 	}
 	/**
 	 * Gets questions from getQuestions method and loads them into the ListView
@@ -86,7 +101,7 @@ public class NewsFeedActivity extends Activity {
 		ArrayAdapter<String> langAdapter = new ArrayAdapter<String>(
 				this, R.layout.textview, langs);
 		languages.setAdapter(langAdapter);
-		languages.setOnItemSelectedListener(new LangaugesFilter());
+		languages.setOnItemSelectedListener(new LanguagesFilter());
 
 	}
 
@@ -141,7 +156,7 @@ public class NewsFeedActivity extends Activity {
 	 * @author ebartlett
 	 *
 	 */
-	private class LangaugesFilter implements AdapterView.OnItemSelectedListener{
+	private class LanguagesFilter implements AdapterView.OnItemSelectedListener{
 
 		@Override
 		public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
