@@ -1,6 +1,4 @@
-package com.example.confluence;
-
-import com.example.confluence.newsfeed.NewsFeedQuestion;
+package com.example.confluence.newsfeed;
 
 import android.content.Context;
 import android.widget.TextView;

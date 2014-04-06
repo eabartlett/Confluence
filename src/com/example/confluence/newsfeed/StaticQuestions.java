@@ -9,12 +9,9 @@ public class StaticQuestions {
 	
 	public StaticQuestions(){
 		mQuestions = new NewsFeedQuestion[20];
-		LinkedList<String> pronunciation = new LinkedList<String>();
-		pronunciation.add("Pronunciation");
-		LinkedList<String> grammar = new LinkedList<String>();
-		pronunciation.add("Grammar");
-		LinkedList<String> translation = new LinkedList<String>();
-		pronunciation.add("Translation");
+		String pronunciation = "Pronunciation";
+		String grammar = "Grammar";
+		String translation = "Translation";
 		NewsFeedQuestion q1 = new NewsFeedQuestion(0, "English", "English", "Chameleon", null, pronunciation);
 		NewsFeedQuestion q2 = new NewsFeedQuestion(0, "French", "French", "Tu t'appelles comment?", null, grammar);
 		NewsFeedQuestion q3 = new NewsFeedQuestion(0, "English", "English", "Generically", "tba", pronunciation);

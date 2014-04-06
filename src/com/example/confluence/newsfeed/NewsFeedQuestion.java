@@ -1,10 +1,8 @@
 package com.example.confluence.newsfeed;
 
-import java.util.List;
-
 public class NewsFeedQuestion {
 	
-	public NewsFeedQuestion(long id, String langTo, String langFrom, String q, String audio, List<String> qType){
+	public NewsFeedQuestion(long id, String langTo, String langFrom, String q, String audio, String qType){
 		this.id = id;
 		languageTo = langTo;
 		languageFrom = langFrom;
@@ -55,8 +53,15 @@ public class NewsFeedQuestion {
 	/**
 	 * Access method for the question type of this question
 	 */
-	public List<String> getQuestionType(){
+	public String getQuestionType(){
 		return questionType;
+	}
+	
+	public String toString(){
+		String val = String.format("%s\n Type: %s\nLanguage: %s ", 
+				getQuestion(), getQuestionType(), getLanguageTo());
+		
+		return val;
 	}
 	
 	/* Unique id for this question */
@@ -77,5 +82,5 @@ public class NewsFeedQuestion {
 	/* List of what type of question this question is
 	 * i.e pronunciation, grammar, etc.
 	 */
-	private List<String> questionType;
+	private String questionType;
 }

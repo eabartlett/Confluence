@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 public class NewsFeedActivity extends Activity {
 
@@ -32,11 +33,13 @@ public class NewsFeedActivity extends Activity {
 	 */
 	private void loadFeed(){
 		NewsArrayAdapter<NewsFeedQuestion> questionArray = getQuestions();
-		
+		ListView feed = (ListView) findViewById(R.id.news_feed_list);
+		feed.setAdapter(questionArray);
 	}
 
 	/**
-	 * 
+	 * If using api, this would use api calls to get the correct array of questions for
+	 * the feed, but as of now it is just using StaticQuestions.getQuestions() w/o the filter
 	 * @return - Questions for feed (hard-coded for interactive prototype)
 	 */
 	private NewsArrayAdapter<NewsFeedQuestion> getQuestions() {
@@ -52,12 +55,12 @@ public class NewsFeedActivity extends Activity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-//        if (id == R.id.action_ask) {
-//            Intent askQuestionIntent = new Intent(NewsFeedActivity.this, AskQuestionActivity.class);
-//            NewsFeedActivity.this.startActivity(askQuestionIntent);
-//
-//            return true;
-//		}
+        if (id == R.id.action_ask) {
+            Intent askQuestionIntent = new Intent(NewsFeedActivity.this, AskQuestionActivity.class);
+            NewsFeedActivity.this.startActivity(askQuestionIntent);
+
+            return true;
+		}
 		return super.onOptionsItemSelected(item);
 	}
 	
