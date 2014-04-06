@@ -3,7 +3,6 @@ package com.example.confluence;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +15,7 @@ public class AskQuestionActivity extends Activity {
     EditText questionEditText;
     Spinner languageSpinner;
     boolean hasRecording;
+    private int VOICE_RECORDER_CODE = 1;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +67,18 @@ public class AskQuestionActivity extends Activity {
 
     }
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    if (requestCode == VOICE_RECORDER_CODE) {
+	        if (resultCode == RESULT_OK) {
+	            // Check attached audio
+	        }
+	    }
+	}
+	
     public void addRecording(View v) {
         Intent voiceRecorderIntent = new Intent(AskQuestionActivity.this, VoiceRecorderActivity.class);
-        AskQuestionActivity.this.startActivityForResult(voiceRecorderIntent, 0);
+        AskQuestionActivity.this.startActivityForResult(voiceRecorderIntent, VOICE_RECORDER_CODE);
     }
 
 }
