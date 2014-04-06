@@ -11,29 +11,26 @@ public class StaticQuestions {
 	
 	public StaticQuestions(){
 		mQuestions = new NewsFeedQuestion[20];
-		String pronunciation = "Pronunciation";
-		String grammar = "Grammar";
-		String translation = "Translation";
-		NewsFeedQuestion q1 = new NewsFeedQuestion(0, "English", "English", "Chameleon", null, pronunciation);
-		NewsFeedQuestion q2 = new NewsFeedQuestion(0, "French", "French", "Tu t'appelles comment?", null, grammar);
-		NewsFeedQuestion q3 = new NewsFeedQuestion(0, "English", "English", "Generically", "tba", pronunciation);
-		NewsFeedQuestion q4 = new NewsFeedQuestion(0, "Spanish", "English", "No sé lo que estoy haciendo", "tba", translation);
-		NewsFeedQuestion q5 = new NewsFeedQuestion(0, "French", "French", "Chat", "tba", pronunciation);
-		NewsFeedQuestion q6 = new NewsFeedQuestion(0, "French", "English", "J'ai oublie beaucoup des langues", null, pronunciation);
-		NewsFeedQuestion q7 = new NewsFeedQuestion(0, "German", "English", "Schau mich an, ich bin kühl", "tba", translation);
-		NewsFeedQuestion q8 = new NewsFeedQuestion(0, "English", "English", "Chaos", "tba", pronunciation);
-		NewsFeedQuestion q9 = new NewsFeedQuestion(0, "Spanish", "Spanish", "Yogur", "tba", pronunciation);
-		NewsFeedQuestion q10 = new NewsFeedQuestion(0, "French", "French", "Quelqu'un m'a dit", "tba", pronunciation);
-		NewsFeedQuestion q11 = new NewsFeedQuestion(0, "English", "English", "Is this they're stuff?", null, grammar);
-		NewsFeedQuestion q12 = new NewsFeedQuestion(0, "French", "French", "Elle est mignon.", null, grammar);
-		NewsFeedQuestion q13 = new NewsFeedQuestion(0, "English", "English", "Read vs. Read", null, grammar);
-		NewsFeedQuestion q14 = new NewsFeedQuestion(0, "French", "English", "J'adore les chats", null, translation);
-		NewsFeedQuestion q15 = new NewsFeedQuestion(0, "German", "German", "Sprechen", "tba", pronunciation);
-		NewsFeedQuestion q16 = new NewsFeedQuestion(0, "Spanish", "English", "Decir", "tba", pronunciation);
-		NewsFeedQuestion q17 = new NewsFeedQuestion(0, "German", "Spanish", "Sie haben Menschen die Hände", null, translation);
-		NewsFeedQuestion q18 = new NewsFeedQuestion(0, "English", "German", "Answer, Daily Double", "tba", translation);
-		NewsFeedQuestion q19 = new NewsFeedQuestion(0, "German", "English", "Antwort, Tages doppelt", "tba", translation);
-		NewsFeedQuestion q20 = new NewsFeedQuestion(0, "English", "English", "I red that somewhere.", "tba", grammar);
+		NewsFeedQuestion q1 = new NewsFeedQuestion(0, "English", "Chameleon", null, 0, false);
+		NewsFeedQuestion q2 = new NewsFeedQuestion(0, "French", "Tu t'appelles comment?", null, 0, false);
+		NewsFeedQuestion q3 = new NewsFeedQuestion(0, "English", "Generically", "tba", 0, false );
+		NewsFeedQuestion q4 = new NewsFeedQuestion(0, "Spanish", "No sé lo que estoy haciendo", "tba", 1, true );
+		NewsFeedQuestion q5 = new NewsFeedQuestion(0, "French", "Chat", "tba", 2, true);
+		NewsFeedQuestion q6 = new NewsFeedQuestion(0, "French", "J'ai oublie beaucoup des langues", null, 3, false);
+		NewsFeedQuestion q7 = new NewsFeedQuestion(0, "German", "Schau mich an, ich bin kühl", "tba", 1, false);
+		NewsFeedQuestion q8 = new NewsFeedQuestion(0, "English", "Chaos", "tba", 2, true);
+		NewsFeedQuestion q9 = new NewsFeedQuestion(0, "Spanish", "Yogur", "tba", 0, false);
+		NewsFeedQuestion q10 = new NewsFeedQuestion(0, "French", "Quelqu'un m'a dit", "tba", 1, false);
+		NewsFeedQuestion q11 = new NewsFeedQuestion(0, "English", "Is this their stuff?", null, 1, false);
+		NewsFeedQuestion q12 = new NewsFeedQuestion(0, "French", "Elle est mignonne.", null, 1, false);
+		NewsFeedQuestion q13 = new NewsFeedQuestion(0, "English", "Read vs. Read", null, 1, false);
+		NewsFeedQuestion q14 = new NewsFeedQuestion(0, "French", "J'adore les chats", null, 1, false);
+		NewsFeedQuestion q15 = new NewsFeedQuestion(0, "German", "Sprechen", "tba", 2, true);
+		NewsFeedQuestion q16 = new NewsFeedQuestion(0, "Spanish", "Decir", "tba", 2, true);
+		NewsFeedQuestion q17 = new NewsFeedQuestion(0, "German", "Sie haben Menschen die Hände", null, 2, true);
+		NewsFeedQuestion q18 = new NewsFeedQuestion(0, "English", "Answer, Daily Double", "tba", 2, true);
+		NewsFeedQuestion q19 = new NewsFeedQuestion(0, "German", "Antwort, Tages doppelt", "tba", 2, true);
+		NewsFeedQuestion q20 = new NewsFeedQuestion(0, "English", "I red that somewhere.", "tba", 2, true);
 		mQuestions[0] = q1;
 		mQuestions[1] = q2;
 		mQuestions[2] = q3;
@@ -63,9 +60,8 @@ public class StaticQuestions {
 		if (cachedFilters.get(filter) == null) {
 			questions = new LinkedList<NewsFeedQuestion>();
 			for (NewsFeedQuestion q : mQuestions) {
-				if (q.getLanguageFrom().equals(filter)
-						|| q.getLanguageTo().equals(filter)) {
-					Log.i("Question language", q.getLanguageTo());
+				if (q.getLanguage().equals(filter)) {
+					Log.i("Question language", q.getLanguage());
 					questions.add(q);
 				}
 			}

@@ -20,13 +20,14 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/language_filter"
+        android:layout_above="@+id/ask_input"
 		android:divider="@android:color/transparent"
         android:dividerHeight="10.0sp" >
 
     </ListView>
     
     <EditText
-        android:id="@+id/ask_input"
+        android:id="@id/ask_input"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:hint="@string/ask_question_hint"
