@@ -7,12 +7,13 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".NewsFeedActivity" >
-    <Spinner 
+
+    <Spinner
         android:id="@+id/language_filter"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true">
-     </Spinner>
+    </Spinner>
 
     <ListView
         android:id="@+id/news_feed_list"
