@@ -40,9 +40,23 @@ public class NewsFeedQuestion {
 		return mAudio;
 	}
 	
+	/**
+	 * @return access function for mVerified variable
+	 */
+	public boolean isVerified(){
+		return mVerified;
+	}
+	
+	/**
+	 * @return - access function for mNumberAnswers variable
+	 */
+	public int numResponses(){
+		return mNumAnswers;
+	}
+	
 	public String toString(){
-		String val = String.format("%s\nLanguage: %s ", 
-				getQuestion(), getLanguage());
+		String val = String.format("%s\nLanguage: %s\nAnswered: %s \t\t\tResponses: %d", 
+				getQuestion(), getLanguage(), (isVerified())?"Yes":"No", numResponses());
 		
 		return val;
 	}
@@ -61,8 +75,8 @@ public class NewsFeedQuestion {
 	
 	
 	/* Integer of the number of answers posted */
-	int mNumAnswers;
+	private int mNumAnswers;
 	
 	/* Boolean saying whether there has been a verified/accepted answer yet */
-	boolean mVerified;
+	private boolean mVerified;
 }
