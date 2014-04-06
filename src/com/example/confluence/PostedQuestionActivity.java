@@ -24,13 +24,12 @@ public class PostedQuestionActivity extends Activity {
         if (extras != null) {
             question = extras.getString("question");
             language = extras.getString("language");
-            type = extras.getString("type");
             hasRecording = extras.getBoolean("hasRecording");
         }
 
         categories = (TextView) findViewById(R.id.categories);
 
-        categories.setText("asked about " + language + " " + type);
+        categories.setText("asked about " + language);
 
         questionTextView = (TextView) findViewById(R.id.question);
         questionTextView.setText(question);

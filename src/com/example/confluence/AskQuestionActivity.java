@@ -15,7 +15,6 @@ public class AskQuestionActivity extends Activity {
 
     EditText questionEditText;
     Spinner languageSpinner;
-    Spinner typeSpinner;
     boolean hasRecording;
     
 	@Override
@@ -63,7 +62,6 @@ public class AskQuestionActivity extends Activity {
         Intent postQuestionIntent = new Intent(AskQuestionActivity.this, PostedQuestionActivity.class);
         postQuestionIntent.putExtra("question", questionText);
         postQuestionIntent.putExtra("language", languageSpinner.getSelectedItem().toString());
-        postQuestionIntent.putExtra("type", typeSpinner.getSelectedItem().toString());
         postQuestionIntent.putExtra("hasRecording", hasRecording);
         AskQuestionActivity.this.startActivity(postQuestionIntent);
 
