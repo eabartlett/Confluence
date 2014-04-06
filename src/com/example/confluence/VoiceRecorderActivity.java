@@ -1,4 +1,4 @@
-package com.example.voicerecorder;
+package com.example.confluence;
 
 import java.io.IOException;
 
