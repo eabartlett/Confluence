@@ -58,7 +58,7 @@ public class NewsFeedQuestion {
 	}
 	
 	public String toString(){
-		String val = String.format("%s\n Type: %s\nLanguage: %s ", 
+		String val = String.format("%s\nType: %s\nLanguage: %s ", 
 				getQuestion(), getQuestionType(), getLanguageTo());
 		
 		return val;

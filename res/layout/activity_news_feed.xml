@@ -7,10 +7,18 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".NewsFeedActivity" >
-    
-    <ListView 
+    <Spinner 
+        android:id="@+id/language_filter"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+     </Spinner>
+
+    <ListView
         android:id="@+id/news_feed_list"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"></ListView>
-
+        android:layout_height="wrap_content"
+        android:layout_below="@id/language_filter" >
+    </ListView>
 </RelativeLayout>
+

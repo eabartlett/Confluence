@@ -3,6 +3,8 @@ package com.example.confluence.newsfeed;
 import java.util.LinkedList;
 import java.util.HashMap;
 
+import android.util.Log;
+
 public class StaticQuestions {
 	private NewsFeedQuestion[] mQuestions;
 	private HashMap<String, NewsFeedQuestion[]> cachedFilters = new HashMap<String, NewsFeedQuestion[]>();
@@ -57,15 +59,17 @@ public class StaticQuestions {
 	public NewsFeedQuestion[] getQuestions(String filter){
 
 		LinkedList<NewsFeedQuestion> questions;
+		Log.i("Filter", filter);
 		if (cachedFilters.get(filter) == null) {
 			questions = new LinkedList<NewsFeedQuestion>();
 			for (NewsFeedQuestion q : mQuestions) {
 				if (q.getLanguageFrom().equals(filter)
 						|| q.getLanguageTo().equals(filter)) {
+					Log.i("Question language", q.getLanguageTo());
 					questions.add(q);
 				}
 			}
-			return (NewsFeedQuestion[]) questions.toArray();
+			return questions.toArray(new NewsFeedQuestion[questions.size()]);
 		}
 		return cachedFilters.get(filter);
 	}
