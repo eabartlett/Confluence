@@ -3,9 +3,11 @@ package com.example.confluence;
 import java.io.IOException;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
@@ -46,6 +48,10 @@ public class VoiceRecorderActivity extends Activity
         mTimerText = (TextView) findViewById(R.id.txt_timer);
         mSeekBar = (SeekBar) findViewById(R.id.seek_bar);
         mSeekBar.setVisibility(View.INVISIBLE);
+        
+        activateRecordButton(true);
+    	activatePlayButton(false);
+    	activateAcceptButton(false);
     }
 
     @Override
@@ -163,11 +169,13 @@ public class VoiceRecorderActivity extends Activity
     }    
 
     public void acceptCallback(View v) {
-    	Toast.makeText(this, "Audio attached!", Toast.LENGTH_LONG).show();
-    	mRecordButton.setText(R.string.start_recording);
-    	activateRecordButton(true);
-    	activatePlayButton(false);
-    	activateAcceptButton(false);
+    	// Toast.makeText(this, "Audio attached!", Toast.LENGTH_LONG).show();
+    	Intent returnResultIntent = new Intent(Intent.ACTION_SEND);
+    	Uri uri = Uri.parse(mFileName);
+    	returnResultIntent.setType("audio/*");
+    	returnResultIntent.putExtra(Intent.EXTRA_STREAM, uri);
+    	setResult(Activity.RESULT_OK, returnResultIntent);
+    	finish();
     }    
     
     public void activateRecordButton(boolean bActivate) {
