@@ -16,6 +16,7 @@ public class AskQuestionActivity extends Activity {
     EditText questionEditText;
     Spinner languageSpinner;
     Spinner typeSpinner;
+    boolean hasRecording;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,12 @@ public class AskQuestionActivity extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
         if (id == R.id.action_post) {
-            postQuestion(questionEditText.getText().toString());
+        	String questionText = questionEditText.getText().toString();
+        	if (questionText != "") {
+        		postQuestion(questionText);
+        	} else {
+        		//Toast
+        	}
             return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -60,6 +66,7 @@ public class AskQuestionActivity extends Activity {
         postQuestionIntent.putExtra("question", questionText);
         postQuestionIntent.putExtra("language", languageSpinner.getSelectedItem().toString());
         postQuestionIntent.putExtra("type", typeSpinner.getSelectedItem().toString());
+        postQuestionIntent.putExtra("hasRecording", hasRecording);
         AskQuestionActivity.this.startActivity(postQuestionIntent);
 
     }

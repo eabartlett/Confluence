@@ -22,14 +22,24 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:padding="5dp"
+	    android:paddingBottom="10dp"
         />
 
-    <LinearLayout
-    android:id="@+id/answers"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-        />
+    <RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="fill_parent"
+	    android:orientation="horizontal"
+	    android:background="@color/tan">
+        
+        <LinearLayout
+	        android:id="@+id/answers"
+	        android:orientation="vertical"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+            >
+    		</LinearLayout>
+    </RelativeLayout>
+        
 
 </LinearLayout>
 

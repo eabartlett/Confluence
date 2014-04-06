@@ -22,13 +22,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity 
+        <activity
             android:name="com.example.confluence.AskQuestionActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustResize" >
         </activity>
-        <activity 
+        <activity
             android:name="com.example.confluence.PostedQuestionActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.example.confluence.BaseActionBarActivity"
+            android:label="@string/title_activity_base_action_bar" >
         </activity>
     </application>
 

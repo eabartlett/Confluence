@@ -11,6 +11,7 @@ public class PostedQuestionActivity extends Activity {
     String question;
     String language;
     String type;
+    boolean hasRecording;
     TextView questionTextView;
     TextView categories;
     
@@ -24,14 +25,19 @@ public class PostedQuestionActivity extends Activity {
             question = extras.getString("question");
             language = extras.getString("language");
             type = extras.getString("type");
+            hasRecording = extras.getBoolean("hasRecording");
         }
 
         categories = (TextView) findViewById(R.id.categories);
 
-        categories.setText(language + " " + type);
+        categories.setText("asked about " + language + " " + type);
 
         questionTextView = (TextView) findViewById(R.id.question);
         questionTextView.setText(question);
+        
+        if (hasRecording) {
+        	//make recording button visible
+        }
 	}
 
 	@Override
