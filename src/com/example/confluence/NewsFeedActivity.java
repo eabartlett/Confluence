@@ -7,6 +7,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 public class NewsFeedActivity extends Activity {
@@ -35,6 +38,22 @@ public class NewsFeedActivity extends Activity {
 		NewsArrayAdapter<NewsFeedQuestion> questionArray = getQuestions();
 		ListView feed = (ListView) findViewById(R.id.news_feed_list);
 		feed.setAdapter(questionArray);
+		feed.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				NewsFeedQuestion q = ((NewsFeedQuestionView) arg1).getQuestion();
+				Intent qIntent = new Intent(NewsFeedActivity.this, PostedQuestionActivity.class);
+				qIntent.putExtra("id", q.getId());
+				//Below this line is all stuff that may or may not be taken out for final functionality
+				qIntent.putExtra("question", q.getQuestion());
+				qIntent.putExtra("language", q.getLanguageTo());
+				qIntent.putExtra("type", q.getQuestionType());
+				startActivity(qIntent);
+				
+			}
+		});
 	}
 
 	/**

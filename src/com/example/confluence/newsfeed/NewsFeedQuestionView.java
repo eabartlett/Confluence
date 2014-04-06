@@ -16,6 +16,10 @@ public class NewsFeedQuestionView extends TextView {
 		mQuestion = question;
 		setText(mQuestion.toString());
 	}
+	
+	public NewsFeedQuestion getQuestion(){
+		return mQuestion;
+	}
 
 	//The Question object of this view
 	private NewsFeedQuestion mQuestion;
