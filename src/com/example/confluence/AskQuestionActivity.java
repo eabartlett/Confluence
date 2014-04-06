@@ -68,9 +68,8 @@ public class AskQuestionActivity extends Activity {
     }
 
     public void addRecording(View v) {
-        Log.d("DEBUG", "adding recording");
-
-        //to test the post intent since action bar button doesn't work
+        Intent voiceRecorderIntent = new Intent(AskQuestionActivity.this, VoiceRecorderActivity.class);
+        AskQuestionActivity.this.startActivityForResult(voiceRecorderIntent, 0);
     }
 
 }
