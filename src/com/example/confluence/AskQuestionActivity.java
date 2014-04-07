@@ -1,21 +1,27 @@
 package com.example.confluence;
 
+import java.io.IOException;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.CountDownTimer;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class AskQuestionActivity extends Activity {
 
     EditText questionEditText;
     Spinner languageSpinner;
     boolean hasRecording;
+    private int VOICE_RECORDER_CODE = 1;
+    private MediaPlayer mPlayer = null;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,10 +73,39 @@ public class AskQuestionActivity extends Activity {
 
     }
 
-    public void addRecording(View v) {
-        Log.d("DEBUG", "adding recording");
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    if (requestCode == VOICE_RECORDER_CODE) {
+	        if (resultCode == RESULT_OK) {
+	        	Toast.makeText(this, "Audio attached", Toast.LENGTH_LONG).show();
+	            // Check attached audio
+	        	mPlayer = new MediaPlayer();
+	            try {
+	                mPlayer.setDataSource(data.getExtras().getString(Intent.EXTRA_TEXT));
+	                mPlayer.prepare();
+	                mPlayer.start();
+	                
+	            	new CountDownTimer(mPlayer.getDuration(), 1000) {
+	            	     public void onTick(long millisUntilFinished) {
+	            	    	 
+	            	     }
 
-        //to test the post intent since action bar button doesn't work
+	            	     public void onFinish() {
+	            	    	 mPlayer.release();
+	            	         mPlayer = null;
+
+	            	     }
+	            	}.start();
+	            } catch (IOException e) {
+	            	
+	            }
+	        }
+	    }
+	}
+	
+    public void addRecording(View v) {
+        Intent voiceRecorderIntent = new Intent(AskQuestionActivity.this, VoiceRecorderActivity.class);
+        AskQuestionActivity.this.startActivityForResult(voiceRecorderIntent, VOICE_RECORDER_CODE);
     }
 
 }
