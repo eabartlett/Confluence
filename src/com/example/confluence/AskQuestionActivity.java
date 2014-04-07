@@ -22,6 +22,7 @@ public class AskQuestionActivity extends BaseActivity {
     boolean hasRecording;
     private int VOICE_RECORDER_CODE = 1;
     private MediaPlayer mPlayer = null;
+    String recording;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,11 +66,22 @@ public class AskQuestionActivity extends BaseActivity {
 	}
 	
 	public void postQuestion(String questionText) {
-        Intent postQuestionIntent = new Intent(AskQuestionActivity.this, PostedQuestionActivity.class);
+        /*Intent postQuestionIntent = new Intent(AskQuestionActivity.this, PostedQuestionActivity.class);
         postQuestionIntent.putExtra("question", questionText);
         postQuestionIntent.putExtra("language", languageSpinner.getSelectedItem().toString());
         postQuestionIntent.putExtra("hasRecording", hasRecording);
-        AskQuestionActivity.this.startActivity(postQuestionIntent);
+        AskQuestionActivity.this.startActivity(postQuestionIntent);*/
+        
+        
+		Intent postQuestionIntent = new Intent(AskQuestionActivity.this, AnswerActivity.class);
+		postQuestionIntent.putExtra("question", questionText);
+        postQuestionIntent.putExtra("language", languageSpinner.getSelectedItem().toString());
+        postQuestionIntent.putExtra("hasAnswers", false); 
+        	// ^ for interactive prototype
+        postQuestionIntent.putExtra("hasRecording", hasRecording);
+        postQuestionIntent.putExtra("recording", recording);
+		AskQuestionActivity.this.startActivity(postQuestionIntent);
+
 
     }
 
@@ -81,6 +93,10 @@ public class AskQuestionActivity extends BaseActivity {
 	            // Check attached audio
 	        	mPlayer = new MediaPlayer();
 	            try {
+	            	recording = data.getExtras().getString(Intent.EXTRA_TEXT);
+		            hasRecording = true;
+		            
+
 	                mPlayer.setDataSource(data.getExtras().getString(Intent.EXTRA_TEXT));
 	                mPlayer.prepare();
 	                mPlayer.start();

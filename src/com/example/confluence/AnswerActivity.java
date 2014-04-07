@@ -29,6 +29,9 @@ public class AnswerActivity extends BaseActivity {
 	private EditText answerEditText;
 	private ImageButton recordButton;
 	private AnswerList answers;
+	private boolean hasAnswers;
+	private boolean hasRecording;
+	private String recording;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +52,17 @@ public class AnswerActivity extends BaseActivity {
 		recordButton = (ImageButton) findViewById(R.id.answer_record_audio);
 		answers = new AnswerList();
 		
-		loadAnswersToUI();
+		hasAnswers = extras.getBoolean("hasAnswers");
+		hasRecording = extras.getBoolean("hasRecording");
+		
+		if (hasAnswers) {
+			loadAnswersToUI();
+		}
+		
+		if (hasRecording) {
+			recording = extras.getString("recording");
+		}
+		
 		setOnPostListener();
 		setRecordButtonListener();
 	}
