@@ -55,7 +55,7 @@
 	                android:onClick="addRecording" /> -->
 	            
 	            <Button
-			        android:id="@+id/answer_record_audio"
+			        android:id="@+id/add_recording"
 			        android:drawableLeft="@drawable/ic_action_mic_active"
 			        android:text="add recording"
 			        android:textColor="#FFFFFF"
@@ -63,7 +63,8 @@
 			        android:layout_height="wrap_content"
 			        android:layout_alignParentBottom="true"
 			        android:layout_alignParentRight="true"
-			        android:layout_alignTop="@id/answer_question_bar" />
+			        android:layout_alignTop="@id/answer_question_bar"
+			        android:onClick="addRecording" />
             
             </LinearLayout>
     </RelativeLayout>
