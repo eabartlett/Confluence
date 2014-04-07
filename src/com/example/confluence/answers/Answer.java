@@ -17,11 +17,11 @@ public class Answer {
 	private int mUserId;
 	private String mUserName;
 	private String mAnswerText;
-	private AudioRecord audioRecord;
+	private String mAudioPath;
 	private Date mAnswerDate;
 	private int mRating; // rating of an answer
 
-	protected Answer(String userName, String answerText, Date answerDate) { 
+	public Answer(String userName, String answerText, Date answerDate) { 
 		mUserName = userName;
 		mAnswerText = answerText;
 		mAnswerDate = answerDate; 
@@ -48,8 +48,12 @@ public class Answer {
 		return mRating;
 	}
 	
+	protected String getAudioPath() {
+		return mAudioPath;
+	}
+	
 	protected boolean hasAudio() {
-		if (audioRecord != null) {
+		if (mAudioPath != null) {
 			return true;
 		} return false;
 	}

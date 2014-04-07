@@ -1,4 +1,4 @@
-package com.example.confluence.answers;
+package com.example.confluence;
 
 
 import android.app.Activity;
@@ -15,7 +15,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
-import com.example.confluence.R;
+import com.example.confluence.answers.AnswerArrayAdapter;
+import com.example.confluence.answers.AnswerList;
 
 /**
  * AnswerActivity handles all answers associated with a question. 
@@ -27,7 +28,7 @@ public class AnswerActivity extends Activity {
 	private ListView listView;
 	private EditText answerEditText;
 	private ImageButton recordButton;
-	private StaticAnswers answers;
+	private AnswerList answers;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,18 +38,26 @@ public class AnswerActivity extends Activity {
 		Intent startIntent = getIntent();
 		Bundle extras = startIntent.getExtras();
 		
-		TextView phraseView = (TextView) findViewById(R.id.question_phrase_content);
+		TextView questionView = (TextView) findViewById(R.id.question_phrase_content);
 		TextView langView = (TextView) findViewById(R.id.question_lang_content);
-		TextView tagView = (TextView) findViewById(R.id.question_tag_content);
+		
+		questionView.setText(extras.getString("question"));
+		langView.setText(extras.getString("language"));
 		
 		listView = (ListView) findViewById(R.id.answer_list);
 		answerEditText = (EditText) findViewById(R.id.answer_question_bar);
 		recordButton = (ImageButton) findViewById(R.id.answer_record_audio);
+		answers = new AnswerList();
 		
-		
-		setAnswerListener();
+		loadAnswersToUI();
+		setOnPostListener();
 		setRecordButtonListener();
-		loadAnswers();
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		// insert handling for getting file path and attaching to right answer.
 	}
 	
 	@Override
@@ -59,8 +68,10 @@ public class AnswerActivity extends Activity {
 		return true;
 	}
 	
-	private void loadAnswers() {
-		answers = new StaticAnswers();
+	/**
+	 * Loads answers contained in AnswerList answers to the ListView UI.
+	 */
+	private void loadAnswersToUI() {
 		AnswerArrayAdapter answerAdapter = 
 				new AnswerArrayAdapter(getApplicationContext(),
 						R.layout.activity_answer, 
@@ -69,9 +80,9 @@ public class AnswerActivity extends Activity {
 	}
 	
 	/**
-	 * Sets listener on EditText to add question to ListView.
+	 * Sets listener on EditText to post a question on the List View
 	 */
-	private void setAnswerListener() {
+	private void setOnPostListener() {
 		answerEditText.setOnEditorActionListener(new OnEditorActionListener() {
 
 			@Override
@@ -79,18 +90,10 @@ public class AnswerActivity extends Activity {
 				// TODO Auto-generated method stub
 				boolean handled = false;
 				if (actionId == EditorInfo.IME_ACTION_SEND) {
-					// addView to adapter 
 					String answerText = v.getText().toString();
+					answers.addAnswer("Bearly a Group", answerText);
 					answerEditText.setText(""); 
-					Answer newAnswer = new Answer("Bearly a Group",
-							answerText,
-							null);
-					answers.addAnswer(newAnswer);
-					AnswerArrayAdapter answerAdapter = 
-							new AnswerArrayAdapter(getApplicationContext(),
-									R.layout.activity_answer, 
-									answers.getAnswers());
-					listView.setAdapter(answerAdapter);
+					loadAnswersToUI();
 					handled = true;
 				}
 				return handled;
@@ -99,17 +102,18 @@ public class AnswerActivity extends Activity {
 		});
 	}
 	
+	/**
+	 * Sets listener for microphone button to start VoiceRecorderActivity
+	 */
 	private void setRecordButtonListener() {
 		recordButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				/*
-				Intent audioRecordIntent = new Intent(this, VoiceRecorderActivity.class);
-				startActivity(audioRecordIntent);*/
+				Intent audioRecordIntent = new Intent(getApplicationContext(), VoiceRecorderActivity.class);
+				startActivity(audioRecordIntent);
 			}
-			
 		});
 	}
 }
