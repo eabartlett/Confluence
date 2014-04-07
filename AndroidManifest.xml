@@ -41,13 +41,12 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="com.example.confluence.BaseActivity"
-            android:label="@string/app_name" >
-        </activity>
-        
-        <activity>
             android:name="com.example.confluence.AnswerActivity"
             android:label="@string/app_name">
+        </activity>
+        <activity
+            android:name="com.example.confluence.BaseActivity"
+            android:label="@string/app_name" >
         </activity>
     </application>
 

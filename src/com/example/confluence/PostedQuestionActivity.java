@@ -27,12 +27,12 @@ public class PostedQuestionActivity extends BaseActivity {
             hasRecording = extras.getBoolean("hasRecording");
         }
 
-        categories = (TextView) findViewById(R.id.categories);
+        /*categories = (TextView) findViewById(R.id.categories);
 
-        categories.setText("asked about " + language);
+        categories.setText("asked about " + language);*/
 
         questionTextView = (TextView) findViewById(R.id.question);
-        questionTextView.setText(question);
+        questionTextView.setText(question + "\n" + language);
         
         if (hasRecording) {
         	//make recording button visible
