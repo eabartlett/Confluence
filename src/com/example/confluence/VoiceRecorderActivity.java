@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class VoiceRecorderActivity extends Activity
+public class VoiceRecorderActivity extends BaseActivity
 {
     private static final String LOG_TAG = "VoiceRecorderTest";
     private static String mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + 

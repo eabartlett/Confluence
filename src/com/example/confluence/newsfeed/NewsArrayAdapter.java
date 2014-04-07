@@ -23,7 +23,7 @@ public class NewsArrayAdapter<T> extends ArrayAdapter<NewsFeedQuestion> {
 		return new NewsFeedQuestionView(getContext(), question);
 	
 		/*LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View rowView = inflater.inflate(R.layout.rowlayout,  parent, false);
+		View rowView = inflater.inflate(R.layout.news_list_view,  parent, false);
 		TextView textView = (TextView) rowView.findViewById(R.id.label);
 		textView.setText();*/
 		

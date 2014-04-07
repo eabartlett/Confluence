@@ -11,7 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-public class AskQuestionActivity extends Activity {
+public class AskQuestionActivity extends BaseActivity {
 
     EditText questionEditText;
     Spinner languageSpinner;

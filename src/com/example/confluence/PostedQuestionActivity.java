@@ -6,7 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class PostedQuestionActivity extends Activity {
+public class PostedQuestionActivity extends BaseActivity {
 
     String question;
     String language;
