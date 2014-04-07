@@ -23,7 +23,7 @@ import com.example.confluence.answers.AnswerList;
  * @author brian
  *
  */
-public class AnswerActivity extends Activity {
+public class AnswerActivity extends BaseActivity {
 
 	private ListView listView;
 	private EditText answerEditText;

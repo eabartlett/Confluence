@@ -12,55 +12,19 @@
         android:background="#AAAAAA"
         >
         
-        <TextView
-            android:id="@+id/question_phrase_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:paddingRight="10dp"
-            android:text="@string/phrase"
-            />
         
         <TextView
             android:id="@+id/question_phrase_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/question_phrase_label"
             />
             
-        <TextView
-            android:id="@+id/question_lang_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-			android:padding="5dp"
-            android:paddingRight="10dp"
-            android:layout_below="@id/question_phrase_label"
-            android:text="@string/lang"
-            />
-        
-        
-        <TextView
-            android:id="@+id/question_tag_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/question_lang_label"
-            android:layout_alignBottom="@+id/question_lang_label"
-            android:layout_centerHorizontal="true"
-            android:text="@string/tag" />
-        
-        <TextView
-            android:id="@+id/question_tag_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/question_tag_label"
-            />
 
         <TextView
             android:id="@+id/question_lang_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/question_lang_label"
-            android:layout_toRightOf="@+id/question_phrase_label" />
+            android:layout_below="@+id/question_phrase_content" />
 
     </RelativeLayout>
     
