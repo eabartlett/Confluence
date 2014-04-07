@@ -1,9 +1,12 @@
 package com.example.confluence;
 
 
-import android.app.Activity;
+import java.io.IOException;
+
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -13,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.TextView.OnEditorActionListener;
 
 import com.example.confluence.answers.AnswerArrayAdapter;
@@ -28,10 +32,16 @@ public class AnswerActivity extends BaseActivity {
 	private ListView listView;
 	private EditText answerEditText;
 	private ImageButton recordButton;
+	private ImageButton playbackButton;
+	
 	private AnswerList answers;
 	private boolean hasAnswers;
 	private boolean hasRecording;
 	private String recording;
+    private int VOICE_RECORDER_CODE = 1;
+    private MediaPlayer mPlayer = null;
+
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +60,9 @@ public class AnswerActivity extends BaseActivity {
 		listView = (ListView) findViewById(R.id.answer_list);
 		answerEditText = (EditText) findViewById(R.id.answer_question_bar);
 		recordButton = (ImageButton) findViewById(R.id.answer_record_audio);
+		playbackButton = (ImageButton) findViewById(R.id.answer_playback_audio);
+		playbackButton.setClickable(false);
+		playbackButton.setEnabled(false);
 		answers = new AnswerList();
 		
 		hasAnswers = extras.getBoolean("hasAnswers");
@@ -65,13 +78,52 @@ public class AnswerActivity extends BaseActivity {
 		
 		setOnPostListener();
 		setRecordButtonListener();
+		setPlayBackButtonListener();
 	}
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		// insert handling for getting file path and attaching to right answer.
+		System.out.println("onActivityResult");
+	    if (requestCode == VOICE_RECORDER_CODE) {
+	    	System.out.println("requestCode ok!");
+	        if (resultCode == RESULT_OK) {
+	        	Toast.makeText(this, "Audio attached", Toast.LENGTH_LONG).show();
+	            // Check attached audio
+	        	mPlayer = new MediaPlayer();
+	            try {
+	            	recording = data.getExtras().getString(Intent.EXTRA_TEXT);
+		            hasRecording = true;
+		            playbackButton.setEnabled(true);
+		            playbackButton.setClickable(true);
+		            playbackButton.setImageResource(R.drawable.ic_action_play_active);
+		            
+
+	                mPlayer.setDataSource(data.getExtras().getString(Intent.EXTRA_TEXT));
+	                mPlayer.prepare();
+	                mPlayer.start();
+	                
+	            	new CountDownTimer(mPlayer.getDuration(), 1000) {
+	            	     public void onTick(long millisUntilFinished) {
+	            	    	 
+	            	     }
+
+	            	     public void onFinish() {
+	            	    	 mPlayer.release();
+	            	         mPlayer = null;
+
+	            	     }
+	            	}.start();
+	            } catch (IOException e) {
+	            	
+	            }
+	        }
+	    }
 	}
+	
+	public void addRecording(View v) {
+        Intent voiceRecorderIntent = new Intent(AnswerActivity.this, VoiceRecorderActivity.class);
+        AnswerActivity.this.startActivityForResult(voiceRecorderIntent, VOICE_RECORDER_CODE);
+    }
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -124,9 +176,44 @@ public class AnswerActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent audioRecordIntent = new Intent(getApplicationContext(), VoiceRecorderActivity.class);
-				startActivity(audioRecordIntent);
+				addRecording(v);
 			}
 		});
+	}
+	
+	/**
+	 * Sets listener for playback button to play back audio
+	 */
+	private void setPlayBackButtonListener() {
+		playbackButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				if (playbackButton.isClickable() && playbackButton.isEnabled()) {
+					mPlayer = new MediaPlayer();
+					try {           
+						mPlayer.setDataSource(recording);
+						mPlayer.prepare();
+						mPlayer.start();
+
+						new CountDownTimer(mPlayer.getDuration(), 1000) {
+							public void onTick(long millisUntilFinished) {
+
+							}
+
+							public void onFinish() {
+								mPlayer.release();
+								mPlayer = null;
+
+							}
+						}.start();
+					} catch (IOException e) {
+
+					}
+				}
+			}
+		});
+		
 	}
 }
