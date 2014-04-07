@@ -1,10 +1,17 @@
 package com.example.confluence;
 
+import java.io.IOException;
+
 import android.app.Activity;
+import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class PostedQuestionActivity extends BaseActivity {
 
@@ -12,9 +19,11 @@ public class PostedQuestionActivity extends BaseActivity {
     String language;
     String type;
     boolean hasRecording;
+    String recording;
     TextView questionTextView;
     TextView categories;
-    
+    private MediaPlayer mPlayer = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -25,6 +34,7 @@ public class PostedQuestionActivity extends BaseActivity {
             question = extras.getString("question");
             language = extras.getString("language");
             hasRecording = extras.getBoolean("hasRecording");
+            recording = extras.getString("recording");
         }
 
         /*categories = (TextView) findViewById(R.id.categories);
@@ -34,9 +44,6 @@ public class PostedQuestionActivity extends BaseActivity {
         questionTextView = (TextView) findViewById(R.id.question);
         questionTextView.setText(question + "\n" + language);
         
-        if (hasRecording) {
-        	//make recording button visible
-        }
 	}
 
 	@Override
@@ -58,6 +65,32 @@ public class PostedQuestionActivity extends BaseActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	public void playCallback(View v) {
+
+            // Check attached audio
+        	mPlayer = new MediaPlayer();
+            try {           
+                mPlayer.setDataSource(recording);
+                mPlayer.prepare();
+                mPlayer.start();
+                
+            	new CountDownTimer(mPlayer.getDuration(), 1000) {
+            	     public void onTick(long millisUntilFinished) {
+            	    	 
+            	     }
+
+            	     public void onFinish() {
+            	    	 mPlayer.release();
+            	         mPlayer = null;
+
+            	     }
+            	}.start();
+            } catch (IOException e) {
+            	
+            }
+        }
+	
 
 
 }

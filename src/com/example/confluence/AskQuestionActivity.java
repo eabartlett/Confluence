@@ -70,6 +70,8 @@ public class AskQuestionActivity extends BaseActivity {
         postQuestionIntent.putExtra("question", questionText);
         postQuestionIntent.putExtra("language", languageSpinner.getSelectedItem().toString());
         postQuestionIntent.putExtra("hasRecording", hasRecording);
+        postQuestionIntent.putExtra("recording", recording);
+
         AskQuestionActivity.this.startActivity(postQuestionIntent);
         
         
