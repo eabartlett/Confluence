@@ -72,6 +72,7 @@
         android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@id/answer_record_audio"/>
+        android:layout_toLeftOf="@id/answer_record_audio"
+        android:visibility="gone"/>
 
 </RelativeLayout>
