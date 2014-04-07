@@ -3,11 +3,11 @@ package com.example.confluence.answers;
 import java.util.ArrayList;
 
 
-public class StaticAnswers {
+public class AnswerList {
 
 	private ArrayList<Answer> mAnswers;
 	
-	public StaticAnswers(){
+	public AnswerList(){
 		mAnswers = new ArrayList<Answer>();
 		Answer a0 = new Answer("Greg", 
 				"That's a good attempt, but you're prounouncing the 'r' wrong. Here's a correct pronunciation",
@@ -23,7 +23,12 @@ public class StaticAnswers {
 		return mAnswers;
 	}
 	
-	protected void addAnswer(Answer answer) {
+	public void addAnswer(Answer answer) {
 		mAnswers.add(answer);
+	}
+	
+	public void addAnswer(String user, String answer) {
+		Answer newAnswer = new Answer(user, answer, null);
+		mAnswers.add(newAnswer);
 	}
 }

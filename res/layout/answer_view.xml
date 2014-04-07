@@ -9,7 +9,7 @@
         android:layout_height="fill_parent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="6dip"
+        android:layout_marginRight="6dp"
         android:contentDescription="Profile picture"
         android:src="@drawable/ic_launcher" />
 
@@ -17,25 +17,43 @@
         android:id="@+id/answer_secondLine"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
+        android:layout_toLeftOf="@+id/answer_downvote"
         android:layout_toRightOf="@id/answer_icon"
         android:ellipsize="marquee"
         android:singleLine="false"
         android:text="Description"
         android:textSize="12sp" />
-
+    
     <TextView
         android:id="@+id/answer_firstLine"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/answer_secondLine"
-        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/answer_secondLine"
         android:layout_alignWithParentIfMissing="true"
         android:layout_toRightOf="@id/answer_icon"
         android:gravity="center_vertical"
         android:text="Title"
         android:textSize="16sp" />
+    
+   <ImageButton
+        android:id="@+id/answer_upvote"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_action_good"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        />
+    
+    <ImageButton 
+        android:id="@+id/answer_downvote"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_action_bad"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/answer_upvote"/>
+    
+        
 
 </RelativeLayout>

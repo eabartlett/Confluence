@@ -1,10 +1,8 @@
 package com.example.confluence;
 
-import com.example.confluence.newsfeed.*;
-
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +12,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.example.confluence.newsfeed.NewsArrayAdapter;
+import com.example.confluence.newsfeed.NewsFeedQuestion;
+import com.example.confluence.newsfeed.NewsFeedQuestionView;
+import com.example.confluence.newsfeed.StaticQuestions;
 
 public class NewsFeedActivity extends Activity {
 
@@ -80,7 +83,7 @@ public class NewsFeedActivity extends Activity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				NewsFeedQuestion q = ((NewsFeedQuestionView) arg1).getQuestion();
-				Intent qIntent = new Intent(NewsFeedActivity.this, PostedQuestionActivity.class);
+				Intent qIntent = new Intent(NewsFeedActivity.this, AnswerActivity.class);
 				qIntent.putExtra("id", q.getId());
 				//Below this line is all stuff that may or may not be taken out for final functionality
 				qIntent.putExtra("question", q.getQuestion());

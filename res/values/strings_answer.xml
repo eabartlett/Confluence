@@ -4,6 +4,6 @@
     <string name="lang">Lang:</string>
     <string name="tag">Tag:</string>
     
-    <string name="add_answer_hint">Add your answer here...</string>
+    <string name="add_answer_hint">Add answer and record audio to right...</string>
     
 </resources>
