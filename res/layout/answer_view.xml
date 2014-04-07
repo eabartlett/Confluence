@@ -12,30 +12,6 @@
         android:layout_marginRight="6dp"
         android:contentDescription="Profile picture"
         android:src="@drawable/ic_launcher" />
-
-    <TextView
-        android:id="@+id/answer_secondLine"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/answer_downvote"
-        android:layout_toRightOf="@id/answer_icon"
-        android:ellipsize="marquee"
-        android:singleLine="false"
-        android:text="Description"
-        android:textSize="12sp" />
-    
-    <TextView
-        android:id="@+id/answer_firstLine"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/answer_secondLine"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/answer_secondLine"
-        android:layout_alignWithParentIfMissing="true"
-        android:layout_toRightOf="@id/answer_icon"
-        android:gravity="center_vertical"
-        android:text="Title"
-        android:textSize="16sp" />
     
    <ImageButton
         android:id="@+id/answer_upvote"
@@ -53,7 +29,38 @@
         android:src="@drawable/ic_action_bad"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/answer_upvote"/>
-    
-        
+
+    <TextView
+        android:id="@+id/answer_firstLine"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/answer_secondLine"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/answer_upvote"
+        android:gravity="center_vertical"
+        android:text="Title"
+        android:textColor="#000000"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/answer_secondLine"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/answer_downvote"
+        android:layout_toRightOf="@+id/answer_icon"
+        android:ellipsize="marquee"
+        android:singleLine="false"
+        android:text="Description"
+        android:textColor="#000000"
+        android:textSize="12sp" />
+
+    <ImageButton
+        android:id="@+id/answer_attatchment"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignRight="@+id/answer_firstLine"
+        android:layout_below="@+id/answer_upvote"
+        android:visibility="gone"
+        android:src="@drawable/ic_action_play_active" />
 
 </RelativeLayout>

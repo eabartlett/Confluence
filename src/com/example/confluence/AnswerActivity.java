@@ -156,10 +156,13 @@ public class AnswerActivity extends BaseActivity {
 				boolean handled = false;
 				if (actionId == EditorInfo.IME_ACTION_SEND) {
 					String answerText = v.getText().toString();
-					answers.addAnswer("Bearly a Group", answerText);
+					answers.addAnswer("Bearly a Group", answerText, hasRecording);
 					answerEditText.setText(""); 
 					loadAnswersToUI();
 					handled = true;
+					playbackButton.setEnabled(false);
+					playbackButton.setImageResource(R.drawable.ic_action_play_inactive);
+					
 				}
 				return handled;
 			}

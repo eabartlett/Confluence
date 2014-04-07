@@ -19,8 +19,8 @@ public class AnswerList {
 		mAnswers.add(answer);
 	}
 	
-	public void addAnswer(String user, String answer) {
-		Answer newAnswer = new Answer(user, answer, null);
+	public void addAnswer(String user, String answer, boolean hasRecording) {
+		Answer newAnswer = new Answer(user, answer, hasRecording);
 		mAnswers.add(newAnswer);
 	}
 	
@@ -28,10 +28,10 @@ public class AnswerList {
 		ArrayList<Answer> dummyAnswers = new ArrayList<Answer>();
 		Answer a0 = new Answer("Greg", 
 				"That's a good attempt, but you're prounouncing the 'r' wrong. Here's a correct pronunciation",
-				null);
+				true);
 		Answer a1 = new Answer("Christine",
 				"You'll want to be careful about your tonation as well.",
-				null);
+				false);
 		dummyAnswers.add(a0);
 		dummyAnswers.add(a1);
 		return dummyAnswers;

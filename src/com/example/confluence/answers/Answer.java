@@ -18,13 +18,15 @@ public class Answer {
 	private String mUserName;
 	private String mAnswerText;
 	private String mAudioPath;
+	private boolean mHasRecording;
 	private Date mAnswerDate;
 	private int mRating; // rating of an answer
 
-	public Answer(String userName, String answerText, Date answerDate) { 
+	public Answer(String userName, String answerText, boolean hasRecording) { 
 		mUserName = userName;
 		mAnswerText = answerText;
-		mAnswerDate = answerDate; 
+		mAnswerDate = null;
+		mHasRecording = hasRecording;
 		mRating = 0;
 	}
 	
@@ -56,5 +58,9 @@ public class Answer {
 		if (mAudioPath != null) {
 			return true;
 		} return false;
+	}
+	
+	protected boolean hasRecording() {
+		return mHasRecording;
 	}
 }

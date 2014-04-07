@@ -2,6 +2,7 @@ package com.example.confluence.answers;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,6 +24,11 @@ public class AnswerLayout extends LinearLayout {
 		this.answer = answer;
 		title = (TextView) findViewById(R.id.answer_firstLine);
 		answerText = (TextView) findViewById(R.id.answer_secondLine);
+		
+		ImageButton attatchment = (ImageButton) findViewById(R.id.answer_attatchment);
+		if (answer.hasRecording()) {
+			attatchment.setVisibility(VISIBLE);
+		}
 		
 		// Insert data into UI
 		setUserName(answer.getUserName());
