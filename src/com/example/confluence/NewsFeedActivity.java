@@ -18,7 +18,7 @@ import com.example.confluence.newsfeed.NewsFeedQuestion;
 import com.example.confluence.newsfeed.NewsFeedQuestionView;
 import com.example.confluence.newsfeed.StaticQuestions;
 
-public class NewsFeedActivity extends Activity {
+public class NewsFeedActivity extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +28,8 @@ public class NewsFeedActivity extends Activity {
 		loadLanguages();
 		
 		setEditTextFocus();
+		getActionBar().setDisplayHomeAsUpEnabled(false);
+
 	}
 
 	@Override

@@ -1,14 +1,18 @@
 package com.example.confluence;
 
-import android.support.v7.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.os.Build;
 
 public class BaseActivity extends Activity {
@@ -19,6 +23,17 @@ public class BaseActivity extends Activity {
 		setContentView(R.layout.activity_base);
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
+	    int actionBarTitle = Resources.getSystem().getIdentifier("action_bar_title", "id", "android");
+	    TextView actionBarTitleView = (TextView) getWindow().findViewById(actionBarTitle);
+	    Typeface appTitleFont = Typeface.createFromAsset(getAssets(), "fonts/Oswald-Regular.otf");
+	    Log.d("DEBUG", "font made");
+	    if(actionBarTitleView != null){
+	        actionBarTitleView.setTypeface(appTitleFont);
+	        actionBarTitleView.setTextColor(Color.parseColor("#FFFFFF"));
+	        actionBarTitleView.setTextSize(24);
+	    }
+	    
 
 	}
 

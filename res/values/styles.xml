@@ -24,7 +24,9 @@
     <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
         <item name="android:background">#47B85E</item>
         <item name="android:textColor">#FFFFFF</item>
+        
     </style>
+    
     
     <style name="spinnerStyle"  parent="@android:style/Widget.TextView.SpinnerItem">
        <item name="android:padding">5sp</item>
