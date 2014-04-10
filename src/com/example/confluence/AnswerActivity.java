@@ -96,6 +96,7 @@ public class AnswerActivity extends BaseActivity {
 		            playbackButton.setEnabled(true);
 		            playbackButton.setClickable(true);
 		            playbackButton.setImageResource(R.drawable.ic_action_play_active);
+					playbackButton.setVisibility(View.VISIBLE);
 		            
 
 	                mPlayer.setDataSource(data.getExtras().getString(Intent.EXTRA_TEXT));
@@ -155,14 +156,16 @@ public class AnswerActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				boolean handled = false;
 				if (actionId == EditorInfo.IME_ACTION_SEND) {
+					handled = true;
+					
 					String answerText = v.getText().toString();
 					answers.addAnswer("Bearly a Group", answerText, hasRecording);
 					answerEditText.setText(""); 
 					loadAnswersToUI();
-					handled = true;
+					
 					playbackButton.setEnabled(false);
 					playbackButton.setImageResource(R.drawable.ic_action_play_inactive);
-					
+					playbackButton.setVisibility(View.GONE);
 				}
 				return handled;
 			}
