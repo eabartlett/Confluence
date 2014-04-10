@@ -104,7 +104,7 @@ public class NewsFeedActivity extends BaseActivity {
 		Spinner languages = (Spinner) findViewById(R.id.language_filter);
 		String[] langs = getUserLanguages();
 		ArrayAdapter<String> langAdapter = new ArrayAdapter<String>(
-				this, R.layout.textview, langs);
+				this, R.layout.spinner_row, langs);
 		languages.setAdapter(langAdapter);
 		languages.setOnItemSelectedListener(new LanguagesFilter());
 

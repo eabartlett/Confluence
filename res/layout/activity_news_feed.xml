@@ -22,7 +22,6 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
 		android:divider="@android:color/transparent"
         android:dividerHeight="10.0sp" >
-
     </ListView>
     
     <EditText
