@@ -4,6 +4,6 @@
     tools:context="com.example.confluence.AskQuestionActivity" >
 
     <item android:id="@+id/action_post"
-        android:title="Post"
-        android:showAsAction="always" />
+        android:title="POST"
+        android:showAsAction="always"/>
 </menu>
