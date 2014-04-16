@@ -2,6 +2,7 @@ package com.example.confluence;
 
 import java.io.IOException;
 
+import android.R.menu;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,6 +13,8 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -25,13 +28,15 @@ public class VoiceRecorderActivity extends BaseActivity
     private static final String LOG_TAG = "VoiceRecorderTest";
     private static String mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + 
     		"/VoiceRecorderTest.3gp";
-    private Button mRecordButton, mPlayButton, mAcceptButton;
+    private Button mRecordButton, mPlayButton;
     private SeekBar mSeekBar;
     private MediaRecorder mRecorder = null;
     private MediaPlayer mPlayer = null;
     private boolean mStartPlaying = true, mStartRecording = true;
     private TextView mTimerText;
     public CountDownTimer mCountDownTimer = null;
+    Menu menu;
+    MenuItem mAcceptButton;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,11 +48,17 @@ public class VoiceRecorderActivity extends BaseActivity
         mRecordButton = (Button) findViewById(R.id.bt_record);
         mPlayButton = (Button) findViewById(R.id.bt_play);
         mPlayButton.setClickable(false);
-        mAcceptButton = (Button) findViewById(R.id.bt_accept);
+        mPlayButton.setVisibility(View.GONE);
+        
+        /*mAcceptButton = (Button) findViewById(R.id.bt_accept);
         mAcceptButton.setClickable(false);
+        mAcceptButton.setVisibility(View.GONE);*/
+
         mTimerText = (TextView) findViewById(R.id.txt_timer);
         mSeekBar = (SeekBar) findViewById(R.id.seek_bar);
         mSeekBar.setVisibility(View.INVISIBLE);
+        
+        
         
         activateRecordButton(true);
     	activatePlayButton(false);
@@ -67,6 +78,28 @@ public class VoiceRecorderActivity extends BaseActivity
             mPlayer = null;
         }
     }
+    
+
+@Override
+public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.voice_recorder, menu);
+    this.menu = menu;
+
+    mAcceptButton = this.menu.findItem(R.id.action_accept);
+    mAcceptButton.setVisible(false);
+    return true;
+}
+
+@Override
+public boolean onOptionsItemSelected(MenuItem item) {
+    int id = item.getItemId();
+    if (id == R.id.action_accept) {
+    	acceptCallback();
+    }
+    return true;
+
+}
+
     
     public void recordCallback(View v) {
     	if (mStartRecording) {
@@ -168,7 +201,7 @@ public class VoiceRecorderActivity extends BaseActivity
     	}    	
     }    
 
-    public void acceptCallback(View v) {
+    public void acceptCallback() {
     	// Toast.makeText(this, "Audio attached!", Toast.LENGTH_LONG).show();
     	Intent returnResultIntent = new Intent(Intent.ACTION_SEND);
     	Uri uri = Uri.parse(mFileName);
@@ -182,11 +215,11 @@ public class VoiceRecorderActivity extends BaseActivity
     	mRecordButton.setClickable(bActivate);
     	if (bActivate) {
     		mRecordButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_action_mic_active, 0, 0);
-    		mRecordButton.setTextColor(Color.parseColor("#ffffff"));
+    		mRecordButton.setVisibility(View.VISIBLE);
     	}
     	else {
     		mRecordButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_action_mic_inactive, 0, 0);
-    		mRecordButton.setTextColor(Color.parseColor("#333333"));
+    		mRecordButton.setVisibility(View.GONE);
     	}
     }
     
@@ -194,23 +227,29 @@ public class VoiceRecorderActivity extends BaseActivity
     	mPlayButton.setClickable(bActivate);
     	if (bActivate) {
     		mPlayButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_action_play_active, 0, 0);
-   	 		mPlayButton.setTextColor(Color.parseColor("#ffffff")); 
+        	mPlayButton.setVisibility(View.VISIBLE);
+        	mRecordButton.setVisibility(View.GONE);
+
     	}
     	else {
     		mPlayButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_action_play_inactive, 0, 0);
-   	 		mPlayButton.setTextColor(Color.parseColor("#333333"));  
+        	mPlayButton.setVisibility(View.GONE);
+  
     	}
     }
     
     public void activateAcceptButton(boolean bActivate) {
-    	mAcceptButton.setClickable(bActivate);
+    	invalidateOptionsMenu();
+
+    	this.menu.findItem(R.id.action_accept).setVisible(true);
+    	
     	if (bActivate) {
-    		mAcceptButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_action_accept_active, 0, 0);
-   	 		mAcceptButton.setTextColor(Color.parseColor("#ffffff"));
+    		/*mAcceptButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_action_accept_active, 0, 0);
+   	 		mAcceptButton.setTextColor(Color.parseColor("#ffffff"));*/
     	}
     	else {
-    		mAcceptButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_action_accept_inactive, 0, 0);
-   	 		mAcceptButton.setTextColor(Color.parseColor("#333333"));
+    		/*mAcceptButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_action_accept_inactive, 0, 0);
+   	 		mAcceptButton.setTextColor(Color.parseColor("#333333"));*/
     	}
     }
 }

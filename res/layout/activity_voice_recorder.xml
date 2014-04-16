@@ -6,47 +6,53 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="#000000"
     tools:context=".VoiceRecorderActivity" >
 	
-    <LinearLayout style="?android:attr/buttonBarStyle"
+    <RelativeLayout style="?android:attr/buttonBarStyle"
         android:id="@+id/buttons"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_centerVertical="true" >
-        
-        <Button style="?android:attr/buttonBarButtonStyle"
-	        android:id="@+id/bt_record"
-		    android:layout_width="wrap_content"
-	   		android:layout_height="wrap_content"
-		    android:drawableTop="@drawable/ic_action_mic_active"
-		    android:text="@string/start_recording"
-		    android:textColor="#ffffff"
-		    android:layout_weight="1"
-		    android:onClick="recordCallback" />
+
+        <Button
+            android:id="@+id/bt_record"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="@dimen/recorder_button_circle"
+            android:layout_height="@dimen/recorder_button_circle"
+            android:layout_centerInParent="true"
+            android:background="@drawable/circlebutton"
+            android:drawable="@drawable/ic_action_mic_active"
+            android:onClick="recordCallback"
+            android:text="@string/start_recording"
+            android:textColor="#ffffff" />
 	    
 	    <Button style="?android:attr/buttonBarButtonStyle"
 	        android:id="@+id/bt_play"
-		    android:layout_width="wrap_content"
-	   		android:layout_height="wrap_content"
+            android:layout_width="@dimen/recorder_button_circle"
+            android:layout_height="@dimen/recorder_button_circle"
+            android:layout_centerInParent="true"
+            android:background="@drawable/circlebutton"
 		    android:drawableTop="@drawable/ic_action_play_inactive"
 		    android:text="@string/play"
-		    android:textColor="#333333"
-		    android:layout_weight="1"
-		    android:onClick="playCallback" />
+		    android:visibility="gone"
+		    android:onClick="playCallback"
+		    android:textColor="#ffffff" />
 	    
+	    <!--
 	    <Button style="?android:attr/buttonBarButtonStyle"
 	        android:id="@+id/bt_accept"
 		    android:layout_width="wrap_content"
 	   		android:layout_height="wrap_content"
 		    android:drawableTop="@drawable/ic_action_accept_inactive"
 		    android:text="@string/accept"
-		    android:textColor="#333333"
 		    android:layout_weight="1"
-		    android:onClick="acceptCallback" />
+		    android:visibility="gone"
+		    android:onClick="acceptCallback"
+		    android:textColor="#ffffff" />
+		    -->
         
-    </LinearLayout>
+    </RelativeLayout>
         
     <TextView
         android:id="@+id/txt_timer"
