@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -84,7 +85,9 @@ public class NewsFeedActivity extends BaseActivity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				NewsFeedQuestion q = ((NewsFeedQuestionView) arg1).getQuestion();
+				ViewGroup viewGroup = (ViewGroup) arg1;
+				NewsFeedQuestionView questionView = (NewsFeedQuestionView) viewGroup.getChildAt(0);
+				NewsFeedQuestion q = questionView.getQuestion();
 				Intent qIntent = new Intent(NewsFeedActivity.this, AnswerActivity.class);
 				qIntent.putExtra("id", q.getId());
 				//Below this line is all stuff that may or may not be taken out for final functionality
