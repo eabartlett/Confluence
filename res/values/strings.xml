@@ -23,7 +23,7 @@
     <string name="tagged_in">asking about </string>
     <string name="record">add a recording</string>
     <string name="title_activity_base_action_bar">BaseActionBarActivity</string>
-    <string name="start_recording">Record</string>
+    <string name="add_recording">Add Recording</string>
     <string name="recording">Recording</string>
     <string name="play">Play</string>
     <string name="playing">Playing</string>

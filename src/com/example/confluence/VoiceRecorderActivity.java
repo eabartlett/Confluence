@@ -18,7 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.SeekBar;
+import android.widget.ImageView;
+//import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,15 +29,15 @@ public class VoiceRecorderActivity extends BaseActivity
     private static final String LOG_TAG = "VoiceRecorderTest";
     private static String mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + 
     		"/VoiceRecorderTest.3gp";
-    private Button mRecordButton, mPlayButton;
-    private SeekBar mSeekBar;
+    private Button mRecordButton, mPlayButton, mAcceptButton, mReRecordButton;
+    private ImageView recordIcon;
+    //private SeekBar mSeekBar;
     private MediaRecorder mRecorder = null;
     private MediaPlayer mPlayer = null;
     private boolean mStartPlaying = true, mStartRecording = true;
     private TextView mTimerText;
     public CountDownTimer mCountDownTimer = null;
     Menu menu;
-    MenuItem mAcceptButton;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,16 +48,17 @@ public class VoiceRecorderActivity extends BaseActivity
         
         mRecordButton = (Button) findViewById(R.id.bt_record);
         mPlayButton = (Button) findViewById(R.id.bt_play);
+        mReRecordButton = (Button) findViewById(R.id.bt_rerecord);
+        mAcceptButton = (Button) findViewById(R.id.bt_accept);
+        recordIcon = (ImageView) findViewById(R.id.record_icon);
+
         mPlayButton.setClickable(false);
-        mPlayButton.setVisibility(View.GONE);
         
-        /*mAcceptButton = (Button) findViewById(R.id.bt_accept);
         mAcceptButton.setClickable(false);
-        mAcceptButton.setVisibility(View.GONE);*/
 
         mTimerText = (TextView) findViewById(R.id.txt_timer);
-        mSeekBar = (SeekBar) findViewById(R.id.seek_bar);
-        mSeekBar.setVisibility(View.INVISIBLE);
+        //mSeekBar = (SeekBar) findViewById(R.id.seek_bar);
+        //mSeekBar.setVisibility(View.INVISIBLE);
         
         
         
@@ -85,30 +87,25 @@ public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.voice_recorder, menu);
     this.menu = menu;
 
-    mAcceptButton = this.menu.findItem(R.id.action_accept);
-    mAcceptButton.setVisible(false);
     return true;
 }
 
 @Override
 public boolean onOptionsItemSelected(MenuItem item) {
     int id = item.getItemId();
-    if (id == R.id.action_accept) {
-    	acceptCallback();
-    }
     return true;
 
 }
 
-    
     public void recordCallback(View v) {
     	if (mStartRecording) {
 	    	startRecording();
 	    	mRecordButton.setText(R.string.stop);
-	    	mRecordButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_action_mic_muted, 0, 0);
+	    	recordIcon.setImageResource(R.drawable.ic_action_mic_muted);
 	    	Toast.makeText(this, "Recording", Toast.LENGTH_SHORT).show();
 	    	activatePlayButton(false);
 	    	activateAcceptButton(false);
+	    	activateReRecordButton(false);
 	    	mStartRecording = false;
 	    	mCountDownTimer = new CountDownTimer(10000, 500) {
 	    	     public void onTick(long millisUntilFinished) {
@@ -118,10 +115,11 @@ public boolean onOptionsItemSelected(MenuItem item) {
 	    	     public void onFinish() {
 	    	    	 mTimerText.setText("");
 	    	    	 stopRecording();
-	    	    	 mRecordButton.setText(R.string.start_recording);
-	    	    	 mRecordButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_action_mic_active, 0, 0);
+	    	    	 mRecordButton.setText(R.string.add_recording);
+	    		     recordIcon.setImageResource(R.drawable.ic_action_mic_active);
 	    	     	 activatePlayButton(true);
 	    	     	 activateAcceptButton(true);
+	    	     	 activateReRecordButton(true);
 	    	     	 mStartRecording = true;
 	    	     }
 	    	}.start();
@@ -158,6 +156,7 @@ public boolean onOptionsItemSelected(MenuItem item) {
     
     public void playCallback(View v) {
     	if (mStartPlaying){
+
     		mPlayButton.setText(R.string.stop);
         	mPlayer = new MediaPlayer();
             try {
@@ -165,16 +164,19 @@ public boolean onOptionsItemSelected(MenuItem item) {
                 mPlayer.prepare();
                 mPlayer.start();
                 
-                mSeekBar.setVisibility(View.VISIBLE);
-                mSeekBar.setMax(mPlayer.getDuration());
+                mReRecordButton.setVisibility(View.VISIBLE);
+                
+                //mSeekBar.setVisibility(View.VISIBLE);
+                //SeekBar.setMax(mPlayer.getDuration());
             	activateRecordButton(false);
-            	activateAcceptButton(false);
+            	activateReRecordButton(true);
+            	activateAcceptButton(true);
             	mStartPlaying = false;
             	mPlayButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_action_stop, 0, 0);
-            	Toast.makeText(this, "Playing..", Toast.LENGTH_SHORT).show();
+            	//Toast.makeText(this, "Playing..", Toast.LENGTH_SHORT).show();
             	mCountDownTimer = new CountDownTimer(mPlayer.getDuration(), 1000) {
             	     public void onTick(long millisUntilFinished) {
-            	    	 mSeekBar.setProgress(mPlayer.getCurrentPosition());
+            	    	 //mSeekBar.setProgress(mPlayer.getCurrentPosition());
             	     }
 
             	     public void onFinish() {
@@ -183,8 +185,10 @@ public boolean onOptionsItemSelected(MenuItem item) {
             	    	 mPlayButton.setText(R.string.play);
             	    	 mPlayButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_action_play_active, 0, 0);
             	         activateRecordButton(true);
+            	         activateReRecordButton(true);
             	         activateAcceptButton(true);
-            	         mSeekBar.setVisibility(View.INVISIBLE);
+            	         //mSeekBar.setVisibility(View.INVISIBLE);
+            	         mRecordButton.setVisibility(View.GONE);
             	         mStartPlaying = true;
             	     }
             	}.start();
@@ -201,8 +205,8 @@ public boolean onOptionsItemSelected(MenuItem item) {
     	}    	
     }    
 
-    public void acceptCallback() {
-    	// Toast.makeText(this, "Audio attached!", Toast.LENGTH_LONG).show();
+    public void acceptCallback(View v) {
+    	Toast.makeText(this, "Audio attached!", Toast.LENGTH_LONG).show();
     	Intent returnResultIntent = new Intent(Intent.ACTION_SEND);
     	Uri uri = Uri.parse(mFileName);
     	returnResultIntent.setType("audio/*");
@@ -211,45 +215,56 @@ public boolean onOptionsItemSelected(MenuItem item) {
     	finish();
     }    
     
+    public void rerecord(View v) {
+    	activateRecordButton(true);
+    	activatePlayButton(false);
+    	activateAcceptButton(false);
+    	activateReRecordButton(false);
+    }
+    
     public void activateRecordButton(boolean bActivate) {
     	mRecordButton.setClickable(bActivate);
     	if (bActivate) {
-    		mRecordButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_action_mic_active, 0, 0);
+	    	recordIcon.setImageResource(R.drawable.ic_action_mic_active);
     		mRecordButton.setVisibility(View.VISIBLE);
     	}
     	else {
-    		mRecordButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_action_mic_inactive, 0, 0);
     		mRecordButton.setVisibility(View.GONE);
     	}
     }
+    
+    public void activateReRecordButton(boolean bActivate) {
+    	mReRecordButton.setClickable(bActivate);
+    	if (bActivate) {
+	    	recordIcon.setImageResource(R.drawable.ic_action_mic_active);
+    		mReRecordButton.setVisibility(View.VISIBLE);
+    	}
+    	else {
+    		mReRecordButton.setVisibility(View.GONE);
+    	}
+    }    
     
     public void activatePlayButton(boolean bActivate) {
     	mPlayButton.setClickable(bActivate);
     	if (bActivate) {
     		mPlayButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_action_play_active, 0, 0);
         	mPlayButton.setVisibility(View.VISIBLE);
-        	mRecordButton.setVisibility(View.GONE);
 
     	}
     	else {
-    		mPlayButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_action_play_inactive, 0, 0);
         	mPlayButton.setVisibility(View.GONE);
-  
     	}
     }
     
     public void activateAcceptButton(boolean bActivate) {
-    	invalidateOptionsMenu();
-
-    	this.menu.findItem(R.id.action_accept).setVisible(true);
-    	
+        mAcceptButton.setClickable(bActivate);
     	if (bActivate) {
-    		/*mAcceptButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_action_accept_active, 0, 0);
-   	 		mAcceptButton.setTextColor(Color.parseColor("#ffffff"));*/
+    		mAcceptButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_accept_active, 0, 0, 0);
+   	 		mAcceptButton.setVisibility(View.VISIBLE);
     	}
     	else {
-    		/*mAcceptButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_action_accept_inactive, 0, 0);
-   	 		mAcceptButton.setTextColor(Color.parseColor("#333333"));*/
+    		//mAcceptButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_action_accept_inactive, 0, 0);
+   	 		mAcceptButton.setVisibility(View.GONE);
     	}
     }
 }

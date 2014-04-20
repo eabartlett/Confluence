@@ -2,8 +2,4 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.voicerecorder.VoiceRecorderActivity" >
 
-    <item android:id="@+id/action_accept"
-        android:title="ATTACH"
-        android:showAsAction="always"/>
-
 </menu>

@@ -14,7 +14,7 @@
     </Spinner>
 
     <ListView
-        android:id="@+id/news_feed_list"
+        android:id="@+id/newsfeed_list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/language_filter"
@@ -35,14 +35,5 @@
         android:paddingBottom="@dimen/edittext_top_bottom_margin"
         android:layout_alignParentBottom="true" />
     
-    <ImageButton
-        android:id="@+id/answer_record_audio"
-        android:src="@drawable/ic_action_mic_active"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@id/ask_input"
-        />
 </RelativeLayout>
 
