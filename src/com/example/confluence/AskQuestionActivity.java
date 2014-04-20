@@ -12,6 +12,7 @@ import android.os.CountDownTimer;
 import android.os.Environment;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -160,13 +161,25 @@ public class AskQuestionActivity extends BaseActivity {
 	}
 	
 	public void postQuestion(String questionText) {
-        Intent postQuestionIntent = new Intent(AskQuestionActivity.this, PostedQuestionActivity.class);
-        postQuestionIntent.putExtra("question", questionText);
-        postQuestionIntent.putExtra("language", languageSpinner.getSelectedItem().toString());
-        postQuestionIntent.putExtra("hasRecording", hasRecording);
-        postQuestionIntent.putExtra("recording", recording);
-
-        AskQuestionActivity.this.startActivity(postQuestionIntent);
+		String chosenLang = languageSpinner.getSelectedItem().toString();
+		
+		if (chosenLang.equals("Select a language")) {
+			Toast toast = Toast.makeText(getApplicationContext(), "Please select a language", Toast.LENGTH_SHORT);  
+			toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 200);
+			toast.show();
+		} else if (recording == null){
+			Toast toast = Toast.makeText(getApplicationContext(), "Please add a recording", Toast.LENGTH_SHORT);  
+			toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 200);
+			toast.show();
+		} else {
+	        Intent postQuestionIntent = new Intent(AskQuestionActivity.this, PostedQuestionActivity.class);
+	        postQuestionIntent.putExtra("question", questionText);
+	        postQuestionIntent.putExtra("language", languageSpinner.getSelectedItem().toString());
+	        postQuestionIntent.putExtra("hasRecording", hasRecording);
+	        postQuestionIntent.putExtra("recording", recording);
+	
+	        AskQuestionActivity.this.startActivity(postQuestionIntent);
+		}
         
         
 		/*Intent postQuestionIntent = new Intent(AskQuestionActivity.this, AnswerActivity.class);

@@ -77,7 +77,7 @@ public class NewsFeedActivity extends BaseActivity {
 	 */
 	private void loadFeed(String filter){
 		NewsArrayAdapter<NewsFeedQuestion> questionArray = getQuestions(filter);
-		ListView feed = (ListView) findViewById(R.id.newsfeed_list);
+		ListView feed = (ListView) findViewById(R.id.news_feed_list);
 		feed.setAdapter(questionArray);
 		feed.setOnItemClickListener(new OnItemClickListener() {
 

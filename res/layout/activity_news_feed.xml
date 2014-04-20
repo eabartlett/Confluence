@@ -14,14 +14,12 @@
     </Spinner>
 
     <ListView
-        android:id="@+id/newsfeed_list"
+        android:id="@+id/news_feed_list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/language_filter"
         android:layout_above="@+id/ask_input"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-		android:divider="@android:color/transparent"
-        android:dividerHeight="10.0sp" >
+         >
     </ListView>
     
     <EditText
