@@ -3,4 +3,6 @@
     <color name="tan">#FEFFD6</color>
     <color name="white">#FFFFFF</color>
     <color name="green">#47B85E</color>
+    <color name="red">#B85E47</color>
+    <color name="light_gray">#D3D3D3</color>
 </resources>

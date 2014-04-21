@@ -5,19 +5,24 @@ import java.io.IOException;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Environment;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
 
 import com.example.confluence.answers.AnswerArrayAdapter;
 import com.example.confluence.answers.AnswerList;
@@ -29,111 +34,80 @@ import com.example.confluence.answers.AnswerList;
  */
 public class AnswerActivity extends BaseActivity {
 
+	private static final String LOG_TAG = "AnswerVoiceRecorderTest";
+
 	private ListView listView;
 	private EditText answerEditText;
-	private ImageButton recordButton;
-	private ImageButton playbackButton;
-	
+	private Button mRecordbutton, mPlayButton, mRecordButton;
+	private LinearLayout mPlayLayout;
+	private RelativeLayout mRecordLayout;
+	private TextView mTimerText, recordButtonText, playButtonText;
+	private ImageView recordIcon, playIcon;
+
+	private static String mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + 
+			"/VoiceRecorderTest.3gp";
 	private AnswerList answers;
-	private boolean hasAnswers;
-	private boolean hasRecording;
+	private boolean hasAnswers, mHasRecording, mStartPlaying = true, mStartRecording=true;
+	private MediaRecorder mRecorder = null;
 	private String recording;
-    private int VOICE_RECORDER_CODE = 1;
-    private MediaPlayer mPlayer = null;
+	private int VOICE_RECORDER_CODE = 1;
+	private MediaPlayer mPlayer = null;
+	public CountDownTimer mCountDownTimer = null;
 
-
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(com.example.confluence.R.layout.activity_answer);
-		
+
 		Intent startIntent = getIntent();
 		Bundle extras = startIntent.getExtras();
-		
+
+		// Set question fields
 		TextView questionView = (TextView) findViewById(R.id.question_phrase_content);
 		TextView langView = (TextView) findViewById(R.id.question_lang_content);
-		
 		questionView.setText(extras.getString("question"));
 		langView.setText(extras.getString("language"));
-		
+
+		mRecordButton = (Button) findViewById(R.id.record_button);
+		mPlayButton = (Button) findViewById(R.id.play_button);
+		mPlayLayout = (LinearLayout) findViewById(R.id.playback_footer);
+		mRecordLayout = (RelativeLayout) findViewById(R.id.recording_footer);
+		mTimerText = (TextView) findViewById(R.id.txt_timer);
+		recordIcon = (ImageView) findViewById(R.id.record_icon);
+		recordButtonText = (TextView) findViewById(R.id.button_text);
+		playIcon = (ImageView) findViewById(R.id.play_icon);
+		playButtonText = (TextView) findViewById(R.id.play_button_text);
+
 		listView = (ListView) findViewById(R.id.answer_list);
 		answerEditText = (EditText) findViewById(R.id.answer_question_bar);
-		recordButton = (ImageButton) findViewById(R.id.answer_record_audio);
-		playbackButton = (ImageButton) findViewById(R.id.answer_playback_audio);
-		playbackButton.setClickable(false);
-		playbackButton.setEnabled(false);
+
 		answers = new AnswerList();
-		
+
 		hasAnswers = extras.getBoolean("hasAnswers");
-		hasRecording = extras.getBoolean("hasRecording");
-		
+		mHasRecording = extras.getBoolean("hasRecording");
+
+
 		if (hasAnswers) {
+			// add dummy answers 
 			loadAnswersToUI();
 		}
-		
-		if (hasRecording) {
+		if (mHasRecording) {
 			recording = extras.getString("recording");
 		}
-		
+
+		activateRecordButton(true);
+		activatePlayButton(false);
 		setOnPostListener();
-		setRecordButtonListener();
-		setPlayBackButtonListener();
 	}
-	
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		System.out.println("onActivityResult");
-	    if (requestCode == VOICE_RECORDER_CODE) {
-	    	System.out.println("requestCode ok!");
-	        if (resultCode == RESULT_OK) {
-	        	Toast.makeText(this, "Audio attached", Toast.LENGTH_LONG).show();
-	            // Check attached audio
-	        	mPlayer = new MediaPlayer();
-	            try {
-	            	recording = data.getExtras().getString(Intent.EXTRA_TEXT);
-		            hasRecording = true;
-		            playbackButton.setEnabled(true);
-		            playbackButton.setClickable(true);
-		            playbackButton.setImageResource(R.drawable.ic_action_play_active);
-					playbackButton.setVisibility(View.VISIBLE);
-		            
 
-	                mPlayer.setDataSource(data.getExtras().getString(Intent.EXTRA_TEXT));
-	                mPlayer.prepare();
-	                mPlayer.start();
-	                
-	            	new CountDownTimer(mPlayer.getDuration(), 1000) {
-	            	     public void onTick(long millisUntilFinished) {
-	            	    	 
-	            	     }
-
-	            	     public void onFinish() {
-	            	    	 mPlayer.release();
-	            	         mPlayer = null;
-
-	            	     }
-	            	}.start();
-	            } catch (IOException e) {
-	            	
-	            }
-	        }
-	    }
-	}
-	
-	public void addRecording(View v) {
-        Intent voiceRecorderIntent = new Intent(AnswerActivity.this, VoiceRecorderActivity.class);
-        AnswerActivity.this.startActivityForResult(voiceRecorderIntent, VOICE_RECORDER_CODE);
-    }
-	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		// getMenuInflater().inflate(R.menu.something, menu)
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * Loads answers contained in AnswerList answers to the ListView UI.
 	 */
@@ -144,7 +118,7 @@ public class AnswerActivity extends BaseActivity {
 						answers.getAnswers());
 		listView.setAdapter(answerAdapter);
 	}
-	
+
 	/**
 	 * Sets listener on EditText to post a question on the List View
 	 */
@@ -157,69 +131,151 @@ public class AnswerActivity extends BaseActivity {
 				boolean handled = false;
 				if (actionId == EditorInfo.IME_ACTION_SEND) {
 					handled = true;
-					
+
 					String answerText = v.getText().toString();
-					answers.addAnswer("Bearly a Group", answerText, hasRecording);
+					answers.addAnswer("Bearly a Group", answerText, mHasRecording, mFileName);
 					answerEditText.setText(""); 
+					activateRecordButton(true);
+					activatePlayButton(false);
 					loadAnswersToUI();
-					
-					playbackButton.setEnabled(false);
-					playbackButton.setImageResource(R.drawable.ic_action_play_inactive);
-					playbackButton.setVisibility(View.GONE);
+
+					// remove re-record + replay buttons
+					activateRecordButton(true);
+					activatePlayButton(false);
+					recordButtonText.setText(R.string.record);
+					mHasRecording = false;
 				}
 				return handled;
 			}
-			
+
 		});
 	}
-	
-	/**
-	 * Sets listener for microphone button to start VoiceRecorderActivity
-	 */
-	private void setRecordButtonListener() {
-		recordButton.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				addRecording(v);
-			}
-		});
+	public void activateRecordButton(boolean bActivate) {
+		mRecordButton.setClickable(bActivate);
+		if (bActivate) {
+			recordIcon.setImageResource(R.drawable.ic_action_mic_active);
+			mRecordLayout.setVisibility(View.VISIBLE);
+		}
+		else {
+			mRecordLayout.setVisibility(View.GONE);
+		}
 	}
-	
-	/**
-	 * Sets listener for playback button to play back audio
-	 */
-	private void setPlayBackButtonListener() {
-		playbackButton.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				if (playbackButton.isClickable() && playbackButton.isEnabled()) {
-					mPlayer = new MediaPlayer();
-					try {           
-						mPlayer.setDataSource(recording);
-						mPlayer.prepare();
-						mPlayer.start();
 
-						new CountDownTimer(mPlayer.getDuration(), 1000) {
-							public void onTick(long millisUntilFinished) {
+	public void activatePlayButton(boolean bActivate) {
+		mPlayButton.setClickable(bActivate);
+		if (bActivate) {
+			//playIcon.setImageResource(R.drawable.ic_action_play_active);;
+			mPlayLayout.setVisibility(View.VISIBLE);
+		}
+		else {
+			mPlayLayout.setVisibility(View.GONE);
+		}
+	}
 
-							}
+	public void playCallback(View v) {
+		if (mStartPlaying){
 
-							public void onFinish() {
-								mPlayer.release();
-								mPlayer = null;
+			playButtonText.setText(R.string.stop);
+			mPlayer = new MediaPlayer();
+			try {
+				mPlayer.setDataSource(mFileName);
+				mPlayer.prepare();
+				mPlayer.start();
 
-							}
-						}.start();
-					} catch (IOException e) {
-
+				mStartPlaying = false;
+				playIcon.setImageResource(R.drawable.ic_action_stop);
+				//Toast.makeText(this, "Playing..", Toast.LENGTH_SHORT).show();
+				mCountDownTimer = new CountDownTimer(mPlayer.getDuration(), 1000) {
+					public void onTick(long millisUntilFinished) {
+						//mSeekBar.setProgress(mPlayer.getCurrentPosition());
 					}
-				}
+
+					public void onFinish() {
+						mPlayer.release();
+						mPlayer = null;
+						recordButtonText.setText("Re-record");
+						playButtonText.setText(R.string.play);
+						playIcon.setImageResource(R.drawable.ic_action_play_active);
+
+						//activateRecordButton(true);
+						//activateReRecordButton(true);
+						//activateAttachButton(true);
+						//mSeekBar.setVisibility(View.INVISIBLE);
+						//mRecordButton.setVisibility(View.GONE);
+						mStartPlaying = true;
+					}
+				}.start();
+			} catch (IOException e) {
+				Log.e(LOG_TAG, "prepare() failed");
 			}
-		});
-		
+		}
+		else
+		{
+			if (mCountDownTimer != null){
+				mCountDownTimer.cancel();
+				mCountDownTimer.onFinish();
+			}
+		}    	
+	}
+
+	public void recordCallback(View v) {
+		if (mStartRecording) {
+			startRecording();
+			recordButtonText.setText(R.string.stop);
+			recordIcon.setImageResource(R.drawable.ic_action_mic_muted);
+			activatePlayButton(false);
+			mStartRecording = false;
+			mCountDownTimer = new CountDownTimer(10000, 500) {
+				public void onTick(long millisUntilFinished) {
+					mTimerText.setText(Integer.toString((int) (millisUntilFinished / 1000)));
+				}
+
+				public void onFinish() {
+					mTimerText.setText("");
+					stopRecording();
+					//attachCallback();
+
+					recordButtonText.setText("Re-record");
+					recordIcon.setImageResource(R.drawable.ic_action_mic_active);
+					activatePlayButton(true);
+					//activateAttachButton(true);
+					//activateReRecordButton(true);
+					mStartRecording = true;
+					mHasRecording = true;
+				}
+			}.start();
+		}
+		else {
+			if (mCountDownTimer != null){
+				mCountDownTimer.cancel();
+				mCountDownTimer.onFinish();
+			}
+		}
+	}
+
+	private void startRecording() {
+		mRecorder = new MediaRecorder();
+		mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+		mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+		mRecorder.setOutputFile(mFileName);
+		recording = mFileName;
+		mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+
+		try {
+			mRecorder.prepare();
+		} catch (IOException e) {
+			Log.e(LOG_TAG, "prepare() failed");
+		}
+
+		mRecorder.start();
+	}
+	
+	private void stopRecording() {
+		mRecorder.stop();
+		mRecorder.release();
+		mRecorder = null;
+
 	}
 }

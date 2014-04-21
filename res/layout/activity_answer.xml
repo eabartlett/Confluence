@@ -49,30 +49,194 @@
         android:id="@id/answer_question_bar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/answer_playback_audio"
+        android:layout_above="@+id/recording_footer"
         android:focusableInTouchMode="true"
         android:hint="@string/add_answer_hint"
         android:imeOptions="actionSend"
         android:inputType="textAutoCorrect|text"
         android:scrollHorizontally="true" />
+    
+    <RelativeLayout
+        android:id="@id/recording_footer"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:background="#d3d3d3"
+        android:orientation="vertical"
+        android:visibility="gone" >
+        
+        <Button
+            android:id="@+id/record_button"
+            android:layout_height="wrap_content"
+		    android:layout_width="fill_parent"
+		    android:layout_alignTop="@+id/foreground"
+		    android:layout_alignBottom="@id/foreground"
+		    android:layout_alignRight="@id/foreground"
+		    android:layout_alignLeft="@id/foreground"
+		    android:background="@android:color/transparent"
+		    android:onClick="recordCallback" />
 
-    <ImageButton
-        android:id="@+id/answer_record_audio"
-        android:src="@drawable/ic_action_mic_active"
-        android:layout_width="wrap_content"
+		   <RelativeLayout
+		       android:id="@id/foreground"
+		       android:layout_width="fill_parent"
+		       android:layout_height="wrap_content"
+		       android:layout_alignParentTop="true" >
+
+			    <TextView
+			        android:id="@+id/button_text"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_centerInParent="true"
+			        android:text="@string/add_recording"
+			        android:textColor="@color/white"
+			        android:textSize="20sp" />
+	
+			    <ImageView
+			        android:id="@+id/record_icon"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_centerVertical="true"
+			        android:layout_toLeftOf="@id/button_text"
+			        android:paddingBottom="5dip"
+			        android:paddingTop="5dp"
+			        android:src="@drawable/ic_action_mic_active" />
+			</RelativeLayout>
+    </RelativeLayout>
+    
+    <LinearLayout
+        android:id="@+id/playback_footer"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@id/answer_question_bar" />
-
-    <ImageButton
-        android:id="@+id/answer_playback_audio"
-        android:src="@drawable/ic_action_play_inactive"
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@id/answer_record_audio"
-        android:visibility="gone"/>
+        android:visibility="visible"
+        android:weightSum="2"
+        android:orientation="horizontal">
+		   
+        <LinearLayout
+            android:id="@+id/rerecord_footer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+        
+			<RelativeLayout
+				android:id="@+id/rerecord_side"
+				android:layout_width="0dp"
+				android:layout_height="40dp"
+				android:layout_alignParentBottom="true"
+				android:background="#d3d3d3"
+				android:orientation="vertical"
+				android:layout_weight="1" >
+				   
+				<Button
+					android:id="@+id/rerecord_button"
+					android:layout_height="wrap_content"
+					android:layout_width="fill_parent"
+					android:layout_alignTop="@+id/rerecordforeground"
+					android:layout_alignBottom="@id/rerecordforeground"
+					android:layout_alignRight="@id/rerecordforeground"
+					android:layout_alignLeft="@id/rerecordforeground"
+					android:background="@android:color/transparent"
+					android:onClick="recordCallback" />
+	
+				   <RelativeLayout
+				       android:id="@id/rerecordforeground"
+				       android:layout_width="fill_parent"
+				       android:layout_height="wrap_content"
+				       android:layout_alignParentTop="true" >
+			
+					    <TextView
+					        android:id="@+id/rerecord_button_text"
+					        android:layout_width="wrap_content"
+					        android:layout_height="wrap_content"
+					        android:layout_alignParentRight="true"
+					        android:layout_centerVertical="true"
+					        android:layout_marginRight="20dp"
+					        android:text="re-record"
+					        android:textColor="@color/white"
+					        android:textSize="20sp" />
+			
+					    <ImageView
+					        android:id="@+id/rerecord_icon"
+					        android:layout_width="wrap_content"
+					        android:layout_height="wrap_content"
+					        android:layout_centerVertical="true"
+					        android:layout_toLeftOf="@id/rerecord_button_text"
+					        android:paddingBottom="5dip"
+					        android:paddingTop="5dp"
+					        android:src="@drawable/ic_action_mic_active" />
+					</RelativeLayout>
+			
+			</RelativeLayout>
+				
+		</LinearLayout>
+				
+        <LinearLayout
+            android:id="@+id/play_footer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+			android:layout_weight="1">
+			
+			<RelativeLayout
+			     android:id="@+id/play_side"
+			     android:layout_width="0dp"
+			     android:layout_height="40dp"
+			     android:layout_alignParentBottom="true"
+			     android:background="#d3d3d3"
+			     android:orientation="vertical"
+			     android:layout_weight="1">
+				   
+			     <Button
+		            android:id="@+id/play_button"
+		            android:layout_height="wrap_content"
+				    android:layout_width="fill_parent"
+				    android:layout_alignTop="@+id/playforeground"
+				    android:layout_alignBottom="@id/playforeground"
+				    android:layout_alignRight="@id/playforeground"
+				    android:layout_alignLeft="@id/playforeground"
+				    android:background="@android:color/transparent"
+				    android:onClick="playCallback" />
+			
+				    <RelativeLayout
+				        android:id="@id/playforeground"
+				        android:layout_width="fill_parent"
+				        android:layout_height="wrap_content"
+				        android:layout_alignParentLeft="true"
+				        android:layout_alignParentBottom="true" >
+			
+					    <TextView
+					        android:id="@+id/play_button_text"
+					        android:layout_width="wrap_content"
+					        android:layout_height="wrap_content"
+					        android:layout_centerInParent="true"
+					        android:text="play"
+					        android:textColor="@color/white"
+					        android:textSize="20sp" />
+			
+					    <ImageView
+					        android:id="@+id/play_icon"
+					        android:layout_width="wrap_content"
+					        android:layout_height="wrap_content"
+					        android:layout_centerVertical="true"
+					        android:layout_toLeftOf="@id/play_button_text"
+					        android:paddingBottom="5dip"
+					        android:paddingTop="5dp"
+					        android:src="@drawable/ic_action_play_active" />
+					</RelativeLayout>
+			
+			 </RelativeLayout>
+				 
+		</LinearLayout>
+    
+    </LinearLayout>
+    
+    <TextView
+	        android:id="@+id/txt_timer"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentTop="true"
+	        android:layout_marginTop="50dp"
+	        android:layout_centerHorizontal="true"
+	        android:textColor="@color/green"
+	        android:textSize="90sp" />
 
 </RelativeLayout>
