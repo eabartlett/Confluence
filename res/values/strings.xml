@@ -22,6 +22,7 @@
     <string name="ask_question_hint">"What's your question?"</string>
     <string name="tagged_in">asking about </string>
     <string name="record">add a recording</string>
+    <string name="rerecord">Re-record</string>
     <string name="title_activity_base_action_bar">BaseActionBarActivity</string>
     <string name="add_recording">Add Recording</string>
     <string name="recording">Recording</string>
