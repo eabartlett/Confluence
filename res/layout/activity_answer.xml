@@ -48,7 +48,6 @@
         android:layout_above="@+id/audio_footer"
         android:focusableInTouchMode="true"
         android:hint="@string/add_answer_hint"
-        android:imeOptions="actionSend"
         android:inputType="textAutoCorrect|text"
         android:scrollHorizontally="true" />
 

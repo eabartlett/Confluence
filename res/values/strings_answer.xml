@@ -4,6 +4,7 @@
     <string name="lang">Lang:</string>
     <string name="tag">Tag:</string>
     
-    <string name="add_answer_hint">Add answer and record audio to right...</string>
+    <string name="add_answer_hint">Add answer and record audio</string>
+    <string name="no_audio_alert">Are you sure you want to submit without a recording?</string>
     
 </resources>

@@ -56,6 +56,7 @@ public class AnswerLayout extends LinearLayout {
 		// Insert data into UI
 		setUserName(answer.getUserName());
 		setAnswer(answer.getText());
+		setRating(answer.getRating());
 	}
 	
 	/**
@@ -74,9 +75,20 @@ public class AnswerLayout extends LinearLayout {
 		mAnswerText.setText(answer);
 	}
 	
+	/**
+	 * Inserts rating value into view.
+	 * @param rating
+	 */
+	protected void setRating(int rating) {
+		mRatingText.setText(Integer.toString(rating));
+	}
+	
+	/**
+	 * Handles logic for upvoting.
+	 */
 	protected void incrementRating() {
 		if (mDownClicked) {
-			// do nothing because already voted
+			// do nothing because already downvoted
 		} else {
 			if (mUpClicked) {
 				// undo upvote

@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
@@ -23,6 +22,17 @@ import android.widget.TextView;
 
 import com.example.confluence.R;
 
+/**
+ * AudioFragment contains the logic needed to record and playback recordings.
+ * It also provides access to these sounds via getter methods. 
+ * 
+ * Any activities that want to use this fragment must implement the 'OnTimerStarted' 
+ * interface (defined within this class) and implement the 'setCountdownText(string)' 
+ * method. This method is primarily used to update any count-down displays in the 
+ * parent activity, but can be left empty if a count-down is not desired.
+ * @author brian
+ *
+ */
 public class AudioFragment extends Fragment {
 
 	private static final String LOG_TAG = "RecordView";
@@ -30,23 +40,25 @@ public class AudioFragment extends Fragment {
 	private Button mReRecordButton, mPlayButton, mRecordButton;
 	private LinearLayout mPlayLayout, mReRecordLayout;
 	private RelativeLayout mRecordLayout;
-	private TextView mTimerText, recordButtonText, playButtonText;
+	private TextView recordButtonText, playButtonText;
 	private ImageView recordIcon, playIcon;
 	private MediaPlayer mPlayer = null;
-	
-	OnTimerStarted mCallback;
 	public CountDownTimer mCountDownTimer = null;
+	OnTimerStarted mCallback;
 
-	
+
 	private String mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/test.3gp";
 
 	private boolean mHasRecording=false, mStartPlaying = true, mStartRecording=true;
 	private MediaRecorder mRecorder = null;
 	private String recording;
 
+	// TIMER INTERFACE METHODS
+	public interface OnTimerStarted {
+		void setCountdownText(String string);
+	}
 	
 	// FRAGMENT LIFE-CYCLE METHODS
-	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -63,7 +75,6 @@ public class AudioFragment extends Fragment {
 		mPlayLayout = (LinearLayout) v.findViewById(R.id.playback_footer);
 		mRecordLayout = (RelativeLayout) v.findViewById(R.id.recording_footer);
 		mReRecordLayout = (LinearLayout) v.findViewById(R.id.rerecord_footer);
-		mTimerText = (TextView) v.findViewById(R.id.txt_timer);
 		recordIcon = (ImageView) v.findViewById(R.id.record_icon);
 		recordButtonText = (TextView) v.findViewById(R.id.button_text);
 		playIcon = (ImageView) v.findViewById(R.id.play_icon);
@@ -126,11 +137,6 @@ public class AudioFragment extends Fragment {
 
 	public String getAudioFilePath() {
 		return mFileName;
-	}
-
-	// TIMER INTERFACE METHODS
-	public interface OnTimerStarted {
-		void setCountdownText(String string);
 	}
 
 
