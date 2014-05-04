@@ -2,6 +2,9 @@ package com.example.confluence;
 
 import java.util.Arrays;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,9 +20,9 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.confluence.newsfeed.NewsArrayAdapter;
 import com.example.confluence.dbtypes.NewsFeedQuestion;
 import com.example.confluence.dbtypes.User;
+import com.example.confluence.newsfeed.NewsArrayAdapter;
 import com.example.confluence.newsfeed.NewsFeedQuestionView;
 public class NewsFeedActivity extends BaseActivity {
 
@@ -49,8 +52,9 @@ public class NewsFeedActivity extends BaseActivity {
 	
 	public void setEditTextFocus() {
 		View askInput = findViewById(R.id.ask_input);
+		askInput.clearFocus();
 		
-		askInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+		/*askInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 			
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
@@ -61,7 +65,7 @@ public class NewsFeedActivity extends BaseActivity {
 					findViewById(R.id.ask_input).clearFocus();
 				}
 			}
-		});
+		});*/
 		
 		askInput.setOnClickListener(new View.OnClickListener() {
 			

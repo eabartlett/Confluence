@@ -2,8 +2,6 @@ package com.example.confluence.answers;
 
 import java.util.Date;
 
-import android.media.AudioRecord;
-
 /**
  * Class that holds the information for an Answer to a question.
  * Includes user, answer text, date, etc.
@@ -15,7 +13,7 @@ public class Answer {
 	// TODO: implement User object instead of userId
 	// TODO: implement list of responses to answer
 	private String mUserId;
-	private String mUserName, mAnswerText, mAudioPath, mFileName;
+	private String mUserName, mAnswerText, mAudioPath;
 	private boolean mHasRecording;
 	private Date mAnswerDate;
 	private int mRating; // rating of an answer
@@ -26,7 +24,6 @@ public class Answer {
 		mAnswerText = answerText;
 		mAnswerDate = null;
 		mHasRecording = hasRecording;
-		mFileName = recordFilePath;
 		mRating = 0;
 	}
 	

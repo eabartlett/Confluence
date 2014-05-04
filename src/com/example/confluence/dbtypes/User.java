@@ -4,6 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 public class User {
 	
 	public User(String username, String first, String last, String email, String pw, String id, JSONArray langs){
@@ -43,6 +45,19 @@ public class User {
 	
 	public String getId(){
 		return mId;
+	}
+	
+	public String[] getLanguages(){
+		JSONArray json = mLanguages;
+		String[] langs = new String[json.length()];
+		for(int i = 0; i < langs.length; i++){
+			try {
+				langs[i] = json.getString(i);
+			} catch (JSONException e) {
+				Log.d("Confluence Error", "Error parsing user langauges");
+			}
+		}
+		return langs;
 	}
 	
 	private String mUsername;

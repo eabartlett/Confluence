@@ -1,23 +1,25 @@
 package com.example.confluence;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Constructor;
-import java.net.URI;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.ContentBody;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
@@ -27,8 +29,9 @@ import org.json.JSONTokener;
 
 import android.util.Log;
 
-import com.example.confluence.dbtypes.*;
 import com.example.confluence.answers.Answer;
+import com.example.confluence.dbtypes.NewsFeedQuestion;
+import com.example.confluence.dbtypes.User;
 
 
 public class ConfluenceAPI {
@@ -49,7 +52,7 @@ public class ConfluenceAPI {
 		//construct URL endpoint
 		String endpoint = String.format(SERVER, "api/question");
 
-		return postData(endpoint, nameValuePair);
+		return postKVData(endpoint, nameValuePair);
 	}
 
 	public JSONObject postAnswer(Answer a){
@@ -63,7 +66,7 @@ public class ConfluenceAPI {
 		//construct URL endpoint
 		String endpoint = String.format(SERVER, "api/answer");
 
-		return postData(endpoint, nameValuePair);
+		return postKVData(endpoint, nameValuePair);
 	}
 
 	public User postUser(User u){
@@ -80,7 +83,7 @@ public class ConfluenceAPI {
 		String endpoint = String.format(SERVER, "api/user");
 
 		try {
-			return new User(postData(endpoint, nameValuePair));
+			return new User(postKVData(endpoint, nameValuePair));
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			Log.d("Error", e.getMessage());
@@ -88,7 +91,27 @@ public class ConfluenceAPI {
 		return null;
 	}
 
-	public JSONObject postData(String endpoint, List<NameValuePair> data){
+	@SuppressWarnings("deprecation")
+	public JSONObject postMultiPartData(String endpoint, String filename, String type,String id){
+		HttpClient client = new DefaultHttpClient();
+		HttpPost post = new HttpPost(endpoint);
+		try {
+			MultipartEntity mpEntity  = new MultipartEntity();
+			mpEntity.addPart(type, new StringBody(id));
+			File file = new File(filename);
+			mpEntity.addPart("audio", (ContentBody) new FileBody(file, "audio/mpeg"));
+			post.setEntity(mpEntity);
+			HttpResponse res = client.execute(post);
+			return getJSONObject(res);
+		} catch (IOException e) {
+			Log.d("Confluence Error", "Failed posting data to server");
+		} catch (IllegalStateException | JSONException e) {
+			Log.d("Confluence Error", "Failed parsing JSON response from server");
+		}
+		return null;
+	}
+
+	public JSONObject postKVData(String endpoint, List<NameValuePair> data){
 		// Creating HTTP Post
 		HttpPost httpPost = new HttpPost(endpoint);
 
@@ -117,7 +140,7 @@ public class ConfluenceAPI {
 		}
 		return null;
 	}
-	
+
 	public NewsFeedQuestion[] getQuestionsByLang(String[] langs){
 		ArrayList<NewsFeedQuestion[]> questions = new ArrayList<NewsFeedQuestion[]>();
 		for(String lang: langs){
@@ -152,7 +175,7 @@ public class ConfluenceAPI {
 		}
 		return questions;
 	}
-	
+
 	public NewsFeedQuestion getQuestionById(String qid){
 		String url = String.format(SERVER, "api/question?%s=%s");
 		url = constructGetUrl(url, "id", qid);
@@ -165,7 +188,7 @@ public class ConfluenceAPI {
 		}
 		return null;
 	}
-	
+
 	public User getUserById(String uid){
 		String url = String.format(SERVER, "api/user?%s=%s");
 		url = constructGetUrl(url, "id", uid);
@@ -175,10 +198,10 @@ public class ConfluenceAPI {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return null;
 	}
-	
+
 	public Object getRequest(String endpoint, boolean isArray){
 		HttpGet get = new HttpGet(endpoint);
 		try{
