@@ -92,7 +92,7 @@ public class ConfluenceAPI {
 	}
 
 	@SuppressWarnings("deprecation")
-	public JSONObject postMultiPartData(String endpoint, String filename, String type,String id){
+	private JSONObject postMultiPartData(String endpoint, String filename, String type,String id){
 		HttpClient client = new DefaultHttpClient();
 		HttpPost post = new HttpPost(endpoint);
 		try {
@@ -111,7 +111,7 @@ public class ConfluenceAPI {
 		return null;
 	}
 
-	public JSONObject postKVData(String endpoint, List<NameValuePair> data){
+	private JSONObject postKVData(String endpoint, List<NameValuePair> data){
 		// Creating HTTP Post
 		HttpPost httpPost = new HttpPost(endpoint);
 
