@@ -24,6 +24,17 @@ import android.widget.TextView;
 
 import com.example.confluence.R;
 
+/**
+ * AudioFragment contains the logic needed to record and playback recordings.
+ * It also provides access to these sounds via getter methods. 
+ * 
+ * Any activities that want to use this fragment must implement the 'OnTimerStarted' 
+ * interface (defined within this class) and implement the 'setCountdownText(string)' 
+ * method. This method is primarily used to update any count-down displays in the 
+ * parent activity, but can be left empty if a count-down is not desired.
+ * @author brian
+ *
+ */
 public class AudioFragment extends Fragment {
 
 	private static final String LOG_TAG = "RecordView";
@@ -34,11 +45,8 @@ public class AudioFragment extends Fragment {
 	private TextView recordButtonText, playButtonText;
 	private ImageView recordIcon, playIcon;
 	private MediaPlayer mPlayer = null;
-	
-	OnTimerStarted mCallback;
 	public CountDownTimer mCountDownTimer = null;
 
-	
 	private String mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/test.3gp";
 
 	private boolean mHasRecording=false, mStartPlaying = true, mStartRecording=true;
@@ -46,9 +54,8 @@ public class AudioFragment extends Fragment {
 	private ProgressDialog progressBar;
 	private int progressBarStatus = 0;
     private Handler progressBarHandler = new Handler();
-	
+    
 	// FRAGMENT LIFE-CYCLE METHODS
-	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -113,11 +120,6 @@ public class AudioFragment extends Fragment {
 
 	public String getAudioFilePath() {
 		return mFileName;
-	}
-
-	// TIMER INTERFACE METHODS
-	public interface OnTimerStarted {
-		void setCountdownText(String string);
 	}
 
 

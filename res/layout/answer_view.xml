@@ -2,37 +2,37 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-    
-     <ImageView
+
+    <ImageView
         android:id="@+id/answer_icon"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true"
         android:layout_marginRight="6dp"
-        android:contentDescription="Profile picture"
+        android:contentDescription="@string/profile_picture"
         android:src="@drawable/ic_launcher" />
-    
-   <ImageButton
+
+    <ImageButton
         android:id="@+id/answer_upvote"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginBottom="2dp"
-        android:src="@drawable/ic_action_good"
-        android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="2dp"
+        android:contentDescription="@string/upvote_description"
         android:background="@color/light_gray"
-        />
-    
-    <ImageButton 
+        android:src="@drawable/ic_action_good" />
+
+    <ImageButton
         android:id="@+id/answer_downvote"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:src="@drawable/ic_action_bad"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/answer_upvote"
         android:background="@color/light_gray"
-       	/>
+        android:contentDescription="@string/downvote_description"
+        android:src="@drawable/ic_action_bad" />
 
     <TextView
         android:id="@+id/answer_firstLine"
@@ -42,7 +42,7 @@
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/answer_upvote"
         android:gravity="center_vertical"
-        android:text="Title"
+        android:text="@string/answer_title"
         android:textColor="#000000"
         android:textSize="16sp" />
 
@@ -51,24 +51,13 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/answer_downvote"
+        android:layout_toLeftOf="@+id/answer_attachment"
         android:layout_toRightOf="@+id/answer_icon"
         android:ellipsize="marquee"
         android:singleLine="false"
-        android:text="Description"
+        android:text="@string/answer_description"
         android:textColor="#000000"
         android:textSize="12sp" />
-
-    <ImageButton
-        android:id="@+id/answer_attatchment"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_alignRight="@+id/answer_firstLine"
-        android:layout_marginRight="2dp"
-        android:layout_below="@+id/answer_upvote"
-        android:visibility="gone"
-        android:src="@drawable/ic_action_play_active"
-        android:background="@color/light_gray"
-         />
 
     <TextView
         android:id="@+id/answer_rating"
@@ -76,7 +65,18 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/answer_upvote"
         android:layout_alignRight="@+id/answer_firstLine"
-        android:layout_marginRight="15dp"
-        android:text="0" />
+        android:layout_marginRight="15dp" />
+
+    <ImageButton
+        android:id="@+id/answer_attachment"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignTop="@+id/answer_downvote"
+        android:layout_toLeftOf="@+id/answer_downvote"
+        android:layout_marginRight="2dp"
+        android:background="@color/light_gray"
+        android:src="@drawable/ic_action_play_active"
+        android:contentDescription="@string/attachment_description"
+        android:visibility="gone" />
 
 </RelativeLayout>

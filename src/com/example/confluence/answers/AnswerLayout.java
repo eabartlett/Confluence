@@ -16,6 +16,10 @@ public class AnswerLayout extends LinearLayout {
 	private ImageButton mPlaybackButton, mUpvoteButton, mDownvoteButton;
 	private boolean mUpClicked = false, mDownClicked = false;
 
+	public AnswerLayout(Context context) {
+		super(context);
+	}
+	
 	public AnswerLayout(Context context, Answer answer) {
 		super(context, null);
 		LayoutInflater inflater = (LayoutInflater) context
@@ -31,7 +35,7 @@ public class AnswerLayout extends LinearLayout {
 		mDownvoteButton = (ImageButton) findViewById(R.id.answer_downvote);
 		
 		// Display playback button if recording exists
-		mPlaybackButton = (ImageButton) findViewById(R.id.answer_attatchment);
+		mPlaybackButton = (ImageButton) findViewById(R.id.answer_attachment);
 		if (answer.hasRecording()) {
 			mPlaybackButton.setVisibility(VISIBLE);
 		}
@@ -56,6 +60,7 @@ public class AnswerLayout extends LinearLayout {
 		// Insert data into UI
 		setUserName(answer.getUserName());
 		setAnswer(answer.getText());
+		setRating(answer.getRating());
 	}
 	
 	/**
@@ -74,9 +79,20 @@ public class AnswerLayout extends LinearLayout {
 		mAnswerText.setText(answer);
 	}
 	
+	/**
+	 * Inserts rating value into view.
+	 * @param rating
+	 */
+	protected void setRating(int rating) {
+		mRatingText.setText(Integer.toString(rating));
+	}
+	
+	/**
+	 * Handles logic for upvoting.
+	 */
 	protected void incrementRating() {
 		if (mDownClicked) {
-			// do nothing because already voted
+			// do nothing because already downvoted
 		} else {
 			if (mUpClicked) {
 				// undo upvote

@@ -2,27 +2,13 @@ package com.example.confluence.answers;
 
 import java.util.ArrayList;
 
-
+/** 
+ * This class is deprecated. Only use if you need to get 
+ * pre-set answers.
+ * @author brian
+ *
+ */
 public class AnswerList {
-
-	private ArrayList<Answer> mAnswers;
-	
-	public AnswerList(){
-		mAnswers = new ArrayList<Answer>();
-	}
-	
-	public ArrayList<Answer> getAnswers() {
-		return mAnswers;
-	}
-	
-	public void addAnswer(Answer answer) {
-		mAnswers.add(answer);
-	}
-	
-	public void addAnswer(String user, String answer, boolean hasRecording, String recordFilePath) {
-		Answer newAnswer = new Answer(user, answer, hasRecording, recordFilePath);
-		mAnswers.add(newAnswer);
-	}
 	
 	public static ArrayList<Answer> getDummyAnswers() {
 		ArrayList<Answer> dummyAnswers = new ArrayList<Answer>();

@@ -1,18 +1,23 @@
 package com.example.confluence;
 
 
+import java.util.ArrayList;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
+import android.view.Gravity;
 import android.view.Menu;
-import android.view.inputmethod.EditorInfo;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
 
+import com.example.confluence.answers.Answer;
 import com.example.confluence.answers.AnswerArrayAdapter;
-import com.example.confluence.answers.AnswerList;
 import com.example.confluence.answers.AudioFragment;
 
 /**
@@ -22,12 +27,11 @@ import com.example.confluence.answers.AudioFragment;
  */
 public class AnswerActivity extends BaseActivity {
 
-	private ListView listView;
-	private EditText answerEditText;
+	private ListView mListView;
+	private EditText mAnswerEditText;
 	private AudioFragment mAudioFooter;
 
-	private String mAnswerRecordingPath;
-	private AnswerList answers;
+	private ArrayList<Answer> mAnswers;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +47,15 @@ public class AnswerActivity extends BaseActivity {
 		questionView.setText(extras.getString("question"));
 		langView.setText(extras.getString("language"));
 
-		listView = (ListView) findViewById(R.id.answer_list);
-		answerEditText = (EditText) findViewById(R.id.answer_question_bar);
-		mAudioFooter = (AudioFragment) getFragmentManager().findFragmentById(R.id.audio_footer);
+		mListView = (ListView) findViewById(R.id.answer_list);
+		mAnswerEditText = (EditText) findViewById(R.id.answer_question_bar);
+		mAudioFooter = (AudioFragment) getFragmentManager().findFragmentById(R.id.audio_footer);		
+		mAnswers = new ArrayList<Answer>();
 		
-		answers = new AnswerList();
+		mListView.setAdapter(new AnswerArrayAdapter(getApplicationContext(),
+				R.layout.activity_answer,
+				mAnswers)); 
+		
 		boolean hasAnswers = extras.getBoolean("hasAnswers");
 		boolean mHasRecording = extras.getBoolean("hasRecording");
 
@@ -57,62 +65,85 @@ public class AnswerActivity extends BaseActivity {
 			loadAnswersToUI();
 		}
 		if (mHasRecording) {
-			mAnswerRecordingPath = extras.getString("recording");
+			extras.getString("recording");
 		}
 
 		mAudioFooter.activateRecordButton(true);
 		mAudioFooter.activatePlayButton(false);
-		setOnPostListener();
+		// setOnPostListener();
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
+		getMenuInflater().inflate(R.menu.ask_question, menu);
 		return true;
 	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+        if (id == R.id.action_post) {
+        	final String questionText = mAnswerEditText.getText().toString();
+        	boolean isTextEmpty = questionText.trim().isEmpty();
+        	boolean hasRecording = mAudioFooter.hasRecording();
+        	if (isTextEmpty && !hasRecording) {
+        		Toast toast = Toast.makeText(getApplicationContext(), "Please add text and a recording.", Toast.LENGTH_SHORT);
+    			toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 200);
+    			toast.show();
+        	} else if (isTextEmpty) {
+        		Toast toast = Toast.makeText(getApplicationContext(), "Please add text.", Toast.LENGTH_SHORT);
+    			toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 200);
+    			toast.show();
+        	} else if (!hasRecording) {
+        		// Display warning message
+        		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        		builder.setMessage(R.string.no_audio_alert)
+        			.setPositiveButton("Yes", new OnClickListener() {
+						@Override
+						public void onClick(DialogInterface arg0, int arg1) {
+							// TODO Auto-generated method stub
+							postAnswer(questionText);
+						}
+        			}).setNegativeButton("No", null).show();
+        	} else {
+        		postAnswer(questionText);
+        	}
+            return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	private void postAnswer(String answerText) {
+
+		boolean answerHasRecording = mAudioFooter.hasRecording();
+		String audioFilePath = mAudioFooter.getAudioFilePath();
+		Answer newAnswer = new Answer("Bearly a Group", answerText, answerHasRecording, audioFilePath);
+		mAnswers.add(newAnswer);
+		mAnswerEditText.setText(""); 
+		mAudioFooter.activateRecordButton(true);
+		mAudioFooter.activatePlayButton(false);
+		loadAnswersToUI();
+
+		// Reset audioFooter UI
+		mAudioFooter.activateRecordButton(true);
+		mAudioFooter.activatePlayButton(false);
+		mAudioFooter.setHasRecording(false);
+	}
+
 
 	/**
 	 * Loads answers contained in AnswerList answers to the ListView UI.
 	 */
 	private void loadAnswersToUI() {
-		AnswerArrayAdapter answerAdapter = 
+		AnswerArrayAdapter answerAdapter = (AnswerArrayAdapter) mListView.getAdapter();
+		answerAdapter.notifyDataSetChanged();
+		/*AnswerArrayAdapter answerAdapter = 
 				new AnswerArrayAdapter(getApplicationContext(),
 						R.layout.activity_answer, 
-						answers.getAnswers());
-		listView.setAdapter(answerAdapter);
-	}
-
-	/**
-	 * Sets listener on EditText to post a question on the List View
-	 */
-	private void setOnPostListener() {
-		answerEditText.setOnEditorActionListener(new OnEditorActionListener() {
-
-			@Override
-			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				// TODO Auto-generated method stub
-				boolean handled = false;
-				if (actionId == EditorInfo.IME_ACTION_SEND) {
-					handled = true;
-
-					String answerText = v.getText().toString();
-					boolean answerHasRecording = mAudioFooter.hasRecording();
-					String audioFilePath = mAudioFooter.getAudioFilePath();
-					answers.addAnswer("Bearly a Group", answerText, answerHasRecording, audioFilePath);
-					answerEditText.setText(""); 
-					mAudioFooter.activateRecordButton(true);
-					mAudioFooter.activatePlayButton(false);
-					loadAnswersToUI();
-
-					// remove re-record + replay buttons
-					mAudioFooter.activateRecordButton(true);
-					mAudioFooter.activatePlayButton(false);
-					mAudioFooter.setHasRecording(false);
-					// mAudioFooter.setRecordText(R.string.record);
-				}
-				return handled;
-			}
-
-		});
+						mAnswers.getAnswers());
+		mListView.setAdapter(answerAdapter);*/
 	}
 }

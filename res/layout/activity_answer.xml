@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:custom="http://schemas.android.com/apk/res/com.example.android.view.compoundview"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
@@ -48,7 +47,6 @@
         android:layout_above="@+id/audio_footer"
         android:focusableInTouchMode="true"
         android:hint="@string/add_answer_hint"
-        android:imeOptions="actionSend"
         android:inputType="textAutoCorrect|text"
         android:scrollHorizontally="true" />
 
