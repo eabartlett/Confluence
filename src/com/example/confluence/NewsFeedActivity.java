@@ -33,7 +33,7 @@ public class NewsFeedActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_news_feed);
 		mApi = new ConfluenceAPI();
-		mUser = mApi.getUserById("5361630c14eee5e62c5d1bba");
+//		mUser = mApi.getUserById("5361630c14eee5e62c5d1bba");
 		loadQuestions(getUserLanguages());
 		loadLanguages();
 		
@@ -130,7 +130,12 @@ public class NewsFeedActivity extends BaseActivity {
 	 * @return - Returns array of the strings that are the languages a user uses
 	 */
 	private String[] getUserLanguages(){
-		return mUser.getLanguages();
+//		return mUser.getLanguages();
+		String[] langs = new String[3];
+		langs[0] = "english";
+		langs[1] = "spanish";
+		langs[2] = "french";
+		return langs;
 	}
 	
 	private void loadQuestions(String filter){
