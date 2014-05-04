@@ -3,9 +3,11 @@ package com.example.confluence.dbtypes;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+
 public class NewsFeedQuestion {
 	
-	public NewsFeedQuestion(String id, String lang, String q, String audio, String user){
+	public NewsFeedQuestion(String id, String lang, String q, String audio, String user) throws ParseException{
 		mId = id;
 		mLanguage = lang;
 		mQuestionPhrase = q;
@@ -13,7 +15,7 @@ public class NewsFeedQuestion {
 		mUser = user;
 	}
 	
-	public NewsFeedQuestion(JSONObject q) throws JSONException{
+	public NewsFeedQuestion(JSONObject q) throws JSONException, ParseException{
 		this(q.getString("_id"), q.getString("lang"), q.getString("question"), "na", q.getString("user"));
 	}
 	

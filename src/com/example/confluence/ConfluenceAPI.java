@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Constructor;
 import java.net.URI;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,7 +66,7 @@ public class ConfluenceAPI {
 		return postData(endpoint, nameValuePair);
 	}
 
-	public JSONObject postUser(User u){
+	public User postUser(User u){
 
 		List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(2);
 
@@ -77,7 +79,13 @@ public class ConfluenceAPI {
 
 		String endpoint = String.format(SERVER, "api/user");
 
-		return postData(endpoint, nameValuePair);
+		try {
+			return new User(postData(endpoint, nameValuePair));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			Log.d("Error", e.getMessage());
+		}
+		return null;
 	}
 
 	public JSONObject postData(String endpoint, List<NameValuePair> data){
@@ -110,26 +118,65 @@ public class ConfluenceAPI {
 		return null;
 	}
 	
+	public NewsFeedQuestion[] getQuestionsByLang(String[] langs){
+		ArrayList<NewsFeedQuestion[]> questions = new ArrayList<NewsFeedQuestion[]>();
+		for(String lang: langs){
+			questions.add(getQuestionsByLang(lang));
+		}
+		int l = 0;
+		for(NewsFeedQuestion[] arr: questions){
+			l += arr.length;
+		}
+		NewsFeedQuestion[] res = new NewsFeedQuestion[l];
+		int i = 0;
+		for(NewsFeedQuestion[] arr: questions){
+			for(NewsFeedQuestion q: arr){
+				res[i] = q;
+				i++;
+			}
+		}
+		return res;
+	}
 	public NewsFeedQuestion[] getQuestionsByLang(String lang){
 		String url = String.format(SERVER, "api/question?%s=%s");
-		url = contstructGetUrl(url, "lang", lang);
+		url = constructGetUrl(url, "lang", lang);
 		JSONArray res = (JSONArray) getRequest(url, true);
 		NewsFeedQuestion[] questions = new NewsFeedQuestion[res.length()];
 		for(int i = 0; i < res.length(); i++){
 			try {
 				JSONObject question = res.getJSONObject(i);
 				questions[i] = new NewsFeedQuestion(question);
-			} catch (JSONException e) {
+			} catch (JSONException | ParseException e) {
 				Log.d("Error", e.getMessage());
 			}
 		}
 		return questions;
 	}
 	
-	public JSONObject getQuestionById(String qid){
+	public NewsFeedQuestion getQuestionById(String qid){
 		String url = String.format(SERVER, "api/question?%s=%s");
-		url = contstructGetUrl(url, "id", qid);
-		return (JSONObject) getRequest(url, false);
+		url = constructGetUrl(url, "id", qid);
+		try {
+			return new NewsFeedQuestion((JSONObject) getRequest(url, false));
+		} catch (JSONException e) {
+			Log.d("Error", e.getMessage());
+		} catch (ParseException e) {
+			Log.d("Error", e.getMessage());
+		}
+		return null;
+	}
+	
+	public User getUserById(String uid){
+		String url = String.format(SERVER, "api/user?%s=%s");
+		url = constructGetUrl(url, "id", uid);
+		try {
+			return new User((JSONObject) getRequest(url, false));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 	
 	public Object getRequest(String endpoint, boolean isArray){
@@ -151,7 +198,7 @@ public class ConfluenceAPI {
 		return null;
 	}
 
-	private String contstructGetUrl(String base, String key, String val){
+	private String constructGetUrl(String base, String key, String val){
 		String url = String.format(base, key, val);
 		return url;
 	}

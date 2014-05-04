@@ -24,12 +24,14 @@ import com.example.confluence.newsfeed.NewsFeedQuestionView;
 public class NewsFeedActivity extends BaseActivity {
 
 	ConfluenceAPI mApi;
+	User mUser;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_news_feed);
 		mApi = new ConfluenceAPI();
-		loadQuestions("english");
+		mUser = mApi.getUserById("5361630c14eee5e62c5d1bba");
+		loadQuestions(getUserLanguages());
 		loadLanguages();
 		
 		setEditTextFocus();
@@ -124,19 +126,15 @@ public class NewsFeedActivity extends BaseActivity {
 	 * @return - Returns array of the strings that are the languages a user uses
 	 */
 	private String[] getUserLanguages(){
-		String[] langs = new String[5];
-
-		langs[0] = "All Languages";
-		langs[1] = "English";
-		langs[2] = "French";
-		langs[3] = "German";
-		langs[4] = "Spanish";
-		
-		return langs;
+		return mUser.getLanguages();
 	}
 	
 	private void loadQuestions(String filter){
-		new RequestQuestions().execute(this, filter);
+		new RequestQuestionsSingle().execute(this, filter);
+	}
+	
+	private void loadQuestions(String[] langs){
+		new RequestQuestionsArray().execute(this, langs);
 	}
 
 	@Override
@@ -175,11 +173,30 @@ public class NewsFeedActivity extends BaseActivity {
 		
 	}
 	
-	private class RequestQuestions extends AsyncTask<Object, Integer, NewsFeedQuestion[]>{
+	private class RequestQuestionsSingle extends AsyncTask<Object, Integer, NewsFeedQuestion[]>{
 
 		@Override
 		protected NewsFeedQuestion[] doInBackground(Object... args) {
 			final NewsFeedQuestion[] questions = mApi.getQuestionsByLang((String) args[1]);
+			((NewsFeedActivity) args[0]).runOnUiThread(new Runnable(){
+				
+				@Override
+				public void run(){
+					Log.d("Array", Arrays.toString(questions));
+					NewsFeedActivity.this.loadFeed(questions);
+				}
+			});
+			return questions;
+			
+		}
+		
+		
+	}
+	private class RequestQuestionsArray extends AsyncTask<Object, Integer, NewsFeedQuestion[]>{
+
+		@Override
+		protected NewsFeedQuestion[] doInBackground(Object... args) {
+			final NewsFeedQuestion[] questions = mApi.getQuestionsByLang((String[]) args[1]);
 			((NewsFeedActivity) args[0]).runOnUiThread(new Runnable(){
 				
 				@Override
