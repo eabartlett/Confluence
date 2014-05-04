@@ -1,8 +1,14 @@
 package com.example.confluence;
 
-import android.app.Activity;
+import java.util.Arrays;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,18 +20,21 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.confluence.dbtypes.NewsFeedQuestion;
+import com.example.confluence.dbtypes.User;
 import com.example.confluence.newsfeed.NewsArrayAdapter;
-import com.example.confluence.newsfeed.NewsFeedQuestion;
 import com.example.confluence.newsfeed.NewsFeedQuestionView;
-import com.example.confluence.newsfeed.StaticQuestions;
-
 public class NewsFeedActivity extends BaseActivity {
 
+	ConfluenceAPI mApi;
+	User mUser;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_news_feed);
-		loadFeed(null);
+		mApi = new ConfluenceAPI();
+//		mUser = mApi.getUserById("5361630c14eee5e62c5d1bba");
+		loadQuestions(getUserLanguages());
 		loadLanguages();
 		
 		setEditTextFocus();
@@ -43,19 +52,20 @@ public class NewsFeedActivity extends BaseActivity {
 	
 	public void setEditTextFocus() {
 		View askInput = findViewById(R.id.ask_input);
+		askInput.clearFocus();
 		
-		askInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+		/*askInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 			
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				// TODO Auto-generated method stub
 				if (hasFocus) {
-					callAskQuestionActivity();
+					//callAskQuestionActivity();
 				} else {
 					findViewById(R.id.ask_input).clearFocus();
 				}
 			}
-		});
+		});*/
 		
 		askInput.setOnClickListener(new View.OnClickListener() {
 			
@@ -76,8 +86,9 @@ public class NewsFeedActivity extends BaseActivity {
 	 * in the main view. Allows getQuestions to worry about how to get the 
 	 * questions.
 	 */
-	private void loadFeed(String filter){
-		NewsArrayAdapter<NewsFeedQuestion> questionArray = getQuestions(filter);
+	private void loadFeed(NewsFeedQuestion[] questions){
+		NewsArrayAdapter questionArray = new NewsArrayAdapter(
+				this, R.layout.spinner_row, questions);
 		ListView feed = (ListView) findViewById(R.id.news_feed_list);
 		feed.setAdapter(questionArray);
 		feed.setOnItemClickListener(new OnItemClickListener() {
@@ -85,6 +96,7 @@ public class NewsFeedActivity extends BaseActivity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
+
 				ViewGroup viewGroup = (ViewGroup) arg1;
 				NewsFeedQuestionView questionView = (NewsFeedQuestionView) viewGroup.getChildAt(0);
 				NewsFeedQuestion q = questionView.getQuestion();
@@ -118,33 +130,21 @@ public class NewsFeedActivity extends BaseActivity {
 	 * @return - Returns array of the strings that are the languages a user uses
 	 */
 	private String[] getUserLanguages(){
-		String[] langs = new String[5];
-
-		langs[0] = "All Languages";
-		langs[1] = "English";
-		langs[2] = "French";
-		langs[3] = "German";
-		langs[4] = "Spanish";
-		
+//		return mUser.getLanguages();
+		String[] langs = new String[3];
+		langs[0] = "english";
+		langs[1] = "spanish";
+		langs[2] = "french";
 		return langs;
 	}
-	/**
-	 * If using api, this would use api calls to get the correct array of questions for
-	 * the feed, but as of now it is just using StaticQuestions.getQuestions() w/o the filter
-	 * @return - Questions for feed (hard-coded for interactive prototype)
-	 */
-	private NewsArrayAdapter<NewsFeedQuestion> getQuestions(String filter) {
-		if(filter == null){
-			return new NewsArrayAdapter<NewsFeedQuestion>(
-					this, R.layout.activity_news_feed, mQuestions.getQuestions());
-		}else{
-			return new NewsArrayAdapter<NewsFeedQuestion>(
-					this, R.layout.activity_news_feed, mQuestions.getQuestions(filter));	
-		}
-
+	
+	private void loadQuestions(String filter){
+		new RequestQuestionsSingle().execute(this, filter);
 	}
 	
-	
+	private void loadQuestions(String[] langs){
+		new RequestQuestionsArray().execute(this, langs);
+	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -154,8 +154,6 @@ public class NewsFeedActivity extends BaseActivity {
 		return super.onOptionsItemSelected(item);
 	}
 	
-	//TODO remove once you're doing real-time question gets
-	StaticQuestions mQuestions = new StaticQuestions();
 	int timesFiltered = 0;
 	
 	
@@ -170,9 +168,9 @@ public class NewsFeedActivity extends BaseActivity {
 		public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
 				long arg3) {
 			if(arg2 == 0){
-				NewsFeedActivity.this.loadFeed(null);
+				NewsFeedActivity.this.loadQuestions("english");;
 			}else{
-				NewsFeedActivity.this.loadFeed((String) ((TextView) arg1).getText());
+				NewsFeedActivity.this.loadQuestions((String) ((TextView) arg1).getText());
 			}
 		}
 
@@ -181,6 +179,45 @@ public class NewsFeedActivity extends BaseActivity {
 			//Do nothing
 		}
 
+		
+	}
+	
+	private class RequestQuestionsSingle extends AsyncTask<Object, Integer, NewsFeedQuestion[]>{
+
+		@Override
+		protected NewsFeedQuestion[] doInBackground(Object... args) {
+			final NewsFeedQuestion[] questions = mApi.getQuestionsByLang((String) args[1]);
+			((NewsFeedActivity) args[0]).runOnUiThread(new Runnable(){
+				
+				@Override
+				public void run(){
+					Log.d("Array", Arrays.toString(questions));
+					NewsFeedActivity.this.loadFeed(questions);
+				}
+			});
+			return questions;
+			
+		}
+		
+		
+	}
+	private class RequestQuestionsArray extends AsyncTask<Object, Integer, NewsFeedQuestion[]>{
+
+		@Override
+		protected NewsFeedQuestion[] doInBackground(Object... args) {
+			final NewsFeedQuestion[] questions = mApi.getQuestionsByLang((String[]) args[1]);
+			((NewsFeedActivity) args[0]).runOnUiThread(new Runnable(){
+				
+				@Override
+				public void run(){
+					Log.d("Array", Arrays.toString(questions));
+					NewsFeedActivity.this.loadFeed(questions);
+				}
+			});
+			return questions;
+			
+		}
+		
 		
 	}
 	

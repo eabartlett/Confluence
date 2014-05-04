@@ -16,6 +16,10 @@ public class AnswerLayout extends LinearLayout {
 	private ImageButton mPlaybackButton, mUpvoteButton, mDownvoteButton;
 	private boolean mUpClicked = false, mDownClicked = false;
 
+	public AnswerLayout(Context context) {
+		super(context);
+	}
+	
 	public AnswerLayout(Context context, Answer answer) {
 		super(context, null);
 		LayoutInflater inflater = (LayoutInflater) context
@@ -31,7 +35,7 @@ public class AnswerLayout extends LinearLayout {
 		mDownvoteButton = (ImageButton) findViewById(R.id.answer_downvote);
 		
 		// Display playback button if recording exists
-		mPlaybackButton = (ImageButton) findViewById(R.id.answer_attatchment);
+		mPlaybackButton = (ImageButton) findViewById(R.id.answer_attachment);
 		if (answer.hasRecording()) {
 			mPlaybackButton.setVisibility(VISIBLE);
 		}

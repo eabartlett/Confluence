@@ -13,14 +13,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.confluence.answers.AudioFragment;
-import com.example.confluence.answers.AudioFragment.OnTimerStarted;
 
-public class AskQuestionActivity extends BaseActivity implements OnTimerStarted{
+public class AskQuestionActivity extends BaseActivity {
 
     EditText questionEditText;
     Spinner languageSpinner;
     boolean hasRecording;
-    private int VOICE_RECORDER_CODE = 1;
     
     AudioFragment mAudioFooter;
     TextView mTimerText;
@@ -40,7 +38,6 @@ public class AskQuestionActivity extends BaseActivity implements OnTimerStarted{
         questionEditText.setMovementMethod(new ScrollingMovementMethod());
 
 		mAudioFooter = (AudioFragment) getFragmentManager().findFragmentById(R.id.audio_footer);
-		mTimerText = (TextView) findViewById(R.id.txt_timer);
 
         loadLanguages();
         
@@ -148,12 +145,6 @@ public class AskQuestionActivity extends BaseActivity implements OnTimerStarted{
 
     }
 
-	@Override
-	public void setCountdownText(String time) {
-		// TODO Auto-generated method stub
-		mTimerText.setText(time);		
-	}
-	
     /*public void addRecording(View v) {
         Intent voiceRecorderIntent = new Intent(AskQuestionActivity.this, VoiceRecorderActivity.class);
         AskQuestionActivity.this.startActivityForResult(voiceRecorderIntent, VOICE_RECORDER_CODE);

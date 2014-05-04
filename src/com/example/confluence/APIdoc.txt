@@ -1,0 +1,90 @@
+====== ConfluenceAPI.java Documentation ======
+
+Author: @eabartlett
+Date: 5/4/2014
+
+------ Basic Description ------
+This is an API for interacting with the node.js backend I developed for an
+Android application, Confluence (with Nahush Bhanage, Shana Hu, and Brian Yin).
+The backend is written in node.js - using MongoDB and express.js (using MongooseJS 
+for the DB interface). The idea was to create a RESTful API for storing data about
+the users and audio files. The code is in a private github project - so if you would
+like it contact me and I'd be more than happy to provide it.
+
+------ Creating/Getting User's Data ------
+>public User postUser(User u):
+    @param - u: A user object, from com.example.confluence.dbtypes.User, that contains
+      all of the data for a new registered user. Creates user in Database.
+    @return - Returns the User object created in the database, including its unique ID to
+    be used when posting questions/answers. Returns null if the creation failed.
+>public User getUserById(String id):
+    @param - id: The unique id of the user when it was created by the database
+    @return - Returns the User object mapped to that ID or null if the User doesn't
+        exist or there is an error in the request.
+>public User addLangUser(String uid, String lang):
+    @param - uid: ID of the user who's languages are to be updated
+    @param - lang: Language to be added to user's languages
+    @return - User with the updated languages.
+
+------ Interacting with Answers ------
+>public Answer postAnswer(Answer a):
+    @param - a: Creates a new answer based on the Answer object it receives, a.
+        associates it with all of the data based in the Answer object a.
+    @return - Returns the completed Answer, including its unique ID from the DB.
+        Null if error in creation.
+> public Answer getAnswerById(String id):
+    @param - id: Unique ID of the answer requested
+    @return - Answer from database corresponding to the given ID. Null if error
+        in request or if there is no Answer with the corresponding ID.
+> public Answer[] getAnswersByQuestion(String qid):
+    @param - qid: Unique ID of the question who's answers are being requested.
+    @return - Array of Answers for the given question. Null if error in request or
+        if there is no Question with the given ID.
+> public Answer[] getAnswersByUser(String uid):
+    @param - uid: Unique ID of the user who's questions are being requested.
+    @return - Array of Answers for the given User id. Can be null if error in
+        request or if there is no User with the given ID.
+
+------ Interacting with Questions ------
+>public Question postQuestion(Question q):
+    @param - q: Question to be created in the application with information
+        in q.
+    @return - Question completed, including the Question's ID to be used for gets. Is
+        null if error in creation.
+>public Question getQuestionById(String qid):
+    @param -qid: ID of question being requested
+    @return - Question that was reqested. Can be null if error in request or no such
+        Question exists.
+>public Question[] getQuestionsByLang(String lang):
+    @param - lang: Single language whos questions are wanted
+    @return - An array of Questions corresponding to the language requested. Can be 
+        null if error in request.
+>public Question[] getQuestionsByLang(String[] langs):
+    @param - langs: Array of languages whos questions are wanted
+    @return - Array of Questions pertaining to each of the languages requested. Is
+        ordered by language, not temporally. Can be null if errors in requests. Are
+        not guarunteed to have each language in return.
+>public Question[] get QuestionsByUser(String uid):
+    @param - uid: ID of user whos questions are requested
+    @return - Array of all questions a User has posted. Can be null if error in request
+        or if there is no User with the requested ID.
+
+------ Interacting with Audio ------
+>public Answer postAnswerAudio(String filename, String aid):
+    @param - filename: path to audio to be posted
+    @param - aid: ID of answer audio corresponds to
+    @return - Answer that audio was posted to. Null if error in posting or if Answer corresponding
+        to aid does not exist.
+>public Question postQuestionAudio(String filename, String qid):
+    @param - filename: path to audio to be posted
+    @param - qid: ID of question corresponding to audio
+    @return - Question that audio was posted for. Null if error in posting or if Question 
+        corresponding to qid does not exist
+>public String getAnswerAudio(String aid):
+    @param - aid: ID of answers audio that is wanted
+    @return - path to audio for the answer that is requested. Null if error in retreival
+        of audio or if aid does not correspond to a valid Answer
+>public String getQuestionAudio(String qid):
+    @param - qid: ID of questions audio that is wanted
+    @return - Path to audio for the anser that is requested. Null if error in retreival of
+        audio, or if given qid does not correspond to a valid Question

@@ -19,23 +19,18 @@ import android.widget.Toast;
 import com.example.confluence.answers.Answer;
 import com.example.confluence.answers.AnswerArrayAdapter;
 import com.example.confluence.answers.AudioFragment;
-import com.example.confluence.answers.AudioFragment.OnTimerStarted;
 
 /**
  * AnswerActivity handles all answers associated with a question. 
  * @author brian
  *
  */
-public class AnswerActivity extends BaseActivity implements OnTimerStarted {
-
-	private static final String LOG_TAG = "AnswerVoiceRecorderTest";
+public class AnswerActivity extends BaseActivity {
 
 	private ListView mListView;
 	private EditText mAnswerEditText;
-	private TextView mTimerText;
 	private AudioFragment mAudioFooter;
 
-	private String mAnswerRecordingPath;
 	private ArrayList<Answer> mAnswers;
 	
 	@Override
@@ -54,7 +49,6 @@ public class AnswerActivity extends BaseActivity implements OnTimerStarted {
 
 		mListView = (ListView) findViewById(R.id.answer_list);
 		mAnswerEditText = (EditText) findViewById(R.id.answer_question_bar);
-		mTimerText = (TextView) findViewById(R.id.txt_timer);
 		mAudioFooter = (AudioFragment) getFragmentManager().findFragmentById(R.id.audio_footer);		
 		mAnswers = new ArrayList<Answer>();
 		
@@ -71,7 +65,7 @@ public class AnswerActivity extends BaseActivity implements OnTimerStarted {
 			loadAnswersToUI();
 		}
 		if (mHasRecording) {
-			mAnswerRecordingPath = extras.getString("recording");
+			extras.getString("recording");
 		}
 
 		mAudioFooter.activateRecordButton(true);
@@ -151,11 +145,5 @@ public class AnswerActivity extends BaseActivity implements OnTimerStarted {
 						R.layout.activity_answer, 
 						mAnswers.getAnswers());
 		mListView.setAdapter(answerAdapter);*/
-	}
-
-	@Override
-	public void setCountdownText(String time) {
-		// TODO Auto-generated method stub
-		mTimerText.setText(time);
 	}
 }

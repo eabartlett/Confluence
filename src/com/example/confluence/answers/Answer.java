@@ -2,8 +2,6 @@ package com.example.confluence.answers;
 
 import java.util.Date;
 
-import android.media.AudioRecord;
-
 /**
  * Class that holds the information for an Answer to a question.
  * Includes user, answer text, date, etc.
@@ -14,30 +12,30 @@ public class Answer {
 	
 	// TODO: implement User object instead of userId
 	// TODO: implement list of responses to answer
-	private int mUserId;
-	private String mUserName, mAnswerText, mAudioPath, mFileName;
+	private String mUserId;
+	private String mUserName, mAnswerText, mAudioPath;
 	private boolean mHasRecording;
 	private Date mAnswerDate;
 	private int mRating; // rating of an answer
+	private String mLanguage; // Language of question/answer
 
 	public Answer(String userName, String answerText, boolean hasRecording, String recordFilePath) { 
 		mUserName = userName;
 		mAnswerText = answerText;
 		mAnswerDate = null;
 		mHasRecording = hasRecording;
-		mFileName = recordFilePath;
 		mRating = 0;
 	}
 	
-	protected int getUserId() {
+	public String getUserId() {
 		return mUserId;
 	}
 	
-	protected String getUserName() {
+	public String getUserName() {
 		return mUserName;
 	}
 	
-	protected String getText() {
+	public String getText() {
 		return mAnswerText;
 	}
 	
@@ -57,11 +55,11 @@ public class Answer {
 		mRating--;
 	}
 	
-	protected String getAudioPath() {
+	public String getAudioPath() {
 		return mAudioPath;
 	}
 	
-	protected boolean hasAudio() {
+	public boolean hasAudio() {
 		if (mAudioPath != null) {
 			return true;
 		} return false;
@@ -69,5 +67,9 @@ public class Answer {
 	
 	protected boolean hasRecording() {
 		return mHasRecording;
+	}
+	
+	public String getLanguage(){
+		return mLanguage;
 	}
 }

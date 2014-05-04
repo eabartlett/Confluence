@@ -1,19 +1,14 @@
 package com.example.confluence;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
-import android.os.Build;
 
 public class BaseActivity extends Activity {
 
@@ -50,7 +45,6 @@ public class BaseActivity extends Activity {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
 		
 		return super.onOptionsItemSelected(item);
 	}

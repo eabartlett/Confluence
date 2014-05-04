@@ -1,20 +1,28 @@
-package com.example.confluence.newsfeed;
+package com.example.confluence.dbtypes;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.ParseException;
 
 public class NewsFeedQuestion {
 	
-	public NewsFeedQuestion(long id, String lang, String q, String audio, int answers, boolean verified){
+	public NewsFeedQuestion(String id, String lang, String q, String audio, String user) throws ParseException{
 		mId = id;
 		mLanguage = lang;
 		mQuestionPhrase = q;
 		mAudio = audio;
-		mNumAnswers = answers;
-		mVerified = verified;
+		mUser = user;
+	}
+	
+	public NewsFeedQuestion(JSONObject q) throws JSONException, ParseException{
+		this(q.getString("_id"), q.getString("lang"), q.getString("question"), "na", q.getString("user"));
 	}
 	
 	/**
 	 * Access method for Question id
 	 */
-	public long getId(){
+	public String getId(){
 		return mId;
 	}
 	
@@ -54,6 +62,14 @@ public class NewsFeedQuestion {
 		return mNumAnswers;
 	}
 	
+	/**
+	 * Returns this question's user's ID
+	 * @return - the ID
+	 */
+	public String getUser(){
+		return mUser;
+	}
+	
 	public String toString(){
 		String val = getQuestion() + "\n" + getLanguage()+ "\t\t\t\t\t\t\t\t\t\t\t\t\t";
 		
@@ -70,7 +86,7 @@ public class NewsFeedQuestion {
 	}
 	
 	/* Unique id for this question */
-	private long mId;
+	private String mId;
 	
 	/* Language this question is asked in/about */
 	private String mLanguage;
@@ -87,4 +103,7 @@ public class NewsFeedQuestion {
 	
 	/* Boolean saying whether there has been a verified/accepted answer yet */
 	private boolean mVerified;
+	
+	/* User's id */
+	private String mUser;
 }
