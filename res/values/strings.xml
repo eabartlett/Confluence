@@ -22,11 +22,11 @@
     <string name="ask_question_hint">"What's your question?"</string>
     <string name="tagged_in">asking about </string>
     <string name="record">record</string>
-    <string name="rerecord">re-record</string>
+    <string name="rerecord">Re-record</string>
     <string name="title_activity_base_action_bar">BaseActionBarActivity</string>
-    <string name="add_recording">Add Recording</string>
-    <string name="play">play</string>
-    <string name="stop">stop</string>
+    <string name="add_recording">Add recording</string>
+    <string name="play">Play</string>
+    <string name="stop">Stop recording</string>
     <string name="title_activity_base">BaseActivity</string>
     
     <string name="profile_picture">Profile picture</string>
