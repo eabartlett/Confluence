@@ -193,6 +193,55 @@ public class ConfluenceAPI {
 		return null;
 	}
 
+  public Answer getAnswerById(String aid){
+		String url = String.format(SERVER, "api/answer?%s=%s");
+		url = constructGetUrl(url, "id", aid);
+		try {
+			return new Answer((JSONObject) getRequest(url, false));
+		} catch (JSONException e) {
+			Log.d("Error", e.getMessage());
+		} catch (ParseException e) {
+			Log.d("Error", e.getMessage());
+		}
+		return null;
+  }
+
+  public Answer[] getAnswersByQuestion(String qid){
+		String url = String.format(SERVER, "api/answer?%s=%s");
+		url = constructGetUrl(url, "qid", qid);
+		try {
+			JSONArray data = (JSONArray) getRequest(url, true);
+      Answer[] answers = new Answer[data.length()];
+      for(int i = 0; i < answers.length; i++){
+        answers[i] = new Answer(data.getJSONObject(i));
+      }
+      return answers;
+		} catch (JSONException e) {
+			Log.d("Error", e.getMessage());
+		} catch (ParseException e) {
+			Log.d("Error", e.getMessage());
+		}
+		return null;
+  }
+
+  public Answer[] getAnswersByUser(String uid){
+		String url = String.format(SERVER, "api/answer?%s=%s");
+		url = constructGetUrl(url, "user", uid);
+		try {
+			JSONArray data = (JSONArray) getRequest(url, true);
+      Answer[] answers = new Answer[data.length()];
+      for(int i = 0; i < answers.length; i++){
+        answers[i] = new Answer(data.getJSONObject(i));
+      }
+      return answers;
+		} catch (JSONException e) {
+			Log.d("Error", e.getMessage());
+		} catch (ParseException e) {
+			Log.d("Error", e.getMessage());
+		}
+		return null;
+  }
+
 	public User getUserById(String uid){
 		String url = String.format(SERVER, "api/user?%s=%s");
 		url = constructGetUrl(url, "id", uid);
