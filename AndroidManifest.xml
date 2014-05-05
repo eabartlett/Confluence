@@ -49,8 +49,13 @@
             android:label="@string/app_name">
         </activity>
         <activity
+            android:name="com.example.confluence.ProfileActivity"
+            android:parentActivityName="com.example.confluence.NewsFeedActivity"
+            android:label="@string/app_name">
+        </activity>
+        <activity
             android:name="com.example.confluence.BaseActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
         </activity>
     </application>
 

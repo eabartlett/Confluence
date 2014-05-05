@@ -2,20 +2,21 @@ package com.example.confluence;
 
 import java.util.Arrays;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ import com.example.confluence.dbtypes.NewsFeedQuestion;
 import com.example.confluence.dbtypes.User;
 import com.example.confluence.newsfeed.NewsArrayAdapter;
 import com.example.confluence.newsfeed.NewsFeedQuestionView;
+import com.example.confluence.profile.NavigationLayout;
 public class NewsFeedActivity extends BaseActivity {
 
 	ConfluenceAPI mApi;
@@ -36,6 +38,7 @@ public class NewsFeedActivity extends BaseActivity {
 //		mUser = mApi.getUserById("5361630c14eee5e62c5d1bba");
 		loadQuestions(getUserLanguages());
 		loadLanguages();
+		loadProfile();
 		
 		setEditTextFocus();
 		getActionBar().setDisplayHomeAsUpEnabled(false);
@@ -124,6 +127,27 @@ public class NewsFeedActivity extends BaseActivity {
 		languages.setOnItemSelectedListener(new LanguagesFilter());
 
 	}
+	
+	/**
+	 * Sets listener to start Profile activity and loads user information into drawer
+	 * TODO: instantiate notifications list
+	 */
+	private void loadProfile() {
+		NavigationLayout navLayout = (NavigationLayout) findViewById(R.id.navigation_drawer);
+		ImageButton profileButton = (ImageButton) navLayout.findViewById(R.id.nav_profile_button);
+		profileButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent profileIntent = new Intent(NewsFeedActivity.this, ProfileActivity.class);
+				profileIntent.putExtra("USER", "Bearly a Group");
+				startActivity(profileIntent);
+			}
+		});
+	}
+		
+		
 
 	/**
 	 * Currently hard coded, would involve an API call in the final version
