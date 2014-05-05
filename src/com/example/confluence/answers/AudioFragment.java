@@ -52,8 +52,7 @@ public class AudioFragment extends Fragment {
 
 	private boolean mHasRecording=false, mStartPlaying = true, mStartRecording=true;
 	private MediaRecorder mRecorder = null;
-	private ProgressBar progressBar;
-	private ProgressDialog progressBar2;
+	private ProgressBar progressBar, progressBar2;
 	private int progressBarStatus = 0;
     private Handler progressBarHandler = new Handler();
     
@@ -69,6 +68,7 @@ public class AudioFragment extends Fragment {
 		// Inflate the layout for this fragment
 		View v = inflater.inflate(R.layout.record_view, container, false);
 		progressBar = (ProgressBar) v.findViewById(R.id.progress_bar);
+		//progressBar2 = (ProgressBar) v.findViewById(R.id.progress_bar);
 		mRecordButton = (Button) v.findViewById(R.id.record_button);
 		mReRecordButton = (Button) v.findViewById(R.id.rerecord_button);
 		mPlayButton = (Button) v.findViewById(R.id.play_button);
@@ -254,33 +254,21 @@ public class AudioFragment extends Fragment {
 				mStartPlaying = false;
 				playIcon.setImageResource(R.drawable.ic_action_stop);
 				
-				/*progressBar2 = new ProgressDialog(this.getActivity());
-		        progressBar2.setCancelable(true);
-		        progressBar2.setMessage("Playing...");
-				progressBar2.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-	            progressBar2.show();
-	            
-				progressBar2.setOnCancelListener(new ProgressDialog.OnCancelListener() {
-					@Override
-					public void onCancel(DialogInterface arg0) {
-						// TODO Auto-generated method stub
-						getActivity().runOnUiThread(new Runnable() {
-	        				@Override
-	        				public void run() {						
-	        					if (mCountDownTimer != null){
-	        						mCountDownTimer.cancel();
-	        						mCountDownTimer.onFinish();
-	        					}
-	        				}
-	        			});
-					}
-	            });
+
+		        progressBar.setProgress(0);
+		        progressBar.setMax(mPlayer.getDuration());
 			
 	            progressBarStatus = 0;
-	            */
-				mCountDownTimer = new CountDownTimer(mPlayer.getDuration(), 1000) {
+	            
+	            
+				mCountDownTimer = new CountDownTimer(mPlayer.getDuration(), 100) {
 					public void onTick(long millisUntilFinished) {
-						
+						progressBarStatus += 1;
+	                    progressBarHandler.post(new Runnable() {
+	                        public void run() {
+	                            progressBar.setProgress(progressBarStatus);
+	                        }
+	                    });
 					}
 
 					public void onFinish() {
@@ -288,7 +276,6 @@ public class AudioFragment extends Fragment {
 							mPlayer.release();
 							mPlayer = null;
 						}
-						//progressBar.dismiss();
 						playButtonText.setText(R.string.play);
 						playIcon.setImageResource(R.drawable.ic_action_play_active);
 						mStartPlaying = true;
@@ -326,6 +313,7 @@ public class AudioFragment extends Fragment {
 	}
 
 	private void stopRecording() {
+		progressBar.setProgress(0);
 		if (mRecorder != null) {
 			mRecorder.stop();
 			mRecorder.release();
@@ -333,4 +321,5 @@ public class AudioFragment extends Fragment {
 		}
 		mHasRecording = true;
 	}
+	
 }
