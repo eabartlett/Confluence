@@ -3,6 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+	      
+	    
+
     <RelativeLayout
         android:id="@+id/recording_footer"
         android:layout_width="match_parent"
@@ -11,7 +14,7 @@
         android:background="#d3d3d3"
         android:orientation="vertical"
         android:visibility="gone" >
-
+        
         <Button
             android:id="@+id/record_button"
             android:layout_width="fill_parent"
@@ -22,6 +25,7 @@
             android:layout_alignTop="@+id/foreground"
             android:background="@android:color/transparent" />
 
+   		
         <RelativeLayout
             android:id="@+id/foreground"
             android:layout_width="fill_parent"
@@ -48,6 +52,8 @@
                 android:contentDescription="@string/record"
                 android:src="@drawable/ic_action_mic_active" />
         </RelativeLayout>
+        
+        
     </RelativeLayout>
 
     <LinearLayout
@@ -59,6 +65,7 @@
         android:visibility="visible"
         android:baselineAligned="false"
         android:weightSum="2" >
+        
 
         <LinearLayout
             android:id="@+id/rerecord_footer"
@@ -173,5 +180,15 @@
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
+    
+    
+	<ProgressBar android:id="@+id/progress_bar"
+	    style="?android:attr/progressBarStyleHorizontal"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentBottom="true"
+	    android:layout_marginBottom="37dp"
+	    android:progressDrawable="@drawable/green_progress"
+	    />
 
 </RelativeLayout>
