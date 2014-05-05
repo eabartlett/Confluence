@@ -105,7 +105,9 @@ public class ConfluenceAPI {
 			return getJSONObject(res);
 		} catch (IOException e) {
 			Log.d("Confluence Error", "Failed posting data to server");
-		} catch (IllegalStateException | JSONException e) {
+		} catch (IllegalStateException e) {
+			Log.d("Confluence Error", "Failed parsing JSON response from server");
+		} catch (JSONException e) {
 			Log.d("Confluence Error", "Failed parsing JSON response from server");
 		}
 		return null;
@@ -169,7 +171,9 @@ public class ConfluenceAPI {
 			try {
 				JSONObject question = res.getJSONObject(i);
 				questions[i] = new NewsFeedQuestion(question);
-			} catch (JSONException | ParseException e) {
+			} catch (JSONException e ) {
+				Log.d("Error", e.getMessage());
+			} catch (ParseException e) {
 				Log.d("Error", e.getMessage());
 			}
 		}

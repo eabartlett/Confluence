@@ -21,7 +21,8 @@ import com.example.confluence.answers.AnswerArrayAdapter;
 import com.example.confluence.answers.AudioFragment;
 
 /**
- * AnswerActivity handles all answers associated with a question. 
+ * AnswerActiv
+ * ity handles all answers associated with a question. 
  * @author brian
  *
  */
