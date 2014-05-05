@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.confluence.R;
+import com.example.confluence.dbtypes.Answer;
 
 public class AnswerLayout extends LinearLayout {
 	

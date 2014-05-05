@@ -29,7 +29,7 @@ import org.json.JSONTokener;
 
 import android.util.Log;
 
-import com.example.confluence.answers.Answer;
+import com.example.confluence.dbtypes.Answer;
 import com.example.confluence.dbtypes.NewsFeedQuestion;
 import com.example.confluence.dbtypes.User;
 
@@ -200,8 +200,6 @@ public class ConfluenceAPI {
 			return new Answer((JSONObject) getRequest(url, false));
 		} catch (JSONException e) {
 			Log.d("Error", e.getMessage());
-		} catch (ParseException e) {
-			Log.d("Error", e.getMessage());
 		}
 		return null;
   }
@@ -218,8 +216,6 @@ public class ConfluenceAPI {
       return answers;
 		} catch (JSONException e) {
 			Log.d("Error", e.getMessage());
-		} catch (ParseException e) {
-			Log.d("Error", e.getMessage());
 		}
 		return null;
   }
@@ -235,8 +231,6 @@ public class ConfluenceAPI {
       }
       return answers;
 		} catch (JSONException e) {
-			Log.d("Error", e.getMessage());
-		} catch (ParseException e) {
 			Log.d("Error", e.getMessage());
 		}
 		return null;

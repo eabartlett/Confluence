@@ -16,9 +16,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.confluence.answers.Answer;
 import com.example.confluence.answers.AnswerArrayAdapter;
 import com.example.confluence.answers.AudioFragment;
+import com.example.confluence.dbtypes.Answer;
 
 /**
  * AnswerActiv
@@ -121,7 +121,7 @@ public class AnswerActivity extends BaseActivity {
 
 		boolean answerHasRecording = mAudioFooter.hasRecording();
 		String audioFilePath = mAudioFooter.getAudioFilePath();
-		Answer newAnswer = new Answer("Bearly a Group", answerText, answerHasRecording, audioFilePath);
+		Answer newAnswer = new Answer("03", "Bearly a Group", answerText, audioFilePath);
 		mAnswers.add(newAnswer);
 		mAnswerEditText.setText(""); 
 		mAudioFooter.activateRecordButton(true);

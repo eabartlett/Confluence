@@ -1,6 +1,9 @@
-package com.example.confluence.answers;
+package com.example.confluence.dbtypes;
 
 import java.util.Date;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Class that holds the information for an Answer to a question.
@@ -19,14 +22,18 @@ public class Answer {
 	private int mRating; // rating of an answer
 	private String mLanguage; // Language of question/answer
 
-	public Answer(String userName, String answerText, boolean hasRecording, String recordFilePath) { 
+	public Answer(String id, String userName, String answerText,String recordFilePath) { 
 		mUserName = userName;
 		mAnswerText = answerText;
 		mAnswerDate = null;
-		mHasRecording = hasRecording;
 		mRating = 0;
 	}
 	
+	public Answer(JSONObject q) throws JSONException {
+		// TODO Auto-generated constructor stub
+		this(q.getString("_id"), q.getString("user"), q.getString("answer"), q.getString("audio"));
+	}
+
 	public String getUserId() {
 		return mUserId;
 	}
@@ -39,19 +46,19 @@ public class Answer {
 		return mAnswerText;
 	}
 	
-	protected Date getDate() {
+	public Date getDate() {
 		return mAnswerDate;
 	}
 	
-	protected int getRating() {
+	public int getRating() {
 		return mRating;
 	}
 	
-	protected void incrementRating() {
+	public void incrementRating() {
 		mRating++;
 	}
 	
-	protected void decrementRating() {
+	public void decrementRating() {
 		mRating--;
 	}
 	
@@ -65,7 +72,7 @@ public class Answer {
 		} return false;
 	}
 	
-	protected boolean hasRecording() {
+	public boolean hasRecording() {
 		return mHasRecording;
 	}
 	

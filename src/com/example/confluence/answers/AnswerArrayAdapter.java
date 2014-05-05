@@ -2,6 +2,8 @@ package com.example.confluence.answers;
 
 import java.util.ArrayList;
 
+import com.example.confluence.dbtypes.Answer;
+
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
