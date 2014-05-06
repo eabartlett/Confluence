@@ -5,8 +5,6 @@ import java.util.Arrays;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -57,18 +55,18 @@ public class NewsFeedActivity extends BaseActivity {
 		View askInput = findViewById(R.id.ask_input);
 		askInput.clearFocus();
 		
-		/*askInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+		askInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 			
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				// TODO Auto-generated method stub
 				if (hasFocus) {
-					//callAskQuestionActivity();
+					callAskQuestionActivity();
 				} else {
 					findViewById(R.id.ask_input).clearFocus();
 				}
 			}
-		});*/
+		});
 		
 		askInput.setOnClickListener(new View.OnClickListener() {
 			
