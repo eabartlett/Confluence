@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="phrase">Phrase:</string>
-    <string name="lang">Lang:</string>
-    <string name="tag">Tag:</string>
     
-    <string name="add_answer_hint">Add answer and record audio</string>
+    <string name="add_answer_hint">Answer this question</string>
     <string name="no_audio_alert">Are you sure you want to submit without a recording?</string>
     
 </resources>

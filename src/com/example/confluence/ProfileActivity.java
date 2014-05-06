@@ -9,7 +9,7 @@ import android.view.Menu;
 
 import com.example.confluence.profile.LanguageSelectorLayout;
 
-public class ProfileActivity extends Activity {
+public class ProfileActivity extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

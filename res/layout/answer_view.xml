@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp" >
 
     <ImageView
         android:id="@+id/answer_icon"
@@ -21,7 +23,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginBottom="2dp"
         android:contentDescription="@string/upvote_description"
-        android:background="@color/light_gray"
+        android:background="@color/transparent"
         android:src="@drawable/ic_action_good" />
 
     <ImageButton
@@ -30,7 +32,7 @@
         android:layout_height="30dp"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/answer_upvote"
-        android:background="@color/light_gray"
+        android:background="@color/transparent"
         android:contentDescription="@string/downvote_description"
         android:src="@drawable/ic_action_bad" />
 

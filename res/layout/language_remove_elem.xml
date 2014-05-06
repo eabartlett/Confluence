@@ -4,26 +4,27 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp">
+    
+        <TextView
+	        android:id="@+id/remove_language_text"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerVertical="true"
+	        android:layout_marginLeft="10dp"
+	        android:text="English"
+	        android:textSize="14sp" />
 
-    <ImageButton
-        android:id="@+id/language_remove_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="30dp"
-        android:background="@android:color/transparent"
-        android:src="@drawable/ic_action_remove" />
-
-    <TextView
-        android:id="@+id/remove_language_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="10dp"
-        android:layout_toLeftOf="@+id/language_remove_button"
-        android:text="English"
-        android:textSize="14sp"
-        android:textAlignment="center" />
+	    <ImageButton
+	        android:id="@+id/language_remove_button"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_alignParentTop="true"
+	        android:layout_marginRight="22dp"
+	        android:background="@android:color/transparent"
+	        android:src="@drawable/ic_action_remove"
+	        android:onClick="removeLanguageView"/>
+    
+	
 
 </RelativeLayout>

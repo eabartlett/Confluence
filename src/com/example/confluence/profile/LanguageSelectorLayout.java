@@ -88,6 +88,10 @@ public class LanguageSelectorLayout extends RelativeLayout {
 		languageList.setAdapter(languageAdapter);*/
 	}
 	
+	public void removeLanguageView(View v) {
+		LinearLayout languageList = (LinearLayout) findViewById(R.id.language_list);
+	}
+	
 	/**
 	 * Removes language from list of languages
 	 * @param lang String of language to remove
