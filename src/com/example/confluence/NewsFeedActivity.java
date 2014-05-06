@@ -245,9 +245,11 @@ public class NewsFeedActivity extends BaseActivity {
 		@Override
 		protected User doInBackground(String... arg0) {
 			mUser = mApi.getUserById(arg0[0]);
-			Log.d("Confluence User", String.valueOf(mUser));
-			loadQuestions(getUserLanguages());
-			loadLanguages();
+			if (mUser != null) {
+				Log.d("Confluence User", String.valueOf(mUser));
+				loadQuestions(getUserLanguages());
+				loadLanguages();
+			}
 			return mUser;
 		}
 	}

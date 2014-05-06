@@ -264,7 +264,9 @@ public class ConfluenceAPI {
 		String url = String.format(SERVER, "api/user?%s=%s");
 		url = constructGetUrl(url, "id", uid);
 		try {
-			return new User((JSONObject) getRequest(url, false, false));
+			JSONObject user = (JSONObject) getRequest(url, false, false);
+			if (user != null)
+				return new User(user);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
