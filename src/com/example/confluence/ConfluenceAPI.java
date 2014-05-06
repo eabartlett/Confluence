@@ -65,6 +65,20 @@ public class ConfluenceAPI {
 		return false;
 	}
 
+	public User addLangUser(String uid, String lang){
+		List<NameValuePair> vals = new ArrayList<NameValuePair>(2);
+		vals.add(new BasicNameValuePair("id", uid));
+		vals.add(new BasicNameValuePair("lang", lang));
+		String endpoint = String.format(SERVER, "api/user/lang");
+		
+		try {
+			return new User(postKVData(endpoint, vals));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 	public JSONObject postQuestion(NewsFeedQuestion q){
 		// Building post parameters
 		// key and value pair

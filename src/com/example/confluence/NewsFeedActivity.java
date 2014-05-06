@@ -155,10 +155,8 @@ public class NewsFeedActivity extends BaseActivity {
 	 * @return - Returns array of the strings that are the languages a user uses
 	 */
 	private String[] getUserLanguages(){
-		// Log.d("User Language", mUser.getLanguages()[0]);
-		// return mUser.getLanguages();
-		String langs[] = {"english"};
-		return langs;
+		 Log.d("User Language", mUser.getLanguages()[0]);
+		 return mUser.getLanguages();
 	}
 	
 	private void loadQuestions(String filter){
@@ -190,11 +188,7 @@ public class NewsFeedActivity extends BaseActivity {
 		@Override
 		public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
 				long arg3) {
-			if(arg2 == 0){
-				NewsFeedActivity.this.loadQuestions("english");;
-			}else{
 				NewsFeedActivity.this.loadQuestions((String) ((TextView) arg1).getText());
-			}
 		}
 
 		@Override
