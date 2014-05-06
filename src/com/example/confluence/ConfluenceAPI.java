@@ -124,6 +124,7 @@ public class ConfluenceAPI {
 		nameValuePair.add(new BasicNameValuePair("answer", a.getText()));
 		nameValuePair.add(new BasicNameValuePair("user", a.getUserId()));
 		nameValuePair.add(new BasicNameValuePair("lang", a.getLanguage()));
+		nameValuePair.add(new BasicNameValuePair("question", a.getQId()));
 
 		//construct URL endpoint
 		String endpoint = String.format(SERVER, "api/answer");
