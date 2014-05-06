@@ -20,7 +20,7 @@ public class User {
 	
 	public User(JSONObject user) throws JSONException{
 		this(user.getString("username"), user.getString("firstname"), user.getString("lastname"), 
-				user.getString("email"), user.getString("pw"), user.getString("_id"), user.getJSONArray("learningLangauges"));
+				user.getString("email"), user.getString("pw"), user.getString("_id"), user.getJSONArray("learningLanguages"));
 	}
 	
 	public String getUsername(){
@@ -53,6 +53,7 @@ public class User {
 		for(int i = 0; i < langs.length; i++){
 			try {
 				langs[i] = json.getString(i);
+				Log.d("Confluence User Language", langs[i]);
 			} catch (JSONException e) {
 				Log.d("Confluence Error", "Error parsing user langauges");
 			}

@@ -80,11 +80,7 @@ like it contact me and I'd be more than happy to provide it.
     @param - qid: ID of question corresponding to audio
     @return - Question that audio was posted for. Null if error in posting or if Question 
         corresponding to qid does not exist
->public String getAnswerAudio(String aid):
-    @param - aid: ID of answers audio that is wanted
-    @return - path to audio for the answer that is requested. Null if error in retreival
-        of audio or if aid does not correspond to a valid Answer
->public String getQuestionAudio(String qid):
-    @param - qid: ID of questions audio that is wanted
-    @return - Path to audio for the anser that is requested. Null if error in retreival of
-        audio, or if given qid does not correspond to a valid Question
+>public String getAudio(String id, String filepath, String type):
+    @param - id: ID of question or answer whos audio is being requested
+    @param - filepath: path of where to save the audio file
+    @param - type: String of type of request, either "answer" or "question"
