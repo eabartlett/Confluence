@@ -1,16 +1,14 @@
 package com.example.confluence;
 
-import java.util.Arrays;
-import java.util.List;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 
+import com.example.confluence.dbtypes.User;
 import com.example.confluence.profile.LanguageSelectorLayout;
 
 public class ProfileActivity extends Activity {
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -20,14 +18,14 @@ public class ProfileActivity extends Activity {
 		LanguageSelectorLayout mKnownLanguages = (LanguageSelectorLayout) findViewById(R.id.profile_known_languages); 
 		LanguageSelectorLayout mDesiredLanguages = (LanguageSelectorLayout) findViewById(R.id.profile_desired_languages);
 		
-		List<String> langs = Arrays.asList(LanguageSelectorLayout.LANGUAGES);
+		// Load User data		
+		String[] knownLangs = NewsFeedActivity.mUser.getKnownLanguages();
+		String[] desiredLangs = NewsFeedActivity.mUser.getProfLanguages();
 		
-		mKnownLanguages.addLanguage(langs.get(0));
 		mKnownLanguages.setTitle("Languages I know:");
-		mDesiredLanguages.addLanguage(langs.get(1));
-		mDesiredLanguages.addLanguage(langs.get(2));
 		mDesiredLanguages.setTitle("Languages I want to learn:");
-		
+		mKnownLanguages.initLanguages(knownLangs);
+		mDesiredLanguages.initLanguages(desiredLangs);
 	}
 
 	@Override

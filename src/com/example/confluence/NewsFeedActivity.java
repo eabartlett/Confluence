@@ -155,8 +155,8 @@ public class NewsFeedActivity extends BaseActivity {
 	 * @return - Returns array of the strings that are the languages a user uses
 	 */
 	private String[] getUserLanguages(){
-		 Log.d("User Language", mUser.getLanguages()[0]);
-		 return mUser.getLanguages();
+		 Log.d("User Language", mUser.getAllUniqueLanguages()[0]);
+		 return mUser.getAllUniqueLanguages();
 	}
 	
 	private void loadQuestions(String filter){
