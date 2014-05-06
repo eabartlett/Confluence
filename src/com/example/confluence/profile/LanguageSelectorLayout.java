@@ -34,8 +34,10 @@ public class LanguageSelectorLayout extends RelativeLayout {
 		inflater.inflate(R.layout.language_selection_view, this, true);
 		
 		// Set default languages user can add.
-		LanguageListAdapter languageAdapter = new LanguageListAdapter(context,
-				R.layout.language_add_elem, LanguageSelectorLayout.LANG_LIST);
+		/*LanguageListAdapter languageAdapter = new LanguageListAdapter(context,
+				android.R.layout.simple_dropdown_item_1line, LanguageSelectorLayout.LANG_LIST);*/
+		ArrayAdapter<String> languageAdapter = new ArrayAdapter<String>(context,
+				android.R.layout.simple_dropdown_item_1line, LanguageSelectorLayout.LANG_LIST);
 		AutoCompleteTextView languageInput = (AutoCompleteTextView) findViewById(R.id.language_selector);
 		languageInput.setAdapter(languageAdapter);
 		
@@ -46,7 +48,8 @@ public class LanguageSelectorLayout extends RelativeLayout {
 			public void onItemClick(AdapterView<?> arg0, View v, int pos,
 					long id) {
 				// TODO Auto-generated method stub
-				String lang = ((LanguageAddItem) v).getText();
+				System.out.println("Itemclicked!");
+				String lang = (String)((TextView) v).getText();
 				addLanguage(lang); 
 			}
 			
@@ -79,13 +82,21 @@ public class LanguageSelectorLayout extends RelativeLayout {
 		int index = languages.indexOf(lang);
 		
 		LinearLayout languageList = (LinearLayout) findViewById(R.id.language_list);
-		LanguageRemoveItem newRow = new LanguageRemoveItem(getContext(), lang);
+		final LanguageRemoveItem newRow = new LanguageRemoveItem(getContext(), lang);
+
+		newRow.findViewById(R.id.language_remove_button).setOnClickListener( 
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View arg0) {
+						// TODO Auto-generated method stub
+						String lang = newRow.getText();
+						removeLanguage(lang);
+					}
+				});
+		
 		languageList.addView(newRow, index);
 		return true;
-		/*ListView languageList = (ListView) findViewById(R.id.language_list);
-		LanguageListAdapter languageAdapter = new LanguageListAdapter(getContext(),
-				R.layout.language_list_elem, langs);
-		languageList.setAdapter(languageAdapter);*/
 	}
 	
 	/**

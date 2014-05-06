@@ -6,27 +6,31 @@ import java.util.List;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
 
 import com.example.confluence.profile.LanguageSelectorLayout;
 
 public class ProfileActivity extends Activity {
 
+	private LanguageSelectorLayout mKnownLanguages;
+	private LanguageSelectorLayout mDesiredLanguages;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_profile);
 		
 		// Get UI elements
-		LanguageSelectorLayout knownLanguages = (LanguageSelectorLayout) findViewById(R.id.profile_known_languages); 
-		LanguageSelectorLayout desiredLanguages = (LanguageSelectorLayout) findViewById(R.id.profile_desired_languages);
+		LanguageSelectorLayout mKnownLanguages = (LanguageSelectorLayout) findViewById(R.id.profile_known_languages); 
+		LanguageSelectorLayout mDesiredLanguages = (LanguageSelectorLayout) findViewById(R.id.profile_desired_languages);
 		
 		List<String> langs = Arrays.asList(LanguageSelectorLayout.LANGUAGES);
 		
-		knownLanguages.addLanguage(langs.get(0));
-		knownLanguages.setTitle("Languages I know:");
-		desiredLanguages.addLanguage(langs.get(1));
-		desiredLanguages.addLanguage(langs.get(2));
-		desiredLanguages.setTitle("Languages I want to learn:");
+		mKnownLanguages.addLanguage(langs.get(0));
+		mKnownLanguages.setTitle("Languages I know:");
+		mDesiredLanguages.addLanguage(langs.get(1));
+		mDesiredLanguages.addLanguage(langs.get(2));
+		mDesiredLanguages.setTitle("Languages I want to learn:");
 		
 	}
 

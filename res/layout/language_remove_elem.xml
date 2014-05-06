@@ -13,7 +13,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginRight="30dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/ic_action_remove" />
+        android:src="@drawable/ic_action_remove"/>
 
     <TextView
         android:id="@+id/remove_language_text"
