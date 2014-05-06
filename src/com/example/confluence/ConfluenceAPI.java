@@ -57,6 +57,7 @@ public class ConfluenceAPI {
 			while( (read = is.read(buffer)) > 0) {
 			  fos.write(buffer, 0, read);
 			}
+			fos.close();
 			return true;
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
@@ -161,7 +162,6 @@ public class ConfluenceAPI {
 		return null;
 	}
 
-	@SuppressWarnings("deprecation")
 	private JSONObject postMultiPartData(String endpoint, String filename, String type,String id){
 		HttpClient client = new DefaultHttpClient();
 		HttpPost post = new HttpPost(endpoint);
