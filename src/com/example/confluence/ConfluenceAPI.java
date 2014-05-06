@@ -58,8 +58,10 @@ public class ConfluenceAPI {
 			  fos.write(buffer, 0, read);
 			}
 			return true;
-		} catch (IllegalStateException | IOException e) {
+		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return false;
@@ -70,8 +72,10 @@ public class ConfluenceAPI {
 		try {
 			NewsFeedQuestion q = new NewsFeedQuestion(postMultiPartData(endpoint, filepath, "question", qid));
 			return q;
-		} catch (JSONException | ParseException e) {
+		} catch (JSONException e)  {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		return null;

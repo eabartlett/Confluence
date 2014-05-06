@@ -11,13 +11,6 @@
         android:layout_marginBottom="5dp"
         android:hint="@string/add_language_hint"/>
     
-	<LinearLayout
-	    android:id="@+id/language_list"
-	    android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/language_section_title"
-        android:orientation="vertical"/>
-    
     <AutoCompleteTextView
         android:id="@+id/language_selector"
         android:layout_width="fill_parent"
@@ -27,5 +20,12 @@
         android:layout_marginRight="10dp"
         android:textSize="14sp"/>
 
+	<LinearLayout
+	    android:id="@+id/language_list"
+	    android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/language_selector"
+        android:orientation="vertical"
+        android:animateLayoutChanges="true"/>
 
 </RelativeLayout>
