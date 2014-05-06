@@ -72,7 +72,7 @@ public class ConfluenceAPI {
 		try {
 			JSONObject qObj = postMultiPartData(endpoint, filepath, "question", qid);
 			if (qObj != null) {			
-				NewsFeedQuestion q = new NewsFeedQuestion(postMultiPartData(endpoint, filepath, "question", qid));
+				NewsFeedQuestion q = new NewsFeedQuestion(qObj);
 				return q;
 			}
 		} catch (JSONException e)  {
