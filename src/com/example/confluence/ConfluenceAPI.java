@@ -70,8 +70,11 @@ public class ConfluenceAPI {
 	public NewsFeedQuestion postQuestionAudio(String filepath, String qid){
 		String endpoint = String.format(SERVER, "api/audio");
 		try {
-			NewsFeedQuestion q = new NewsFeedQuestion(postMultiPartData(endpoint, filepath, "question", qid));
-			return q;
+			JSONObject qObj = postMultiPartData(endpoint, filepath, "question", qid);
+			if (qObj != null) {			
+				NewsFeedQuestion q = new NewsFeedQuestion(postMultiPartData(endpoint, filepath, "question", qid));
+				return q;
+			}
 		} catch (JSONException e)  {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
