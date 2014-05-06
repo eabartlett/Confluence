@@ -27,13 +27,13 @@ import com.example.confluence.profile.NavigationLayout;
 public class NewsFeedActivity extends BaseActivity {
 
 	ConfluenceAPI mApi;
-	User mUser;
+	public static User mUser;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_news_feed);
 		mApi = new ConfluenceAPI();
-		loadUser("5361630c14eee5e62c5d1bba");
+		loadUser("53688688c7a0aa166b8ee5e6");
 		loadProfile();
 		
 		setEditTextFocus();
@@ -155,8 +155,10 @@ public class NewsFeedActivity extends BaseActivity {
 	 * @return - Returns array of the strings that are the languages a user uses
 	 */
 	private String[] getUserLanguages(){
-		Log.d("User Language", mUser.getLanguages()[0]);
-		return mUser.getLanguages();
+		// Log.d("User Language", mUser.getLanguages()[0]);
+		// return mUser.getLanguages();
+		String langs[] = {"english"};
+		return langs;
 	}
 	
 	private void loadQuestions(String filter){
@@ -245,12 +247,16 @@ public class NewsFeedActivity extends BaseActivity {
 		@Override
 		protected User doInBackground(String... arg0) {
 			mUser = mApi.getUserById(arg0[0]);
-			if (mUser != null) {
-				Log.d("Confluence User", String.valueOf(mUser));
+			return mUser;
+		}
+		
+		@Override
+	    protected void onPostExecute(User user) {
+			if (user != null) {
+				Log.d("Confluence User", String.valueOf(user));
 				loadQuestions(getUserLanguages());
 				loadLanguages();
 			}
-			return mUser;
-		}
+	    }
 	}
 }

@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.confluence.answers.AudioFragment;
 import com.example.confluence.dbtypes.NewsFeedQuestion;
+import com.example.confluence.dbtypes.User;
 
 public class AskQuestionActivity extends BaseActivity {
 
@@ -33,6 +34,7 @@ public class AskQuestionActivity extends BaseActivity {
     
     Menu menu;
     ConfluenceAPI mApi;
+    String mCurrentQID;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,7 @@ public class AskQuestionActivity extends BaseActivity {
     	mAudioFooter.activatePlayButton(false);
     	//activateAttachButton(false);
     	mApi = new ConfluenceAPI();
+    	mCurrentQID = "";
 	}
 	
 	/**
@@ -82,24 +85,20 @@ public class AskQuestionActivity extends BaseActivity {
 
 		langs[0] = "Select a language";
 			//a different prompt than in newsfeed activity
-		langs[1] = "English";
-		langs[2] = "French";
-		langs[3] = "German";
-		langs[4] = "Spanish";
+		langs[1] = "english";
+		langs[2] = "french";
+		langs[3] = "german";
+		langs[4] = "spanish";
 		
 		return langs;
 	}
 	
-	
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.ask_question, menu);
 		return true;
 	}
-	
-    
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -137,10 +136,10 @@ public class AskQuestionActivity extends BaseActivity {
 	        postQuestionIntent.putExtra("hasRecording", hasRecording);
 	        postQuestionIntent.putExtra("recording", mAudioFooter.getAudioFilePath() ); */
 	
-			// Need to change this once we have user profiles set up
+			// Need to change this - 
 			// Maybe maintain a count var in the user object.
-			String user = "TestUser";
-			String QID = user + Integer.toString(Double.valueOf(Math.random() * 100).intValue());
+			String user = NewsFeedActivity.mUser.getId();//"53688688c7a0aa166b8ee5e6";
+			String QID =  user + Integer.toString(Double.valueOf(Math.random() * 100).intValue());
 			NewsFeedQuestion Question;
 			try {
 				Question = new NewsFeedQuestion(
@@ -177,6 +176,32 @@ public class AskQuestionActivity extends BaseActivity {
 		@Override
 		protected JSONObject doInBackground(NewsFeedQuestion... Question) {
 			return mApi.postQuestion(Question[0]);
-		}		
+		}
+		
+		@Override
+	    protected void onPostExecute(JSONObject question) {
+			if (question != null) {
+				//Log.d("Confluence User", question.toString());
+				mCurrentQID = question.optString("_id");
+				// Toast.makeText(AskQuestionActivity.this, mCurrentQID, Toast.LENGTH_LONG).show();
+			}
+	    }
+	}
+	
+	private class PostAudio extends AsyncTask<String, Integer, NewsFeedQuestion>{
+
+		@Override
+		protected NewsFeedQuestion doInBackground(String... audioPath) {
+			return mApi.postQuestion(Question[0]);
+		}
+		
+		@Override
+	    protected void onPostExecute(JSONObject question) {
+			if (question != null) {
+				//Log.d("Confluence User", question.toString());
+				mCurrentQID = question.optString("_id");
+				// Toast.makeText(AskQuestionActivity.this, mCurrentQID, Toast.LENGTH_LONG).show();
+			}
+	    }
 	}
 }
