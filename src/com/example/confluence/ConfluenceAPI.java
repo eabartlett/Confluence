@@ -64,6 +64,30 @@ public class ConfluenceAPI {
 		}
 		return false;
 	}
+	
+	public NewsFeedQuestion postQuestionAudio(String filepath, String qid){
+		String endpoint = String.format(SERVER, "api/audio");
+		try {
+			NewsFeedQuestion q = new NewsFeedQuestion(postMultiPartData(endpoint, filepath, "question", qid));
+			return q;
+		} catch (JSONException | ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public Answer postAnswerAudio(String filepath, String aid){
+		String endpoint = String.format(SERVER, "api/audio");
+		try {
+			Answer a = new Answer(postMultiPartData(endpoint, filepath, "answer", aid));
+			return a;
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	public User addLangUser(String uid, String lang){
 		List<NameValuePair> vals = new ArrayList<NameValuePair>(2);
@@ -203,6 +227,23 @@ public class ConfluenceAPI {
 	public NewsFeedQuestion[] getQuestionsByLang(String lang){
 		String url = String.format(SERVER, "api/question?%s=%s");
 		url = constructGetUrl(url, "lang", lang);
+		JSONArray res = (JSONArray) getRequest(url, true, false);
+		NewsFeedQuestion[] questions = new NewsFeedQuestion[res.length()];
+		for(int i = 0; i < res.length(); i++){
+			try {
+				JSONObject question = res.getJSONObject(i);
+				questions[i] = new NewsFeedQuestion(question);
+			} catch (JSONException e ) {
+				Log.d("Error", e.getMessage());
+			} catch (ParseException e) {
+				Log.d("Error", e.getMessage());
+			}
+		}
+		return questions;
+	}
+	public NewsFeedQuestion[] getQuestionsByUser(String uid){
+		String url = String.format(SERVER, "api/question?%s=%s");
+		url = constructGetUrl(url, "user", uid);
 		JSONArray res = (JSONArray) getRequest(url, true, false);
 		NewsFeedQuestion[] questions = new NewsFeedQuestion[res.length()];
 		for(int i = 0; i < res.length(); i++){
