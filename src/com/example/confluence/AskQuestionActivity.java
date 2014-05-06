@@ -187,21 +187,4 @@ public class AskQuestionActivity extends BaseActivity {
 			}
 	    }
 	}
-	
-	private class PostAudio extends AsyncTask<String, Integer, NewsFeedQuestion>{
-
-		@Override
-		protected NewsFeedQuestion doInBackground(String... audioPath) {
-			return mApi.postQuestion(Question[0]);
-		}
-		
-		@Override
-	    protected void onPostExecute(JSONObject question) {
-			if (question != null) {
-				//Log.d("Confluence User", question.toString());
-				mCurrentQID = question.optString("_id");
-				// Toast.makeText(AskQuestionActivity.this, mCurrentQID, Toast.LENGTH_LONG).show();
-			}
-	    }
-	}
 }
