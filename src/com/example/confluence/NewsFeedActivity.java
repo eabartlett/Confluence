@@ -33,9 +33,7 @@ public class NewsFeedActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_news_feed);
 		mApi = new ConfluenceAPI();
-//		mUser = mApi.getUserById("5361630c14eee5e62c5d1bba");
-		loadQuestions(getUserLanguages());
-		loadLanguages();
+		loadUser("5361630c14eee5e62c5d1bba");
 		loadProfile();
 		
 		setEditTextFocus();
@@ -82,6 +80,7 @@ public class NewsFeedActivity extends BaseActivity {
         Intent askQuestionIntent = new Intent(NewsFeedActivity.this, AskQuestionActivity.class);
         NewsFeedActivity.this.startActivity(askQuestionIntent);
 	}
+	
 	/**
 	 * Gets questions from getQuestions method and loads them into the ListView
 	 * in the main view. Allows getQuestions to worry about how to get the 
@@ -112,6 +111,10 @@ public class NewsFeedActivity extends BaseActivity {
 		});
 	}
 	
+	private void loadUser(String uid){
+		RequestUser req = new RequestUser();
+		req.execute(uid);
+	}
 	/**
 	 * Gets user's languages and populates the filter by language spinner
 	 * with these languages
@@ -152,12 +155,8 @@ public class NewsFeedActivity extends BaseActivity {
 	 * @return - Returns array of the strings that are the languages a user uses
 	 */
 	private String[] getUserLanguages(){
-//		return mUser.getLanguages();
-		String[] langs = new String[3];
-		langs[0] = "english";
-		langs[1] = "spanish";
-		langs[2] = "french";
-		return langs;
+		Log.d("User Language", mUser.getLanguages()[0]);
+		return mUser.getLanguages();
 	}
 	
 	private void loadQuestions(String filter){
@@ -239,8 +238,17 @@ public class NewsFeedActivity extends BaseActivity {
 			return questions;
 			
 		}
-		
-		
 	}
 	
+	private class RequestUser extends AsyncTask<String, Integer, User>{
+
+		@Override
+		protected User doInBackground(String... arg0) {
+			mUser = mApi.getUserById(arg0[0]);
+			Log.d("Confluence User", String.valueOf(mUser));
+			loadQuestions(getUserLanguages());
+			loadLanguages();
+			return mUser;
+		}
+	}
 }
