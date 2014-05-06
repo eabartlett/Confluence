@@ -6,14 +6,10 @@ import java.util.List;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.View;
 
 import com.example.confluence.profile.LanguageSelectorLayout;
 
 public class ProfileActivity extends Activity {
-
-	private LanguageSelectorLayout mKnownLanguages;
-	private LanguageSelectorLayout mDesiredLanguages;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

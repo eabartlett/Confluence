@@ -37,7 +37,7 @@ public class LanguageSelectorLayout extends RelativeLayout {
 		/*LanguageListAdapter languageAdapter = new LanguageListAdapter(context,
 				android.R.layout.simple_dropdown_item_1line, LanguageSelectorLayout.LANG_LIST);*/
 		ArrayAdapter<String> languageAdapter = new ArrayAdapter<String>(context,
-				android.R.layout.simple_dropdown_item_1line, LanguageSelectorLayout.LANG_LIST);
+				android.R.layout.simple_list_item_1, LanguageSelectorLayout.LANG_LIST);
 		AutoCompleteTextView languageInput = (AutoCompleteTextView) findViewById(R.id.language_selector);
 		languageInput.setAdapter(languageAdapter);
 		
