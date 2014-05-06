@@ -32,7 +32,6 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="10dp"
         android:layout_toLeftOf="@+id/language_remove_button"
-        android:text="English"
         android:textSize="14sp"
         android:textAlignment="center" />
 

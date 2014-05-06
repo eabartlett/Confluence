@@ -26,6 +26,7 @@ public class LanguageSelectorLayout extends RelativeLayout {
 	public static List<String> LANG_LIST = Arrays.asList(LanguageSelectorLayout.LANGUAGES);
 	
 	private ArrayList<String> languages = new ArrayList<String>();
+	private AutoCompleteTextView languageInput;
 	
 	public LanguageSelectorLayout(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -38,7 +39,7 @@ public class LanguageSelectorLayout extends RelativeLayout {
 				android.R.layout.simple_dropdown_item_1line, LanguageSelectorLayout.LANG_LIST);*/
 		ArrayAdapter<String> languageAdapter = new ArrayAdapter<String>(context,
 				android.R.layout.simple_list_item_1, LanguageSelectorLayout.LANG_LIST);
-		AutoCompleteTextView languageInput = (AutoCompleteTextView) findViewById(R.id.language_selector);
+		languageInput = (AutoCompleteTextView) findViewById(R.id.language_selector);
 		languageInput.setAdapter(languageAdapter);
 		
 		// Set listener for add Button
@@ -96,11 +97,10 @@ public class LanguageSelectorLayout extends RelativeLayout {
 				});
 		
 		languageList.addView(newRow, index);
+
+		languageInput.setText("");
+
 		return true;
-	}
-	
-	public void removeLanguageView(View v) {
-		LinearLayout languageList = (LinearLayout) findViewById(R.id.language_list);
 	}
 	
 	/**
