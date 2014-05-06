@@ -1,8 +1,15 @@
 package com.example.confluence;
 
+import java.text.ParseException;
+import java.util.Arrays;
+
+import org.json.JSONObject;
+
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.confluence.answers.AudioFragment;
+import com.example.confluence.dbtypes.NewsFeedQuestion;
 
 public class AskQuestionActivity extends BaseActivity {
 
@@ -24,7 +32,7 @@ public class AskQuestionActivity extends BaseActivity {
     TextView mTimerText;
     
     Menu menu;
-    
+    ConfluenceAPI mApi;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +53,7 @@ public class AskQuestionActivity extends BaseActivity {
         mAudioFooter.activateRecordButton(true);
     	mAudioFooter.activatePlayButton(false);
     	//activateAttachButton(false);
-
+    	mApi = new ConfluenceAPI();
 	}
 	
 	/**
@@ -123,12 +131,31 @@ public class AskQuestionActivity extends BaseActivity {
 			toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 200);
 			toast.show();
 		} else {
-	        Intent postQuestionIntent = new Intent(AskQuestionActivity.this, PostedQuestionActivity.class);
+	        /*Intent postQuestionIntent = new Intent(AskQuestionActivity.this, PostedQuestionActivity.class);
 	        postQuestionIntent.putExtra("question", questionText);
 	        postQuestionIntent.putExtra("language", languageSpinner.getSelectedItem().toString());
 	        postQuestionIntent.putExtra("hasRecording", hasRecording);
-	        postQuestionIntent.putExtra("recording", mAudioFooter.getAudioFilePath() );
+	        postQuestionIntent.putExtra("recording", mAudioFooter.getAudioFilePath() ); */
 	
+			// Need to change this once we have user profiles set up
+			// Maybe maintain a count var in the user object.
+			String user = "TestUser";
+			String QID = user + Integer.toString(Double.valueOf(Math.random() * 100).intValue());
+			NewsFeedQuestion Question;
+			try {
+				Question = new NewsFeedQuestion(
+						QID, 
+						chosenLang, 
+						questionText, 
+						mAudioFooter.getAudioFilePath(), 
+						user);
+				new PostQuestion().execute(Question);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+			
+			Intent postQuestionIntent = new Intent(AskQuestionActivity.this, NewsFeedActivity.class);
 	        AskQuestionActivity.this.startActivity(postQuestionIntent);
 		}
         
@@ -145,9 +172,11 @@ public class AskQuestionActivity extends BaseActivity {
 
     }
 
-    /*public void addRecording(View v) {
-        Intent voiceRecorderIntent = new Intent(AskQuestionActivity.this, VoiceRecorderActivity.class);
-        AskQuestionActivity.this.startActivityForResult(voiceRecorderIntent, VOICE_RECORDER_CODE);
-    }*/
-    
+	private class PostQuestion extends AsyncTask<NewsFeedQuestion, Integer, JSONObject>{
+
+		@Override
+		protected JSONObject doInBackground(NewsFeedQuestion... Question) {
+			return mApi.postQuestion(Question[0]);
+		}		
+	}
 }
