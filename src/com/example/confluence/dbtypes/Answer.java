@@ -16,23 +16,25 @@ public class Answer {
 	// TODO: implement User object instead of userId
 	// TODO: implement list of responses to answer
 	private String mUserId;
+	private String mQId;
 	private String mUserName, mAnswerText, mAudioPath;
 	private boolean mHasRecording;
 	private Date mAnswerDate;
 	private int mRating; // rating of an answer
 	private String mLanguage; // Language of question/answer
 
-	public Answer(String id, String userName, String answerText,String recordFilePath) { 
+	public Answer(String id, String userName, String answerText,String recordFilePath, String qId) { 
 		mUserName = userName;
 		mAnswerText = answerText;
 		mAnswerDate = null;
 		mAudioPath = recordFilePath;
 		mRating = 0;
+		mQId = qId;
 	}
 	
 	public Answer(JSONObject q) throws JSONException {
 		// TODO Auto-generated constructor stub
-		this(q.getString("_id"), q.getString("user"), q.getString("answer"), q.getString("audio"));
+		this(q.getString("_id"), q.getString("user"), q.getString("answer"), q.getString("audio"), /*QId*/q.getString(""));
 	}
 
 	public String getUserId() {
@@ -79,5 +81,9 @@ public class Answer {
 	
 	public String getLanguage(){
 		return mLanguage;
+	}
+	
+	public String getQId(){
+		return mQId;
 	}
 }

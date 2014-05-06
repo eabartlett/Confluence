@@ -121,7 +121,7 @@ public class AnswerActivity extends BaseActivity {
 
 		boolean answerHasRecording = mAudioFooter.hasRecording();
 		String audioFilePath = mAudioFooter.getAudioFilePath();
-		Answer newAnswer = new Answer("03", "Bearly a Group", answerText, audioFilePath);
+		Answer newAnswer = new Answer("03", "Bearly a Group", answerText, audioFilePath, null);
 		mAnswers.add(newAnswer);
 		mAnswerEditText.setText(""); 
 		mAudioFooter.activateRecordButton(true);
