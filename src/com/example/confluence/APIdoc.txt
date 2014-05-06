@@ -84,3 +84,4 @@ like it contact me and I'd be more than happy to provide it.
     @param - id: ID of question or answer whos audio is being requested
     @param - filepath: path of where to save the audio file
     @param - type: String of type of request, either "answer" or "question"
+    @return - boolean: if true, successful. If false, unsuccessful
