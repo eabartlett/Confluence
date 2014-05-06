@@ -1,15 +1,11 @@
 package com.example.confluence;
 
 import java.text.ParseException;
-import java.util.Arrays;
-
 import org.json.JSONObject;
-
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,7 +17,6 @@ import android.widget.Toast;
 
 import com.example.confluence.answers.AudioFragment;
 import com.example.confluence.dbtypes.NewsFeedQuestion;
-import com.example.confluence.dbtypes.User;
 
 public class AskQuestionActivity extends BaseActivity {
 
@@ -139,11 +134,10 @@ public class AskQuestionActivity extends BaseActivity {
 			// Need to change this - 
 			// Maybe maintain a count var in the user object.
 			String user = NewsFeedActivity.mUser.getId();//"53688688c7a0aa166b8ee5e6";
-			String QID =  user + Integer.toString(Double.valueOf(Math.random() * 100).intValue());
 			NewsFeedQuestion Question;
 			try {
 				Question = new NewsFeedQuestion(
-						QID, 
+						"", 
 						chosenLang, 
 						questionText, 
 						mAudioFooter.getAudioFilePath(), 
@@ -157,18 +151,6 @@ public class AskQuestionActivity extends BaseActivity {
 			Intent postQuestionIntent = new Intent(AskQuestionActivity.this, NewsFeedActivity.class);
 	        AskQuestionActivity.this.startActivity(postQuestionIntent);
 		}
-        
-        
-		/*Intent postQuestionIntent = new Intent(AskQuestionActivity.this, AnswerActivity.class);
-		postQuestionIntent.putExtra("question", questionText);
-        postQuestionIntent.putExtra("language", languageSpinner.getSelectedItem().toString());
-        postQuestionIntent.putExtra("hasAnswers", false); 
-        	// ^ for interactive prototype
-        postQuestionIntent.putExtra("hasRecording", hasRecording);
-        postQuestionIntent.putExtra("recording", recording);
-		AskQuestionActivity.this.startActivity(postQuestionIntent);*/
-
-
     }
 
 	private class PostQuestion extends AsyncTask<NewsFeedQuestion, Integer, JSONObject>{
@@ -183,7 +165,7 @@ public class AskQuestionActivity extends BaseActivity {
 			if (question != null) {
 				//Log.d("Confluence User", question.toString());
 				mCurrentQID = question.optString("_id");
-				// Toast.makeText(AskQuestionActivity.this, mCurrentQID, Toast.LENGTH_LONG).show();
+				Toast.makeText(AskQuestionActivity.this, mCurrentQID, Toast.LENGTH_LONG).show();
 			}
 	    }
 	}

@@ -26,6 +26,7 @@ public class Answer {
 		mUserName = userName;
 		mAnswerText = answerText;
 		mAnswerDate = null;
+		mAudioPath = recordFilePath;
 		mRating = 0;
 	}
 	

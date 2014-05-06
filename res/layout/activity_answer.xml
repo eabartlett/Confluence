@@ -29,7 +29,7 @@
             android:layout_alignParentRight="true"
             android:drawableTop="@drawable/ic_action_play_inactive"
             android:text="@string/play"
-            android:textColor="#FFFFFF" />
+            android:textColor="#333333" />
     </RelativeLayout>
 
     <ListView

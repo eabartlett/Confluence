@@ -3,8 +3,6 @@ package com.example.confluence.answers;
 import java.io.IOException;
 
 import android.app.Fragment;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
