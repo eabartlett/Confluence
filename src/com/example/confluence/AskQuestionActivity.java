@@ -1,7 +1,10 @@
 package com.example.confluence;
 
 import java.text.ParseException;
+
+import org.json.JSONException;
 import org.json.JSONObject;
+
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -133,9 +136,7 @@ public class AskQuestionActivity extends BaseActivity {
 						questionText, 
 						mAudioFooter.getAudioFilePath(), 
 						user);
-				new PostQuestion().execute(Question);
-				new PostAudioInQuestion().execute("");
-				
+				new PostQuestion().execute(Question);				
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -146,34 +147,18 @@ public class AskQuestionActivity extends BaseActivity {
 		}
     }
 
-	private class PostQuestion extends AsyncTask<NewsFeedQuestion, Integer, JSONObject>{
+	private class PostQuestion extends AsyncTask<NewsFeedQuestion, Integer, NewsFeedQuestion>{
 
 		@Override
-		protected JSONObject doInBackground(NewsFeedQuestion... Question) {
-			return mApi.postQuestion(Question[0]);
-		}
-		
-		@Override
-	    protected void onPostExecute(JSONObject question) {
-			if (question != null) {
-				//Log.d("Confluence User", question.toString());
-				mCurrentQID = question.optString("_id");
+		protected NewsFeedQuestion doInBackground(NewsFeedQuestion... Question) {
+			JSONObject question = mApi.postQuestion(Question[0]);
+			try {
+				mCurrentQID = question.getString("_id");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-	    }
-	}
-	
-	private class PostAudioInQuestion extends AsyncTask<String, Integer, NewsFeedQuestion>{
-
-		@Override
-		protected NewsFeedQuestion doInBackground(String... params) {
 			return mApi.postQuestionAudio(mAudioFooter.getAudioFilePath(), mCurrentQID);
 		}
-		
-		@Override
-	    protected void onPostExecute(NewsFeedQuestion question) {
-			if (question == null) {
-				Toast.makeText(AskQuestionActivity.this, "Couldn't post audio", Toast.LENGTH_LONG).show();
-			}
-	    }
 	}
 }
