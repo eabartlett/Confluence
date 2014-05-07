@@ -45,7 +45,7 @@
             android:layout_marginTop="20dp" />
 
         <com.example.confluence.profile.LanguageSelectorLayout
-            android:id="@+id/profile_desired_languages"
+            android:id="@+id/profile_learn_languages"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/profile_known_languages"
@@ -56,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="100dp"
             android:layout_alignParentBottom="true"
-            android:layout_below="@id/profile_desired_languages"
+            android:layout_below="@id/profile_learn_languages"
             />
     </RelativeLayout>
 

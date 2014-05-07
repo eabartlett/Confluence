@@ -25,17 +25,19 @@ public class ProfileLayout extends RelativeLayout {
 	}
 	
 	public void initLanguages() {
-		LanguageSelectorLayout knownLanguages = (LanguageSelectorLayout) findViewById(R.id.profile_known_languages); 
-		LanguageSelectorLayout desiredLanguages = (LanguageSelectorLayout) findViewById(R.id.profile_desired_languages);
+		LanguageSelectorLayout profLanguages = (LanguageSelectorLayout) findViewById(R.id.profile_known_languages);
+		LanguageSelectorLayout learnLanguages = (LanguageSelectorLayout) findViewById(R.id.profile_learn_languages);
 		
-		// Load User data		
-		String[] knownLangs = NewsFeedActivity.mUser.getKnownLanguages();
-		String[] desiredLangs = NewsFeedActivity.mUser.getProfLanguages();
+		// Load User data
+		String[] profLangs = NewsFeedActivity.mUser.getProfLanguages();
+		String[] learnLangs = NewsFeedActivity.mUser.getLearnLanguages();
 		
-		knownLanguages.setTitle("Languages I know:");
-		desiredLanguages.setTitle("Languages I want to learn:");
-		knownLanguages.initLanguages(knownLangs);
-		desiredLanguages.initLanguages(desiredLangs);
+		profLanguages.setTitle("Languages I know:");
+		learnLanguages.setTitle("Languages I want to learn:");
+		profLanguages.setIsLearnLayout(false);
+		learnLanguages.setIsLearnLayout(true);
+		profLanguages.initLanguages(profLangs);
+		learnLanguages.initLanguages(learnLangs);
 	}
 
 }
