@@ -3,13 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
     
+	
     <TextView
         android:id="@+id/language_section_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
-        android:hint="@string/add_language_hint"
-        android:text="I know these languages"/>
+        android:hint="@string/add_language_hint"/>
     
     <AutoCompleteTextView
         android:id="@+id/language_selector"
@@ -17,6 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/language_section_title"
         android:hint="@string/add_language_hint"
+        android:layout_marginRight="10dp"
         android:textSize="14sp"/>
 
 	<LinearLayout

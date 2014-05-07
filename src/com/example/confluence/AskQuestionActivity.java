@@ -143,6 +143,8 @@ public class AskQuestionActivity extends BaseActivity {
 						mAudioFooter.getAudioFilePath(), 
 						user);
 				new PostQuestion().execute(Question);
+				new PostAudioInQuestion().execute("");
+				
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -165,7 +167,21 @@ public class AskQuestionActivity extends BaseActivity {
 			if (question != null) {
 				//Log.d("Confluence User", question.toString());
 				mCurrentQID = question.optString("_id");
-				Toast.makeText(AskQuestionActivity.this, mCurrentQID, Toast.LENGTH_LONG).show();
+			}
+	    }
+	}
+	
+	private class PostAudioInQuestion extends AsyncTask<String, Integer, NewsFeedQuestion>{
+
+		@Override
+		protected NewsFeedQuestion doInBackground(String... params) {
+			return mApi.postQuestionAudio(mAudioFooter.getAudioFilePath(), mCurrentQID);
+		}
+		
+		@Override
+	    protected void onPostExecute(NewsFeedQuestion question) {
+			if (question == null) {
+				Toast.makeText(AskQuestionActivity.this, "Couldn't post audio", Toast.LENGTH_LONG).show();
 			}
 	    }
 	}

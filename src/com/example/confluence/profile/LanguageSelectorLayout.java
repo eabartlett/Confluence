@@ -35,6 +35,7 @@ public class LanguageSelectorLayout extends RelativeLayout {
 	
 	private ConfluenceAPI mApi;
 	private AutoCompleteTextView mLanguageInput;
+
 	
 	public LanguageSelectorLayout(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -51,6 +52,7 @@ public class LanguageSelectorLayout extends RelativeLayout {
 		ArrayAdapter<String> languageAdapter = new ArrayAdapter<String>(getContext(),
 				android.R.layout.simple_list_item_1, LanguageSelectorLayout.LANGUAGES);
 		mLanguageInput.setAdapter(languageAdapter);
+
 		
 		// Set listener for add Button
 		mLanguageInput.setOnItemClickListener(new OnItemClickListener() {
@@ -119,6 +121,9 @@ public class LanguageSelectorLayout extends RelativeLayout {
 				});
 		
 		languageList.addView(newRow, index);
+
+		mLanguageInput.setText("");
+
 		return true;
 	}
 	

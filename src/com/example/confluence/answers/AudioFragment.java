@@ -222,7 +222,7 @@ public class AudioFragment extends Fragment {
 
 				public void onFinish() {
 					stopRecording();
-					recordButtonText.setText(R.string.record);
+					recordButtonText.setText(R.string.add_recording);
 					activateReRecordButton(true);
 					activatePlayButton(true);
 					mStartRecording = true;
@@ -254,7 +254,7 @@ public class AudioFragment extends Fragment {
 				
 
 		        progressBar.setProgress(0);
-		        progressBar.setMax(mPlayer.getDuration());
+		        progressBar.setMax(mPlayer.getDuration()/100);
 			
 	            progressBarStatus = 0;
 	            
@@ -274,6 +274,7 @@ public class AudioFragment extends Fragment {
 							mPlayer.release();
 							mPlayer = null;
 						}
+						progressBar.setProgress(0);
 						playButtonText.setText(R.string.play);
 						playIcon.setImageResource(R.drawable.ic_action_play_active);
 						mStartPlaying = true;
