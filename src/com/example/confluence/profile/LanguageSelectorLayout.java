@@ -5,7 +5,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,16 +19,23 @@ import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.confluence.ConfluenceAPI;
+import com.example.confluence.NewsFeedActivity;
 import com.example.confluence.R;
+import com.example.confluence.dbtypes.User;
 
 public class LanguageSelectorLayout extends RelativeLayout {
 
-	public static String[] LANGUAGES = {"English", "Spanish", "French"};
+	public static String[] LANGUAGES = {"English", "Spanish", "French", "German", "Chinese", "Japanese", "Swedish"};
 	public static List<String> LANG_LIST = Arrays.asList(LanguageSelectorLayout.LANGUAGES);
 	
-	private ArrayList<String> languages = new ArrayList<String>();
-	private AutoCompleteTextView languageInput;
+	private ArrayList<String> mLanguages = new ArrayList<String>();
+	
+	private ConfluenceAPI mApi;
+	private AutoCompleteTextView mLanguageInput;
+
 	
 	public LanguageSelectorLayout(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -34,24 +43,31 @@ public class LanguageSelectorLayout extends RelativeLayout {
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		inflater.inflate(R.layout.language_selection_view, this, true);
 		
-		// Set default languages user can add.
-		/*LanguageListAdapter languageAdapter = new LanguageListAdapter(context,
-				android.R.layout.simple_dropdown_item_1line, LanguageSelectorLayout.LANG_LIST);*/
-		ArrayAdapter<String> languageAdapter = new ArrayAdapter<String>(context,
-				android.R.layout.simple_list_item_1, LanguageSelectorLayout.LANG_LIST);
-		languageInput = (AutoCompleteTextView) findViewById(R.id.language_selector);
-		languageInput.setAdapter(languageAdapter);
+		mApi = new ConfluenceAPI();
+		
+		// Get references to UI elements
+		mLanguageInput = (AutoCompleteTextView) findViewById(R.id.language_selector);
+		
+		// Set default elements for AutoCompleteTextView
+		ArrayAdapter<String> languageAdapter = new ArrayAdapter<String>(getContext(),
+				android.R.layout.simple_list_item_1, LanguageSelectorLayout.LANGUAGES);
+		mLanguageInput.setAdapter(languageAdapter);
+
 		
 		// Set listener for add Button
-		languageInput.setOnItemClickListener(new OnItemClickListener() {
+		mLanguageInput.setOnItemClickListener(new OnItemClickListener() {
 
+			@SuppressLint("DefaultLocale")
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View v, int pos,
 					long id) {
 				// TODO Auto-generated method stub
-				System.out.println("Itemclicked!");
+				AddLanguage req =  new AddLanguage();
 				String lang = (String)((TextView) v).getText();
-				addLanguage(lang); 
+				if (!(mLanguages.contains(lang.toLowerCase()) || mLanguages.contains(lang.toUpperCase()) || 
+						mLanguages.contains(lang))) {
+					req.execute(lang);
+				}
 			}
 			
 		});
@@ -66,21 +82,29 @@ public class LanguageSelectorLayout extends RelativeLayout {
 		titleView.setText(title);
 	}
 
+	public void initLanguages(String[] langs) {
+		for (int i=0; i < langs.length; i++) {
+			addLanguage(langs[i]);
+		} 
+	}
+	
 	/**
 	 * Adds language view to list of languages 
 	 * @param lang String of lang to add
 	 * @return boolean if adding succeeded
 	 * TODO: check if language exists already
 	 */
+	@SuppressLint("DefaultLocale")
 	public boolean addLanguage(String lang) {
-		if (languages.contains(lang)) {
+		if (mLanguages.contains(lang.toLowerCase()) || mLanguages.contains(lang.toUpperCase()) || 
+				mLanguages.contains(lang)) {
 			return false;
 		}
 		
 		// TODO: fix very slow code
-		languages.add(lang);
-		Collections.sort(languages);
-		int index = languages.indexOf(lang);
+		mLanguages.add(lang);
+		Collections.sort(mLanguages);
+		int index = mLanguages.indexOf(lang);
 		
 		LinearLayout languageList = (LinearLayout) findViewById(R.id.language_list);
 		final LanguageRemoveItem newRow = new LanguageRemoveItem(getContext(), lang);
@@ -98,7 +122,7 @@ public class LanguageSelectorLayout extends RelativeLayout {
 		
 		languageList.addView(newRow, index);
 
-		languageInput.setText("");
+		mLanguageInput.setText("");
 
 		return true;
 	}
@@ -109,11 +133,11 @@ public class LanguageSelectorLayout extends RelativeLayout {
 	 * @return boolean if remove succeeded
 	 */
 	public boolean removeLanguage(String lang) {
-		int index = languages.indexOf(lang);
+		int index = mLanguages.indexOf(lang);
 		if (index == -1) {
 			return false;
 		}
-		languages.remove(index);
+		mLanguages.remove(index);
 		LinearLayout languageList = (LinearLayout) findViewById(R.id.language_list);
 		languageList.removeViewAt(index);
 		return true;
@@ -167,5 +191,31 @@ public class LanguageSelectorLayout extends RelativeLayout {
 			TextView langText = (TextView) findViewById(R.id.remove_language_text);
 			return (String) langText.getText();
 		}
+	}
+	
+	private class AddLanguage extends AsyncTask<String, Integer, User> {
+
+		String mLang;
+		
+		@Override
+		protected User doInBackground(String... params) {
+			// TODO Auto-generated method stub
+			String lang = params[0];
+			User result = mApi.addLangUser(NewsFeedActivity.mUser.getId(), lang);
+			if (result == null) {
+				Toast msg = Toast.makeText(getContext(), "Error with servers. Language not added.", Toast.LENGTH_LONG);
+				msg.show();
+			} else {
+				mLang = lang;
+			}
+			return result; 
+		}
+		
+		@Override
+	    protected void onPostExecute(User user) {
+			if (user != null && mLang!= null) {
+				addLanguage(mLang);
+			}
+	    }
 	}
 }
