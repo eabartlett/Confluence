@@ -4,6 +4,8 @@ package com.example.confluence;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.json.JSONObject;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -73,19 +75,10 @@ public class AnswerActivity extends BaseActivity {
 				R.layout.activity_answer,
 				mAnswers)); 
 		
-		boolean hasAnswers = extras.getBoolean("hasAnswers");
-		boolean mHasRecording = extras.getBoolean("hasRecording");
-		
 		mApi = new ConfluenceAPI();
 		playButton = (Button) findViewById (R.id.bt_play);
 
-		if (hasAnswers) {
-			// add dummy answers 
-			loadAnswersToUI();
-		}
-		if (mHasRecording) {
-			extras.getString("recording");
-		}
+		new callGetAnswersByQuestion().execute("");
 
 		mAudioFooter.activateRecordButton(true);
 		mAudioFooter.activatePlayButton(false);
@@ -183,28 +176,67 @@ public class AnswerActivity extends BaseActivity {
 	}
 	
 	private void postAnswer(String answerText) {
-
-		boolean answerHasRecording = mAudioFooter.hasRecording();
-		String audioFilePath = mAudioFooter.getAudioFilePath();
-		Answer newAnswer = new Answer("03", "Bearly a Group", answerText, audioFilePath, null);
-		mAnswers.add(newAnswer);
-		mAnswerEditText.setText(""); 
-		mAudioFooter.activateRecordButton(true);
-		mAudioFooter.activatePlayButton(false);
-		loadAnswersToUI();
+		
+		// boolean answerHasRecording = mAudioFooter.hasRecording();
+		Answer newAnswer = new Answer(
+				"", 
+				NewsFeedActivity.mUser.getId(), 
+				answerText, 
+				mAudioFooter.getAudioFilePath(), 
+				mQuestionId);
+		
+		new callPostAnswer().execute(newAnswer);
 
 		// Reset audioFooter UI
 		mAudioFooter.activateRecordButton(true);
 		mAudioFooter.activatePlayButton(false);
 		mAudioFooter.setHasRecording(false);
+		
+		mAnswerEditText.setText(""); 
 	}
 
+	private class callPostAnswer extends AsyncTask<Answer, Integer, Boolean>{
 
+		// @Override
+		protected Boolean doInBackground(Answer... answer) {
+			JSONObject jAns = mApi.postAnswer(answer[0]);
+			if (jAns != null) {			
+				return true;
+			}
+			Log.d("Confluence ****", "PostAnswer failed");
+			return false;
+		}
+		
+		@Override
+		protected void onPostExecute(Boolean result) {
+			if (result) {
+				new callGetAnswersByQuestion().execute("");		
+			}
+	    }
+	}
+
+	private class callGetAnswersByQuestion extends AsyncTask<String, Integer, Answer[]>{
+
+		// @Override
+		protected Answer[] doInBackground(String... param) {
+			return mApi.getAnswersByQuestion(mQuestionId);
+		}
+		
+		@Override
+		protected void onPostExecute(Answer[] answers) {
+			if (answers != null) {
+				loadAnswersToUI(answers);
+			}
+	    }
+	}
+	
 	/**
 	 * Loads answers contained in AnswerList answers to the ListView UI.
 	 */
-	private void loadAnswersToUI() {
+	private void loadAnswersToUI(Answer[] answers) {
 		AnswerArrayAdapter answerAdapter = (AnswerArrayAdapter) mListView.getAdapter();
+		answerAdapter.clear();
+		answerAdapter.addAll(answers);
 		answerAdapter.notifyDataSetChanged();
 		/*AnswerArrayAdapter answerAdapter = 
 				new AnswerArrayAdapter(getApplicationContext(),

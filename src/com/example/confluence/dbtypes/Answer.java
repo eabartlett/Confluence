@@ -23,8 +23,8 @@ public class Answer {
 	private int mRating; // rating of an answer
 	private String mLanguage; // Language of question/answer
 
-	public Answer(String id, String userName, String answerText,String recordFilePath, String qId) { 
-		mUserName = userName;
+	public Answer(String id, String userId, String answerText,String recordFilePath, String qId) { 
+		mUserId = userId;
 		mAnswerText = answerText;
 		mAnswerDate = null;
 		mAudioPath = recordFilePath;

@@ -2,24 +2,19 @@ package com.example.confluence;
 
 import java.util.Arrays;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.DrawerLayout.SimpleDrawerListener;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -28,7 +23,6 @@ import com.example.confluence.dbtypes.NewsFeedQuestion;
 import com.example.confluence.dbtypes.User;
 import com.example.confluence.newsfeed.NewsArrayAdapter;
 import com.example.confluence.newsfeed.NewsFeedQuestionView;
-import com.example.confluence.profile.LanguageSelectorLayout;
 import com.example.confluence.profile.ProfileLayout;
 public class NewsFeedActivity extends BaseActivity {
 

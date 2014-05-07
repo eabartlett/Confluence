@@ -147,7 +147,7 @@ public class ConfluenceAPI {
 	public JSONObject postAnswer(Answer a){
 		// Building post parameters
 		// key and value pair
-		List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(3);
+		List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(4);
 		nameValuePair.add(new BasicNameValuePair("answer", a.getText()));
 		nameValuePair.add(new BasicNameValuePair("user", a.getUserId()));
 		nameValuePair.add(new BasicNameValuePair("lang", a.getLanguage()));
@@ -315,11 +315,13 @@ public class ConfluenceAPI {
 		url = constructGetUrl(url, "qid", qid);
 		try {
 			JSONArray data = (JSONArray) getRequest(url, true, false);
-      Answer[] answers = new Answer[data.length()];
-      for(int i = 0; i < answers.length; i++){
-        answers[i] = new Answer(data.getJSONObject(i));
-      }
-      return answers;
+			if (data != null) {
+				Answer[] answers = new Answer[data.length()];
+				for(int i = 0; i < answers.length; i++){
+					answers[i] = new Answer(data.getJSONObject(i));
+				}
+				return answers;
+			}
 		} catch (JSONException e) {
 			Log.d("Error", e.getMessage());
 		}
