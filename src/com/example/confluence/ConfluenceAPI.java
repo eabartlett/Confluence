@@ -42,7 +42,7 @@ public class ConfluenceAPI {
 	public final static String SUCCESS = "Success";
 	// Creating HTTP client
 	private DefaultHttpClient mHttpClient = new DefaultHttpClient();
-	
+
 	public boolean getAudio(String id, String filepath, String type){
 		String endpoint = constructGetUrl(String.format(SERVER, "api/audio?%s=%s"), type, id);
 		HttpResponse res = (HttpResponse) getRequest(endpoint, false, true);
@@ -52,9 +52,9 @@ public class ConfluenceAPI {
 		try {
 			FileOutputStream fos = new FileOutputStream(file);
 			InputStream is = res.getEntity().getContent();
-			
+
 			//Taken from stackoverflow: http://stackoverflow.com/questions/19733612/how-to-download-an-httpresponse-into-a-file
-			
+
 			int read = 0;
 
 			byte[] buffer = new byte[1024];
@@ -73,7 +73,7 @@ public class ConfluenceAPI {
 		}
 		return false;
 	}
-	
+
 	public NewsFeedQuestion postQuestionAudio(String filepath, String qid){
 		String endpoint = String.format(SERVER, "api/audio");
 		try {
@@ -90,7 +90,7 @@ public class ConfluenceAPI {
 		}
 		return null;
 	}
-	
+
 	public Answer postAnswerAudio(String filepath, String aid){
 		String endpoint = String.format(SERVER, "api/audio");
 		try {
@@ -108,7 +108,7 @@ public class ConfluenceAPI {
 		vals.add(new BasicNameValuePair("id", uid));
 		vals.add(new BasicNameValuePair("lang", lang));
 		String endpoint = String.format(SERVER, "api/user/dellang");
-		
+
 		try {
 			return new User(postKVData(endpoint, vals));
 		} catch (JSONException e) {
@@ -117,13 +117,13 @@ public class ConfluenceAPI {
 		}
 		return null;
 	}
-	
+
 	public User addLearnLangUser(String uid, String lang){
 		List<NameValuePair> vals = new ArrayList<NameValuePair>(2);
 		vals.add(new BasicNameValuePair("id", uid));
 		vals.add(new BasicNameValuePair("lang", lang));
 		String endpoint = String.format(SERVER, "api/user/learnlang");
-		
+
 		try {
 			return new User(postKVData(endpoint, vals));
 		} catch (JSONException e) {
@@ -137,7 +137,7 @@ public class ConfluenceAPI {
 		vals.add(new BasicNameValuePair("id", uid));
 		vals.add(new BasicNameValuePair("lang", lang));
 		String endpoint = String.format(SERVER, "api/user/proflang");
-		
+
 		try {
 			return new User(postKVData(endpoint, vals));
 		} catch (JSONException e) {
@@ -315,7 +315,7 @@ public class ConfluenceAPI {
 		return null;
 	}
 
-  public Answer getAnswerById(String aid){
+	public Answer getAnswerById(String aid){
 		String url = String.format(SERVER, "api/answer?%s=%s");
 		url = constructGetUrl(url, "id", aid);
 		try {
@@ -324,9 +324,9 @@ public class ConfluenceAPI {
 			Log.d("Error", e.getMessage());
 		}
 		return null;
-  }
+	}
 
-  public Answer[] getAnswersByQuestion(String qid){
+	public Answer[] getAnswersByQuestion(String qid){
 		String url = String.format(SERVER, "api/answer?%s=%s");
 		url = constructGetUrl(url, "qid", qid);
 		try {
@@ -341,28 +341,28 @@ public class ConfluenceAPI {
 				Log.d("Danger!!!!", "I was here");
 				return answers;
 			}
-				
+
 		} catch (JSONException e) {
 			Log.d("Error", e.getMessage());
 		}
 		return null;
-  }
+	}
 
-  public Answer[] getAnswersByUser(String uid){
+	public Answer[] getAnswersByUser(String uid){
 		String url = String.format(SERVER, "api/answer?%s=%s");
 		url = constructGetUrl(url, "user", uid);
 		try {
 			JSONArray data = (JSONArray) getRequest(url, true, false);
-      Answer[] answers = new Answer[data.length()];
-      for(int i = 0; i < answers.length; i++){
-        answers[i] = new Answer(data.getJSONObject(i));
-      }
-      return answers;
+			Answer[] answers = new Answer[data.length()];
+			for(int i = 0; i < answers.length; i++){
+				answers[i] = new Answer(data.getJSONObject(i));
+			}
+			return answers;
 		} catch (JSONException e) {
 			Log.d("Error", e.getMessage());
 		}
 		return null;
-  }
+	}
 
 	public User getUserById(String uid){
 		String url = String.format(SERVER, "api/user?%s=%s");
