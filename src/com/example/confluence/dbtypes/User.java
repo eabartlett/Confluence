@@ -75,7 +75,8 @@ public class User {
 		String[] langs = new String[json.length()];
 		for(int i = 0; i < langs.length; i++){
 			try {
-				langs[i] = json.getString(i);
+				String singleLang = json.getString(i);
+				langs[i] = singleLang.substring(0,1).toUpperCase() + singleLang.substring(1);
 				Log.d("Confluence User Language", langs[i]);
 			} catch (JSONException e) {
 				Log.d("Confluence Error", "Error parsing user langauges");

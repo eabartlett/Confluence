@@ -76,16 +76,7 @@ public class AskQuestionActivity extends BaseActivity {
 	 * Same as in NewsFeedActivity
 	 */
 	private String[] getUserLanguages(){
-		String[] langs = new String[5];
-
-		langs[0] = "Select a language";
-			//a different prompt than in newsfeed activity
-		langs[1] = "english";
-		langs[2] = "french";
-		langs[3] = "german";
-		langs[4] = "spanish";
-		
-		return langs;
+		return NewsFeedActivity.mUser.getAllUniqueLanguages();
 	}
 	
 	@Override
