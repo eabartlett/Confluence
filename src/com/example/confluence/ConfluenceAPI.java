@@ -44,7 +44,7 @@ public class ConfluenceAPI {
 	private DefaultHttpClient mHttpClient = new DefaultHttpClient();
 	
 	public boolean getAudio(String id, String filepath, String type){
-		String endpoint = constructGetUrl(String.format(SERVER, "audio"), type, id);
+		String endpoint = constructGetUrl(String.format(SERVER, "api/audio?%s=%s"), type, id);
 		HttpResponse res = (HttpResponse) getRequest(endpoint, false, true);
 		File file = new File(filepath);
 		try {
