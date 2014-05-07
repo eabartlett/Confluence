@@ -249,7 +249,12 @@ public class LanguageSelectorLayout extends RelativeLayout {
 		protected User doInBackground(String... params) {
 			// TODO Auto-generated method stub
 			String lang = params[0];
-			User result = mApi.delLangUser(NewsFeedActivity.mUser.getId(), lang);
+			User result;
+			if (mIsLearnLayout) {
+				result = mApi.delLearnLangUser(NewsFeedActivity.mUser.getId(), lang);
+			} else { 
+				result = mApi.delProfLangUser(NewsFeedActivity.mUser.getId(), lang);
+			}
 			if (result == null) {
 				Toast msg = Toast.makeText(getContext(), "Error with servers. Language not removed.", Toast.LENGTH_LONG);
 				msg.show();
