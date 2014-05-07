@@ -78,7 +78,6 @@
         android:layout_marginRight="2dp"
         android:background="@color/light_gray"
         android:src="@drawable/ic_action_play_active"
-        android:contentDescription="@string/attachment_description"
-        android:visibility="gone" />
+        android:contentDescription="@string/attachment_description" />
 
 </RelativeLayout>

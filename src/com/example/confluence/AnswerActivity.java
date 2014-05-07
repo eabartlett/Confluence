@@ -4,6 +4,7 @@ package com.example.confluence;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.AlertDialog;
@@ -44,7 +45,7 @@ public class AnswerActivity extends BaseActivity {
 
 	private ArrayList<Answer> mAnswers;
 	
-	private String mQuestionId;
+	private String mQuestionId, mAnswerId;
 	ConfluenceAPI mApi;
 	private String mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/test1.3gp";
 	private Button playButton;
@@ -204,8 +205,16 @@ public class AnswerActivity extends BaseActivity {
 		// @Override
 		protected Boolean doInBackground(Answer... answer) {
 			JSONObject jAns = mApi.postAnswer(answer[0]);
-			if (jAns != null) {			
-				return true;
+			if (jAns != null) {		
+				try {
+					mAnswerId = jAns.getString("_id");
+					if (mApi.postAnswerAudio(mFileName, mAnswerId) != null)
+						return true;
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				// return true;
 			}
 			Log.d("Confluence ****", "PostAnswer failed");
 			return false;
