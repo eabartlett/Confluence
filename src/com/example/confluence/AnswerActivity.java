@@ -160,9 +160,13 @@ public class AnswerActivity extends BaseActivity {
 					mPlayer.setDataSource(mFileName);
 					mPlayer.prepare();
 					mPlayer.start();					
-				} catch (IllegalArgumentException | SecurityException
-						| IllegalStateException | IOException e) {
-					// TODO Auto-generated catch block
+				} catch (IllegalArgumentException e) { 
+					e.printStackTrace();
+				} catch (SecurityException e) {
+					e.printStackTrace();
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
 					e.printStackTrace();
 				}
 				mCountDownTimer = new CountDownTimer(mPlayer.getDuration(), 1000) {

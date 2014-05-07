@@ -32,6 +32,7 @@ public class LanguageSelectorLayout extends RelativeLayout {
 	public static List<String> LANG_LIST = Arrays.asList(LanguageSelectorLayout.LANGUAGES);
 	
 	private ArrayList<String> mLanguages = new ArrayList<String>();
+	private boolean mIsLearnLayout = false;
 	
 	private ConfluenceAPI mApi;
 	private AutoCompleteTextView mLanguageInput;
@@ -74,6 +75,15 @@ public class LanguageSelectorLayout extends RelativeLayout {
 		});
 	}
 	
+	/**
+	 * Sets mIsLearnLayout variable used to determine if learning vs professional language layout.
+	 * Used to determine which api call to make
+	 * @param isLearn
+	 */
+	public void setIsLearnLayout(boolean isLearn) {
+		mIsLearnLayout = isLearn;
+	}
+		
 	/**
 	 * Set title of LanguageSelectorLayout. Used to distinguish between 'Known' and 'Learning' languages
 	 * @param title String to use as title
@@ -208,7 +218,12 @@ public class LanguageSelectorLayout extends RelativeLayout {
 		protected User doInBackground(String... params) {
 			// TODO Auto-generated method stub
 			String lang = params[0];
-			User result = mApi.addLangUser(NewsFeedActivity.mUser.getId(), lang);
+			User result;
+			if (mIsLearnLayout) {
+				result = mApi.addLearnLangUser(NewsFeedActivity.mUser.getId(), lang);
+			} else { 
+				result = mApi.addProfLangUser(NewsFeedActivity.mUser.getId(), lang);
+			}
 			if (result == null) {
 				Toast msg = Toast.makeText(getContext(), "Error with servers. Language not added.", Toast.LENGTH_LONG);
 				msg.show();

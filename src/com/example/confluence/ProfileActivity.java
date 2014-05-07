@@ -15,10 +15,10 @@ public class ProfileActivity extends Activity {
 		
 		// Get UI elements
 		LanguageSelectorLayout mKnownLanguages = (LanguageSelectorLayout) findViewById(R.id.profile_known_languages); 
-		LanguageSelectorLayout mDesiredLanguages = (LanguageSelectorLayout) findViewById(R.id.profile_desired_languages);
+		LanguageSelectorLayout mDesiredLanguages = (LanguageSelectorLayout) findViewById(R.id.profile_learn_languages);
 		
 		// Load User data		
-		String[] knownLangs = NewsFeedActivity.mUser.getKnownLanguages();
+		String[] knownLangs = NewsFeedActivity.mUser.getLearnLanguages();
 		String[] desiredLangs = NewsFeedActivity.mUser.getProfLanguages();
 		
 		mKnownLanguages.setTitle("Languages I know:");

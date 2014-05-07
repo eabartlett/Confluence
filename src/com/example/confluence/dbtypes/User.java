@@ -11,14 +11,14 @@ import android.util.Log;
 
 public class User {
 	
-	public User(String username, String first, String last, String email, String pw, String id, JSONArray knownLangs, JSONArray profLangs){
+	public User(String username, String first, String last, String email, String pw, String id, JSONArray learnLangs, JSONArray profLangs){
 		mUsername = username;
 		mFirstname = first;
 		mLastname = last;
 		mEmail = email;
 		mPassword = pw;
 		mId = id;
-		mKnownLanguages = knownLangs;
+		mLearnLanguages = learnLangs;
 		mProfLanguages = profLangs;
 	}
 	
@@ -52,8 +52,8 @@ public class User {
 		return mId;
 	}
 	
-	public String[] getKnownLanguages() {
-		return getLanguages(mKnownLanguages);
+	public String[] getLearnLanguages() {
+		return getLanguages(mLearnLanguages);
 	}
 	
 	public String[] getProfLanguages() {
@@ -61,7 +61,7 @@ public class User {
 	}
 	
 	public String[] getAllUniqueLanguages() {
-		String[] allLangs =  concatenate(getKnownLanguages(), getProfLanguages());
+		String[] allLangs =  concatenate(getLearnLanguages(), getProfLanguages());
 		HashMap<String, Integer> uniqueLangs = new HashMap<String, Integer>();
 		for(int i = 0; i < allLangs.length; i++){
 			uniqueLangs.put(allLangs[i], 1);
@@ -102,6 +102,6 @@ public class User {
 	private String mEmail;
 	private String mPassword;
 	private String mId;
-	private JSONArray mKnownLanguages;
+	private JSONArray mLearnLanguages;
 	private JSONArray mProfLanguages;
 }
