@@ -7,10 +7,15 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,6 +39,11 @@ public class AnswerActivity extends BaseActivity {
 
 	private ArrayList<Answer> mAnswers;
 	
+	private String mQuestionId;
+	ConfluenceAPI mApi;
+	private String mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/test1.3gp";
+	private Button playButton;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -47,6 +57,7 @@ public class AnswerActivity extends BaseActivity {
 		TextView langView = (TextView) findViewById(R.id.question_lang_content);
 		questionView.setText(extras.getString("question"));
 		langView.setText(extras.getString("language"));
+		mQuestionId = extras.getString("id");
 
 		mListView = (ListView) findViewById(R.id.answer_list);
 		mAnswerEditText = (EditText) findViewById(R.id.answer_question_bar);
@@ -59,7 +70,9 @@ public class AnswerActivity extends BaseActivity {
 		
 		boolean hasAnswers = extras.getBoolean("hasAnswers");
 		boolean mHasRecording = extras.getBoolean("hasRecording");
-
+		
+		mApi = new ConfluenceAPI();
+		playButton = (Button) findViewById (R.id.bt_play);
 
 		if (hasAnswers) {
 			// add dummy answers 
@@ -117,6 +130,58 @@ public class AnswerActivity extends BaseActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	public void playAudioInQuestion(View view) {
+		new GetAudioInQuestion().execute("");
+		
+	}
+	
+	private class GetAudioInQuestion extends AsyncTask<String, Integer, Boolean>{
+
+		@Override
+		protected Boolean doInBackground(String... params) {
+			if (mApi.getAudio(mQuestionId, mFileName, "question")) {
+				
+				/*try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			    
+				mPlayer = new MediaPlayer();
+				try {
+					playButton.setClickable(false);
+					mPlayer.setDataSource(mFileName);
+					mPlayer.prepare();
+					mPlayer.start();
+					
+					mCountDownTimer = new CountDownTimer(mPlayer.getDuration(), 1000) {
+						public void onTick(long millisUntilFinished) {
+							
+						}
+
+						public void onFinish() {
+							if (mPlayer != null) {
+								mPlayer.release();
+								mPlayer = null;
+							}
+							playButton.setClickable(false);
+						}
+					}.start();
+					return true;
+					
+				} catch (IllegalArgumentException | SecurityException
+						| IllegalStateException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}*/
+				return true;
+			}
+			Log.d("Confluence ****", "GetAudio failed");
+			return false;
+		}
+	}
+	
 	private void postAnswer(String answerText) {
 
 		boolean answerHasRecording = mAudioFooter.hasRecording();
