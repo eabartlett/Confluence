@@ -1,14 +1,17 @@
 package com.example.confluence;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Environment;
 import android.util.Log;
 import android.view.Gravity;
@@ -43,6 +46,8 @@ public class AnswerActivity extends BaseActivity {
 	ConfluenceAPI mApi;
 	private String mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/test1.3gp";
 	private Button playButton;
+	private MediaPlayer mPlayer;
+	private CountDownTimer mCountDownTimer; 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -137,49 +142,44 @@ public class AnswerActivity extends BaseActivity {
 	
 	private class GetAudioInQuestion extends AsyncTask<String, Integer, Boolean>{
 
-		@Override
+		// @Override
 		protected Boolean doInBackground(String... params) {
-			if (mApi.getAudio(mQuestionId, mFileName, "question")) {
-				
-				/*try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			    
-				mPlayer = new MediaPlayer();
-				try {
-					playButton.setClickable(false);
-					mPlayer.setDataSource(mFileName);
-					mPlayer.prepare();
-					mPlayer.start();
-					
-					mCountDownTimer = new CountDownTimer(mPlayer.getDuration(), 1000) {
-						public void onTick(long millisUntilFinished) {
-							
-						}
-
-						public void onFinish() {
-							if (mPlayer != null) {
-								mPlayer.release();
-								mPlayer = null;
-							}
-							playButton.setClickable(false);
-						}
-					}.start();
-					return true;
-					
-				} catch (IllegalArgumentException | SecurityException
-						| IllegalStateException | IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}*/
+			if (mApi.getAudio(mQuestionId, mFileName, "question")) {			
 				return true;
 			}
 			Log.d("Confluence ****", "GetAudio failed");
 			return false;
 		}
+		
+		@Override
+		protected void onPostExecute(Boolean result) {
+			if (result) {
+				mPlayer = new MediaPlayer();
+				try {
+					playButton.setClickable(false);
+					mPlayer.setDataSource(mFileName);
+					mPlayer.prepare();
+					mPlayer.start();					
+				} catch (IllegalArgumentException | SecurityException
+						| IllegalStateException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				mCountDownTimer = new CountDownTimer(mPlayer.getDuration(), 1000) {
+					public void onTick(long millisUntilFinished) {
+						
+					}
+	
+					public void onFinish() {
+						if (mPlayer != null) {
+							mPlayer.release();
+							mPlayer = null;
+						}
+						playButton.setClickable(true);
+					}
+				}.start();
+			}
+	    }
 	}
 	
 	private void postAnswer(String answerText) {
