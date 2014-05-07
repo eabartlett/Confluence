@@ -2,6 +2,7 @@ package com.example.confluence.answers;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
@@ -20,6 +21,7 @@ public class AnswerLayout extends LinearLayout {
 	private boolean mUpClicked = false, mDownClicked = false;
 	private Activity mActivity;
 	private String mAnswerId;
+	private String mAudioPath;
 
 	public AnswerLayout(Context context) {
 		super(context);
@@ -37,7 +39,10 @@ public class AnswerLayout extends LinearLayout {
 		// TODO: check if ids will conflict
 		this.mAnswer = answer;
 		mAnswerId = this.mAnswer.getAnswerId();
+		mAudioPath = mAnswer.getAudioPath();
 		mTitle = (TextView) findViewById(R.id.answer_firstLine);
+		Log.d("CONFLUENCE", mTitle + " " + mAnswerId + " " + mAudioPath);
+
 		mAnswerText = (TextView) findViewById(R.id.answer_secondLine);
 		mRatingText = (TextView) findViewById(R.id.answer_rating);
 		mUpvoteButton = (ImageButton) findViewById(R.id.answer_upvote);
@@ -51,7 +56,7 @@ public class AnswerLayout extends LinearLayout {
 			mPlaybackButton.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
-					playAudio(mAnswerId);
+					playAudio(mAnswerId, mAudioPath);
 				}
 			});
 		}
@@ -79,8 +84,8 @@ public class AnswerLayout extends LinearLayout {
 		setRating(answer.getRating());
 	}
 	
-	protected void playAudio(String answerId) {
-		((AnswerActivity) mActivity).playAudioInAnswer(answerId);
+	protected void playAudio(String answerId, String audioPath) {
+		((AnswerActivity) mActivity).playAudioInAnswer(answerId, audioPath);
 	}
 	
 	/**

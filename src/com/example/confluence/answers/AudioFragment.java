@@ -46,7 +46,8 @@ public class AudioFragment extends Fragment {
 	private MediaPlayer mPlayer = null;
 	public CountDownTimer mCountDownTimer = null;
 
-	private String mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/test.3gp";
+	private String mFileName;
+	private int random;
 
 	private boolean mHasRecording=false, mStartPlaying = true, mStartRecording=true;
 	private MediaRecorder mRecorder = null;
@@ -65,6 +66,9 @@ public class AudioFragment extends Fragment {
 			Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
 		View v = inflater.inflate(R.layout.record_view, container, false);
+		
+		random = (int) Math.random();
+		mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + random + ".3gp";
 		progressBar = (ProgressBar) v.findViewById(R.id.progress_bar);
 		//progressBar2 = (ProgressBar) v.findViewById(R.id.progress_bar);
 		mRecordButton = (Button) v.findViewById(R.id.record_button);
@@ -122,7 +126,6 @@ public class AudioFragment extends Fragment {
 	public String getAudioFilePath() {
 		return mFileName;
 	}
-
 
 	// AUDIO HANDLING METHODS
 

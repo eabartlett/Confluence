@@ -50,9 +50,9 @@ public class AnswerActivity extends BaseActivity {
 
 	private ArrayList<Answer> mAnswers;
 	
-	private String mQuestionId, mAnswerId, mAnswerIdPosted;
+	private String mQuestionId, mAnswerId, mAnswerIdPosted, mAnswerAudioPath;
 	ConfluenceAPI mApi;
-	private String mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/test1.3gp";
+	private String mFileName;
 	private Button playButton;
 	private MediaPlayer mPlayer;
 	private CountDownTimer mCountDownTimer; 
@@ -74,7 +74,10 @@ public class AnswerActivity extends BaseActivity {
 
 		mListView = (ListView) findViewById(R.id.answer_list);
 		mAnswerEditText = (EditText) findViewById(R.id.answer_question_bar);
-		mAudioFooter = (AudioFragment) getFragmentManager().findFragmentById(R.id.audio_footer);		
+		mAudioFooter = (AudioFragment) getFragmentManager().findFragmentById(R.id.audio_footer);	
+		mFileName = mAudioFooter.getAudioFilePath();
+		
+		
 		mAnswers = new ArrayList<Answer>();
 		
 		mListView.setAdapter(new AnswerArrayAdapter(this,
@@ -289,9 +292,10 @@ public class AnswerActivity extends BaseActivity {
 	}
 	
 	//pulled from OpenAnswerActivity
-	public void playAudioInAnswer(String answerId) {
+	public void playAudioInAnswer(String answerId, String audioPath) {
 		new GetAudioInAnswer().execute("");
 		mAnswerIdPosted = answerId;
+		mAnswerAudioPath = audioPath;
 		
 	}
 	

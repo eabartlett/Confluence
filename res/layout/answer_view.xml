@@ -25,7 +25,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginBottom="2dp"
         android:contentDescription="@string/upvote_description"
-        android:background="@color/transparent"
+        android:background="@color/light_gray"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:src="@drawable/ic_action_good" />
@@ -36,7 +36,7 @@
         android:layout_height="30dp"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/answer_upvote"
-        android:background="@color/transparent"
+        android:background="@color/light_gray"
         android:contentDescription="@string/downvote_description"
         android:focusable="false"
         android:focusableInTouchMode="false"
