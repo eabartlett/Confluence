@@ -235,6 +235,7 @@ public class LanguageSelectorLayout extends RelativeLayout {
 			// TODO Auto-generated method stub
 			String lang = params[0];
 			User result = mApi.delLangUser(NewsFeedActivity.mUser.getId(), lang);
+			lang = lang.toLowerCase();
 			if (result == null) {
 				Toast msg = Toast.makeText(getContext(), "Error with servers. Language not removed.", Toast.LENGTH_LONG);
 				msg.show();
