@@ -140,7 +140,6 @@ public class NewsFeedActivity extends BaseActivity {
 				NewsFeedQuestion q = questionView.getQuestion();
 				Intent qIntent = new Intent(NewsFeedActivity.this, AnswerActivity.class);
 				qIntent.putExtra("id", q.getId());
-				//Below this line is all stuff that may or may not be taken out for final functionality
 				qIntent.putExtra("question", q.getQuestion());
 				qIntent.putExtra("language", q.getLanguage());
 				startActivity(qIntent);

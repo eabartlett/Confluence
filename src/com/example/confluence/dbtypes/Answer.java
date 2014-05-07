@@ -19,6 +19,7 @@ public class Answer {
 	// TODO: implement list of responses to answer
 	private String mUserId;
 	private String mQId;
+	private String mAId;
 	private String mUserName, mAnswerText, mAudioPath;
 	private boolean mHasRecording;
 	private Date mAnswerDate;
@@ -32,6 +33,7 @@ public class Answer {
 		mAudioPath = recordFilePath;
 		mRating = 0;
 		mQId = qId;
+		mAId = id;
 	}
 	
 	public Answer(JSONObject q) throws JSONException {
@@ -42,6 +44,10 @@ public class Answer {
 
 	public String getUserId() {
 		return mUserId;
+	}
+	
+	public String getAnswerId() {
+		return mAId;
 	}
 	
 	public String getUserName() {

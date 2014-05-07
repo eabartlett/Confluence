@@ -35,17 +35,13 @@
             android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity
-            android:name="com.example.confluence.PostedQuestionActivity"
-            android:parentActivityName="com.example.confluence.NewsFeedActivity"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name="com.example.confluence.VoiceRecorderActivity"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
             android:name="com.example.confluence.AnswerActivity"
             android:parentActivityName="com.example.confluence.NewsFeedActivity"
+            android:label="@string/app_name">
+        </activity>
+        <activity
+            android:name="com.example.confluence.OpenAnswerActivity"
+            android:parentActivityName="com.example.confluence.AnswerActivity"
             android:label="@string/app_name">
         </activity>
         <activity

@@ -21,6 +21,9 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -30,6 +33,7 @@ import android.widget.Toast;
 import com.example.confluence.answers.AnswerArrayAdapter;
 import com.example.confluence.answers.AudioFragment;
 import com.example.confluence.dbtypes.Answer;
+import com.example.confluence.newsfeed.AnswerView;
 
 /**
  * AnswerActiv
@@ -76,6 +80,29 @@ public class AnswerActivity extends BaseActivity {
 				R.layout.activity_answer,
 				mAnswers)); 
 		
+		mListView.setFocusable(true);
+		mListView.setFocusableInTouchMode(true);
+		mListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				Log.d("Confluence Listview", "Item clicked");
+				ViewGroup viewGroup = (ViewGroup) arg1;
+				AnswerView answerView = (AnswerView) viewGroup.getChildAt(0);
+				Answer a = answerView.getAnswer();
+				Intent qIntent = new Intent(AnswerActivity.this, OpenAnswerActivity.class);
+				qIntent.putExtra("id", a.getAnswerId());
+				qIntent.putExtra("question", a.getText());
+				qIntent.putExtra("language", a.getLanguage());
+				startActivity(qIntent);
+			}
+			
+		});
+		
+		
+
 		mApi = new ConfluenceAPI();
 		playButton = (Button) findViewById (R.id.bt_play);
 
