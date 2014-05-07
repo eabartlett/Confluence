@@ -48,9 +48,16 @@
             android:id="@+id/profile_desired_languages"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_below="@id/profile_known_languages"
             android:layout_marginTop="20dp" />
+        
+        <View 
+            android:id="@+id/white_space_filler"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/profile_desired_languages"
+            />
     </RelativeLayout>
 
 </ScrollView>
