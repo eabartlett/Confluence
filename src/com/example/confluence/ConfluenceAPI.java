@@ -56,8 +56,8 @@ public class ConfluenceAPI {
 			byte[] buffer = new byte[32768];
 			while( (read = is.read(buffer)) > 0) {
 			  fos.write(buffer, 0, read);
+			  fos.flush();
 			}
-			fos.flush();
 			fos.close();
 			return true;
 		} catch (IllegalStateException e) {
