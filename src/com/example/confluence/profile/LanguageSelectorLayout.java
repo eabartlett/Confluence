@@ -36,6 +36,7 @@ public class LanguageSelectorLayout extends RelativeLayout {
 	private ConfluenceAPI mApi;
 	private AutoCompleteTextView mLanguageInput;
 
+	//TODO: remove checks to case when adding/removing languages
 	
 	public LanguageSelectorLayout(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -116,7 +117,13 @@ public class LanguageSelectorLayout extends RelativeLayout {
 					public void onClick(View arg0) {
 						// TODO Auto-generated method stub
 						String lang = newRow.getText();
-						removeLanguage(lang);
+						DeleteLanguage req = new DeleteLanguage();
+						
+						if (mLanguages.contains(lang.toLowerCase()) || mLanguages.contains(lang.toUpperCase()) || 
+								mLanguages.contains(lang)) {
+							req.execute(lang);
+						}
+						
 					}
 				});
 		
@@ -215,6 +222,32 @@ public class LanguageSelectorLayout extends RelativeLayout {
 	    protected void onPostExecute(User user) {
 			if (user != null && mLang!= null) {
 				addLanguage(mLang);
+			}
+	    }
+	}
+	
+	private class DeleteLanguage extends AsyncTask<String, Integer, User> {
+
+		String mLang;
+		
+		@Override
+		protected User doInBackground(String... params) {
+			// TODO Auto-generated method stub
+			String lang = params[0];
+			User result = mApi.delLangUser(NewsFeedActivity.mUser.getId(), lang);
+			if (result == null) {
+				Toast msg = Toast.makeText(getContext(), "Error with servers. Language not removed.", Toast.LENGTH_LONG);
+				msg.show();
+			} else {
+				mLang = lang;
+			}
+			return result; 
+		}
+		
+		@Override
+	    protected void onPostExecute(User user) {
+			if (user != null && mLang!= null) {
+				removeLanguage(mLang);
 			}
 	    }
 	}
