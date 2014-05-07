@@ -55,8 +55,9 @@ public class ConfluenceAPI {
 			
 			//Taken from stackoverflow: http://stackoverflow.com/questions/19733612/how-to-download-an-httpresponse-into-a-file
 			int read = 0;
-			byte[] buffer = new byte[32768];
-			while( (read = is.read(buffer)) > 0) {
+			byte[] buffer = new byte[1024];
+			while((read = is.read(buffer)) > 0) {
+				Log.d("Confluence writing file", String.valueOf(read));
 			  buff.write(buffer, 0, read);
 			}
 			buff.flush();
