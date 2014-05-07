@@ -59,6 +59,7 @@ public class ConfluenceAPI {
 			while( (read = is.read(buffer)) > 0) {
 			  buff.write(buffer, 0, read);
 			}
+			buff.flush();
 			buff.close();
 			fos.close();
 			return true;
