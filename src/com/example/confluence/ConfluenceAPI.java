@@ -105,7 +105,7 @@ public class ConfluenceAPI {
 		List<NameValuePair> vals = new ArrayList<NameValuePair>(2);
 		vals.add(new BasicNameValuePair("id", uid));
 		vals.add(new BasicNameValuePair("lang", lang));
-		String endpoint = String.format(SERVER, "api/user/langdel");
+		String endpoint = String.format(SERVER, "api/user/dellang");
 		
 		try {
 			return new User(postKVData(endpoint, vals));
@@ -116,11 +116,25 @@ public class ConfluenceAPI {
 		return null;
 	}
 	
-	public User addLangUser(String uid, String lang){
+	public User addLearnLangUser(String uid, String lang){
 		List<NameValuePair> vals = new ArrayList<NameValuePair>(2);
 		vals.add(new BasicNameValuePair("id", uid));
 		vals.add(new BasicNameValuePair("lang", lang));
-		String endpoint = String.format(SERVER, "api/user/lang");
+		String endpoint = String.format(SERVER, "api/user/learnlang");
+		
+		try {
+			return new User(postKVData(endpoint, vals));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public User addProfLangUser(String uid, String lang){
+		List<NameValuePair> vals = new ArrayList<NameValuePair>(2);
+		vals.add(new BasicNameValuePair("id", uid));
+		vals.add(new BasicNameValuePair("lang", lang));
+		String endpoint = String.format(SERVER, "api/user/proflang");
 		
 		try {
 			return new User(postKVData(endpoint, vals));
