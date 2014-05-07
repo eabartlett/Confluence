@@ -2,15 +2,20 @@ package com.example.confluence;
 
 import java.util.Arrays;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.DrawerLayout.SimpleDrawerListener;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -29,6 +34,9 @@ public class NewsFeedActivity extends BaseActivity {
 
 	ConfluenceAPI mApi;
 	public static User mUser;
+	public SimpleDrawerListener drawerToggle;
+	public DrawerLayout mDrawerLayout;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -38,6 +46,9 @@ public class NewsFeedActivity extends BaseActivity {
 		
 		setEditTextFocus();
 		getActionBar().setDisplayHomeAsUpEnabled(false);
+		
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		setUpDrawer();
 
 	}
 
@@ -46,6 +57,39 @@ public class NewsFeedActivity extends BaseActivity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.news_feed, menu);
 		return true;
+	}
+	
+	private class DrawerListener implements android.support.v4.widget.DrawerLayout.DrawerListener {
+		@Override
+		public void onDrawerClosed(View v) {
+			Log.d("DEBUG", "drawer closed");
+			loadUser("53688688c7a0aa166b8ee5e6");
+
+			//InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		}
+
+		@Override
+		public void onDrawerOpened(View arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onDrawerSlide(View arg0, float arg1) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onDrawerStateChanged(int arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+	}
+	
+	public void setUpDrawer() {
+		mDrawerLayout.setDrawerListener((android.support.v4.widget.DrawerLayout.DrawerListener) new DrawerListener());
+		
 	}
 
 	
@@ -137,6 +181,8 @@ public class NewsFeedActivity extends BaseActivity {
 		ProfileLayout profileLayout = (ProfileLayout) findViewById(R.id.navigation_drawer);				
 		profileLayout.setUsername(mUser.getFirst());
 		profileLayout.initLanguages();
+		
+		
 	}
 		
 		
@@ -245,4 +291,5 @@ public class NewsFeedActivity extends BaseActivity {
 			}
 	    }
 	}
+
 }
