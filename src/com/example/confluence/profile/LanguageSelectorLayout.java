@@ -28,7 +28,7 @@ import com.example.confluence.dbtypes.User;
 
 public class LanguageSelectorLayout extends RelativeLayout {
 
-	public static String[] LANGUAGES = {"English", "Spanish", "French", "German", "Chinese", "Japanese", "Swedish"};
+	public static String[] LANGUAGES = {"English", "Spanish", "French", "German", "Swedish", "Russian"};
 	public static List<String> LANG_LIST = Arrays.asList(LanguageSelectorLayout.LANGUAGES);
 	
 	private ArrayList<String> mLanguages = new ArrayList<String>();

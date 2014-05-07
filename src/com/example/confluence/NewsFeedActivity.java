@@ -122,6 +122,7 @@ public class NewsFeedActivity extends BaseActivity {
 	private void loadLanguages(){
 		Spinner languages = (Spinner) findViewById(R.id.language_filter);
 		String[] langs = getUserLanguages();
+		Arrays.sort(langs);
 		ArrayAdapter<String> langAdapter = new ArrayAdapter<String>(
 				this, R.layout.spinner_row, langs);
 		languages.setAdapter(langAdapter);
@@ -130,28 +131,12 @@ public class NewsFeedActivity extends BaseActivity {
 	}
 	
 	/**
-	 * Sets listener to start Profile activity and loads user information into drawer
-	 * TODO: instantiate notifications list
+	 * Loads user information into drawer (i.e. languages, name)
 	 */
 	private void loadProfile() {
-		ProfileLayout profileLayout = (ProfileLayout) findViewById(R.id.navigation_drawer);
-		// ImageButton profileButton = (ImageButton) profileLayout.findViewById(R.id.nav_profile_button);
-				
-		profileLayout.setUsername(mUser.getFirst() + " " + mUser.getLast());
+		ProfileLayout profileLayout = (ProfileLayout) findViewById(R.id.navigation_drawer);				
+		profileLayout.setUsername(mUser.getFirst());
 		profileLayout.initLanguages();
-
-/*		
- 			ImageButton profileButton = (ImageButton) profileLayout.findViewById(R.id.nav_profile_button);
- 			profileButton.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				Intent profileIntent = new Intent(NewsFeedActivity.this, ProfileActivity.class);
-				profileIntent.putExtra("USER", "Bearly a Group");
-				startActivity(profileIntent);
-			}
-		});*/
 	}
 		
 		
