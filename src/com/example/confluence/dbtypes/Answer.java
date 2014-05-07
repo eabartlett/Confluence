@@ -5,6 +5,8 @@ import java.util.Date;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 /**
  * Class that holds the information for an Answer to a question.
  * Includes user, answer text, date, etc.
@@ -34,7 +36,8 @@ public class Answer {
 	
 	public Answer(JSONObject q) throws JSONException {
 		// TODO Auto-generated constructor stub
-		this(q.getString("_id"), q.getString("user"), q.getString("answer"), q.getString("audio"), /*QId*/q.getString(""));
+		this(q.getString("_id"), q.getString("user"), q.getString("answer"), q.getString("audio"), q.getString("question"));
+		Log.d("Confluence JSON", q.toString(1));
 	}
 
 	public String getUserId() {

@@ -37,7 +37,7 @@ public class AnswerLayout extends LinearLayout {
 		
 		// Display playback button if recording exists
 		mPlaybackButton = (ImageButton) findViewById(R.id.answer_attachment);
-		if (answer.hasRecording()) {
+		{
 			mPlaybackButton.setVisibility(VISIBLE);
 		}
 		

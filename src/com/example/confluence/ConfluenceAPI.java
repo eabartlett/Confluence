@@ -315,13 +315,17 @@ public class ConfluenceAPI {
 		url = constructGetUrl(url, "qid", qid);
 		try {
 			JSONArray data = (JSONArray) getRequest(url, true, false);
-			if (data != null) {
+			if (data != null) 
+			{
 				Answer[] answers = new Answer[data.length()];
+				Log.d("Confluence ********", String.valueOf(answers.length));
 				for(int i = 0; i < answers.length; i++){
 					answers[i] = new Answer(data.getJSONObject(i));
 				}
+				Log.d("Danger!!!!", "I was here");
 				return answers;
 			}
+				
 		} catch (JSONException e) {
 			Log.d("Error", e.getMessage());
 		}

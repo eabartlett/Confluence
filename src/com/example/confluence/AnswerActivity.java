@@ -219,12 +219,18 @@ public class AnswerActivity extends BaseActivity {
 
 		// @Override
 		protected Answer[] doInBackground(String... param) {
-			return mApi.getAnswersByQuestion(mQuestionId);
+			Answer[] answers;
+			answers = mApi.getAnswersByQuestion(mQuestionId);
+			if (answers == null) {
+				Log.d("Confluence ****", "Danger");
+			}
+			return answers;
 		}
 		
 		@Override
 		protected void onPostExecute(Answer[] answers) {
-			if (answers != null) {
+			if (answers != null) 
+			{
 				loadAnswersToUI(answers);
 			}
 	    }
@@ -238,10 +244,5 @@ public class AnswerActivity extends BaseActivity {
 		answerAdapter.clear();
 		answerAdapter.addAll(answers);
 		answerAdapter.notifyDataSetChanged();
-		/*AnswerArrayAdapter answerAdapter = 
-				new AnswerArrayAdapter(getApplicationContext(),
-						R.layout.activity_answer, 
-						mAnswers.getAnswers());
-		mListView.setAdapter(answerAdapter);*/
 	}
 }
