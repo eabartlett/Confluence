@@ -61,7 +61,7 @@ public class OpenAnswerActivity extends Activity {
 		
 	}
 	
-	private class GetAudioInAnswer extends AsyncTask<String, Integer, Boolean>{
+	public class GetAudioInAnswer extends AsyncTask<String, Integer, Boolean>{
 
 		// @Override
 		protected Boolean doInBackground(String... params) {

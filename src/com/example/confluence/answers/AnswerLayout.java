@@ -1,5 +1,6 @@
 package com.example.confluence.answers;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.confluence.AnswerActivity;
 import com.example.confluence.R;
 import com.example.confluence.dbtypes.Answer;
 
@@ -16,6 +18,8 @@ public class AnswerLayout extends LinearLayout {
 	private TextView mTitle, mAnswerText, mRatingText;
 	private ImageButton mPlaybackButton, mUpvoteButton, mDownvoteButton;
 	private boolean mUpClicked = false, mDownClicked = false;
+	private Activity mActivity;
+	private String mAnswerId;
 
 	public AnswerLayout(Context context) {
 		super(context);
@@ -23,12 +27,16 @@ public class AnswerLayout extends LinearLayout {
 	
 	public AnswerLayout(Context context, Answer answer) {
 		super(context, null);
+		
+		mActivity = (Activity) context;
+		
 		LayoutInflater inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		inflater.inflate(R.layout.answer_view, this, true);
 		
 		// TODO: check if ids will conflict
 		this.mAnswer = answer;
+		mAnswerId = this.mAnswer.getAnswerId();
 		mTitle = (TextView) findViewById(R.id.answer_firstLine);
 		mAnswerText = (TextView) findViewById(R.id.answer_secondLine);
 		mRatingText = (TextView) findViewById(R.id.answer_rating);
@@ -36,9 +44,16 @@ public class AnswerLayout extends LinearLayout {
 		mDownvoteButton = (ImageButton) findViewById(R.id.answer_downvote);
 		
 		// Display playback button if recording exists
+		
 		mPlaybackButton = (ImageButton) findViewById(R.id.answer_attachment);
 		{
 			mPlaybackButton.setVisibility(VISIBLE);
+			mPlaybackButton.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					playAudio(mAnswerId);
+				}
+			});
 		}
 		
 		// Add listeners to upvotes
@@ -62,6 +77,10 @@ public class AnswerLayout extends LinearLayout {
 		setUserName(answer.getUserName());
 		setAnswer(answer.getText());
 		setRating(answer.getRating());
+	}
+	
+	protected void playAudio(String answerId) {
+		((AnswerActivity) mActivity).playAudioInAnswer(answerId);
 	}
 	
 	/**

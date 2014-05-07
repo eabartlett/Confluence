@@ -30,6 +30,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.confluence.OpenAnswerActivity.GetAudioInAnswer;
 import com.example.confluence.answers.AnswerArrayAdapter;
 import com.example.confluence.answers.AudioFragment;
 import com.example.confluence.dbtypes.Answer;
@@ -49,7 +50,7 @@ public class AnswerActivity extends BaseActivity {
 
 	private ArrayList<Answer> mAnswers;
 	
-	private String mQuestionId, mAnswerId;
+	private String mQuestionId, mAnswerId, mAnswerIdPosted;
 	ConfluenceAPI mApi;
 	private String mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/test1.3gp";
 	private Button playButton;
@@ -76,7 +77,7 @@ public class AnswerActivity extends BaseActivity {
 		mAudioFooter = (AudioFragment) getFragmentManager().findFragmentById(R.id.audio_footer);		
 		mAnswers = new ArrayList<Answer>();
 		
-		mListView.setAdapter(new AnswerArrayAdapter(getApplicationContext(),
+		mListView.setAdapter(new AnswerArrayAdapter(this,
 				R.layout.activity_answer,
 				mAnswers)); 
 		
@@ -93,6 +94,7 @@ public class AnswerActivity extends BaseActivity {
 				AnswerView answerView = (AnswerView) viewGroup.getChildAt(0);
 				Answer a = answerView.getAnswer();
 				Intent qIntent = new Intent(AnswerActivity.this, OpenAnswerActivity.class);
+
 				qIntent.putExtra("id", a.getAnswerId());
 				qIntent.putExtra("question", a.getText());
 				qIntent.putExtra("language", a.getLanguage());
@@ -285,4 +287,59 @@ public class AnswerActivity extends BaseActivity {
 		answerAdapter.addAll(answers);
 		answerAdapter.notifyDataSetChanged();
 	}
+	
+	//pulled from OpenAnswerActivity
+	public void playAudioInAnswer(String answerId) {
+		new GetAudioInAnswer().execute("");
+		mAnswerIdPosted = answerId;
+		
+	}
+	
+	private class GetAudioInAnswer extends AsyncTask<String, Integer, Boolean>{
+
+		// @Override
+		protected Boolean doInBackground(String... params) {
+			if (mApi.getAudio(mAnswerIdPosted, mFileName, "answer")) {			
+				return true;
+			}
+			Log.d("Confluence ****", "GetAudio failed");
+			return false;
+		}
+		
+		@Override
+		protected void onPostExecute(Boolean result) {
+			if (result) {
+				mPlayer = new MediaPlayer();
+				try {
+					playButton.setClickable(false);
+					mPlayer.setDataSource(mFileName);
+					mPlayer.prepare();
+					mPlayer.start();					
+				} catch (IllegalArgumentException e) { 
+					e.printStackTrace();
+				} catch (SecurityException e) {
+					e.printStackTrace();
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				mCountDownTimer = new CountDownTimer(mPlayer.getDuration(), 1000) {
+					public void onTick(long millisUntilFinished) {
+						
+					}
+	
+					public void onFinish() {
+						if (mPlayer != null) {
+							mPlayer.release();
+							mPlayer = null;
+						}
+						playButton.setClickable(true);
+					}
+				}.start();
+			}
+	    }
+	}
+	
+	
 }
