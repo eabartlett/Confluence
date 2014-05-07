@@ -1,5 +1,6 @@
 package com.example.confluence;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -49,14 +50,17 @@ public class ConfluenceAPI {
 		File file = new File(filepath);
 		try {
 			FileOutputStream fos = new FileOutputStream(file);
+			BufferedOutputStream buff = new BufferedOutputStream(fos);
 			InputStream is = res.getEntity().getContent();
 			
 			//Taken from stackoverflow: http://stackoverflow.com/questions/19733612/how-to-download-an-httpresponse-into-a-file
 			int read = 0;
 			byte[] buffer = new byte[32768];
 			while( (read = is.read(buffer)) > 0) {
-			  fos.write(buffer, 0, read);
+			  buff.write(buffer, 0, read);
 			}
+			buff.flush();
+			buff.close();
 			fos.close();
 			return true;
 		} catch (IllegalStateException e) {
