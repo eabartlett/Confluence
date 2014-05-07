@@ -23,7 +23,8 @@ import com.example.confluence.dbtypes.NewsFeedQuestion;
 import com.example.confluence.dbtypes.User;
 import com.example.confluence.newsfeed.NewsArrayAdapter;
 import com.example.confluence.newsfeed.NewsFeedQuestionView;
-import com.example.confluence.profile.NavigationLayout;
+import com.example.confluence.profile.LanguageSelectorLayout;
+import com.example.confluence.profile.ProfileLayout;
 public class NewsFeedActivity extends BaseActivity {
 
 	ConfluenceAPI mApi;
@@ -34,7 +35,6 @@ public class NewsFeedActivity extends BaseActivity {
 		setContentView(R.layout.activity_news_feed);
 		mApi = new ConfluenceAPI();
 		loadUser("53688688c7a0aa166b8ee5e6");
-		loadProfile();
 		
 		setEditTextFocus();
 		getActionBar().setDisplayHomeAsUpEnabled(false);
@@ -134,9 +134,15 @@ public class NewsFeedActivity extends BaseActivity {
 	 * TODO: instantiate notifications list
 	 */
 	private void loadProfile() {
-		NavigationLayout navLayout = (NavigationLayout) findViewById(R.id.navigation_drawer);
-		ImageButton profileButton = (ImageButton) navLayout.findViewById(R.id.nav_profile_button);
-		profileButton.setOnClickListener(new OnClickListener() {
+		ProfileLayout profileLayout = (ProfileLayout) findViewById(R.id.navigation_drawer);
+		// ImageButton profileButton = (ImageButton) profileLayout.findViewById(R.id.nav_profile_button);
+				
+		profileLayout.setUsername(mUser.getFirst() + " " + mUser.getLast());
+		profileLayout.initLanguages();
+
+/*		
+ 			ImageButton profileButton = (ImageButton) profileLayout.findViewById(R.id.nav_profile_button);
+ 			profileButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
@@ -145,7 +151,7 @@ public class NewsFeedActivity extends BaseActivity {
 				profileIntent.putExtra("USER", "Bearly a Group");
 				startActivity(profileIntent);
 			}
-		});
+		});*/
 	}
 		
 		
@@ -250,6 +256,7 @@ public class NewsFeedActivity extends BaseActivity {
 				Log.d("Confluence User", String.valueOf(user));
 				loadQuestions(getUserLanguages());
 				loadLanguages();
+				loadProfile();
 			}
 	    }
 	}
