@@ -79,7 +79,7 @@ public class AnswerLayout extends LinearLayout {
 		});
 		
 		// Insert data into UI
-		setUserName(answer.getUserName());
+		//setUserName(answer.getUserName());
 		setAnswer(answer.getText());
 		setRating(answer.getRating());
 	}
