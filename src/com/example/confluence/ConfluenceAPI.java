@@ -103,11 +103,26 @@ public class ConfluenceAPI {
 		return null;
 	}
 
-	public User delLangUser(String uid, String lang){
+	public User delProfLangUser(String uid, String lang){
 		List<NameValuePair> vals = new ArrayList<NameValuePair>(2);
 		vals.add(new BasicNameValuePair("id", uid));
 		vals.add(new BasicNameValuePair("lang", lang));
-		String endpoint = String.format(SERVER, "api/user/dellang");
+		String endpoint = String.format(SERVER, "api/user/delproflang");
+
+		try {
+			return new User(postKVData(endpoint, vals));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public User delLearnLangUser(String uid, String lang){
+		List<NameValuePair> vals = new ArrayList<NameValuePair>(2);
+		vals.add(new BasicNameValuePair("id", uid));
+		vals.add(new BasicNameValuePair("lang", lang));
+		String endpoint = String.format(SERVER, "api/user/dellearnlang");
 
 		try {
 			return new User(postKVData(endpoint, vals));
