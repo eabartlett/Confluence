@@ -313,6 +313,28 @@ public class ConfluenceAPI {
 		return null;
 	}
 
+  public Answer increment(String aid){
+  
+		List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(1);
+		nameValuePair.add(new BasicNameValuePair("id", aid));
+
+		//construct URL endpoint
+		String endpoint = String.format(SERVER, "api/answer/inc");
+
+		return new Answer(postKVData(endpoint, nameValuePair));
+  }
+  
+  public Answer decrement(String aid){
+  
+		List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(1);
+		nameValuePair.add(new BasicNameValuePair("id", aid));
+
+		//construct URL endpoint
+		String endpoint = String.format(SERVER, "api/answer/dec");
+
+		return new Answer(postKVData(endpoint, nameValuePair));
+  }
+  
   public Answer getAnswerById(String aid){
 		String url = String.format(SERVER, "api/answer?%s=%s");
 		url = constructGetUrl(url, "id", aid);
