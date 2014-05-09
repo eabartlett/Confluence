@@ -4,6 +4,9 @@ package com.example.confluence;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -18,15 +21,20 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.confluence.OpenAnswerActivity.GetAudioInAnswer;
 import com.example.confluence.answers.AnswerArrayAdapter;
 import com.example.confluence.answers.AudioFragment;
 import com.example.confluence.dbtypes.Answer;
+import com.example.confluence.newsfeed.AnswerView;
 
 /**
  * AnswerActiv
@@ -42,9 +50,9 @@ public class AnswerActivity extends BaseActivity {
 
 	private ArrayList<Answer> mAnswers;
 	
-	private String mQuestionId;
+	private String mQuestionId, mAnswerId, mAnswerIdPosted, mAnswerAudioPath;
 	ConfluenceAPI mApi;
-	private String mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/test1.3gp";
+	private String mFileName;
 	private Button playButton;
 	private MediaPlayer mPlayer;
 	private CountDownTimer mCountDownTimer; 
@@ -66,26 +74,44 @@ public class AnswerActivity extends BaseActivity {
 
 		mListView = (ListView) findViewById(R.id.answer_list);
 		mAnswerEditText = (EditText) findViewById(R.id.answer_question_bar);
-		mAudioFooter = (AudioFragment) getFragmentManager().findFragmentById(R.id.audio_footer);		
+		mAudioFooter = (AudioFragment) getFragmentManager().findFragmentById(R.id.audio_footer);	
+		mFileName = mAudioFooter.getAudioFilePath();
+		
+		
 		mAnswers = new ArrayList<Answer>();
 		
-		mListView.setAdapter(new AnswerArrayAdapter(getApplicationContext(),
+		mListView.setAdapter(new AnswerArrayAdapter(this,
 				R.layout.activity_answer,
 				mAnswers)); 
 		
-		boolean hasAnswers = extras.getBoolean("hasAnswers");
-		boolean mHasRecording = extras.getBoolean("hasRecording");
+		mListView.setFocusable(true);
+		mListView.setFocusableInTouchMode(true);
+		mListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				Log.d("Confluence Listview", "Item clicked");
+				ViewGroup viewGroup = (ViewGroup) arg1;
+				AnswerView answerView = (AnswerView) viewGroup.getChildAt(0);
+				Answer a = answerView.getAnswer();
+				Intent qIntent = new Intent(AnswerActivity.this, OpenAnswerActivity.class);
+
+				qIntent.putExtra("id", a.getAnswerId());
+				qIntent.putExtra("question", a.getText());
+				qIntent.putExtra("language", a.getLanguage());
+				startActivity(qIntent);
+			}
+			
+		});
 		
+		
+
 		mApi = new ConfluenceAPI();
 		playButton = (Button) findViewById (R.id.bt_play);
 
-		if (hasAnswers) {
-			// add dummy answers 
-			loadAnswersToUI();
-		}
-		if (mHasRecording) {
-			extras.getString("recording");
-		}
+		new callGetAnswersByQuestion().execute("");
 
 		mAudioFooter.activateRecordButton(true);
 		mAudioFooter.activatePlayButton(false);
@@ -187,33 +213,137 @@ public class AnswerActivity extends BaseActivity {
 	}
 	
 	private void postAnswer(String answerText) {
-
-		boolean answerHasRecording = mAudioFooter.hasRecording();
-		String audioFilePath = mAudioFooter.getAudioFilePath();
-		Answer newAnswer = new Answer("03", "Bearly a Group", answerText, audioFilePath, null);
-		mAnswers.add(newAnswer);
-		mAnswerEditText.setText(""); 
-		mAudioFooter.activateRecordButton(true);
-		mAudioFooter.activatePlayButton(false);
-		loadAnswersToUI();
+		
+		// boolean answerHasRecording = mAudioFooter.hasRecording();
+		Answer newAnswer = new Answer(
+				"", 
+				NewsFeedActivity.mUser.getId(), 
+				answerText, 
+				mAudioFooter.getAudioFilePath(), 
+				mQuestionId);
+		
+		new callPostAnswer().execute(newAnswer);
 
 		// Reset audioFooter UI
 		mAudioFooter.activateRecordButton(true);
 		mAudioFooter.activatePlayButton(false);
 		mAudioFooter.setHasRecording(false);
+		
+		mAnswerEditText.setText(""); 
 	}
 
+	private class callPostAnswer extends AsyncTask<Answer, Integer, Boolean>{
 
+		// @Override
+		protected Boolean doInBackground(Answer... answer) {
+			JSONObject jAns = mApi.postAnswer(answer[0]);
+			if (jAns != null) {		
+				try {
+					mAnswerId = jAns.getString("_id");
+					if (mApi.postAnswerAudio(mFileName, mAnswerId) != null)
+						return true;
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				// return true;
+			}
+			Log.d("Confluence ****", "PostAnswer failed");
+			return false;
+		}
+		
+		@Override
+		protected void onPostExecute(Boolean result) {
+			if (result) {
+				new callGetAnswersByQuestion().execute("");		
+			}
+	    }
+	}
+
+	private class callGetAnswersByQuestion extends AsyncTask<String, Integer, Answer[]>{
+
+		// @Override
+		protected Answer[] doInBackground(String... param) {
+			Answer[] answers;
+			answers = mApi.getAnswersByQuestion(mQuestionId);
+			if (answers == null) {
+				Log.d("Confluence ****", "Danger");
+			}
+			return answers;
+		}
+		
+		@Override
+		protected void onPostExecute(Answer[] answers) {
+			if (answers != null) 
+			{
+				loadAnswersToUI(answers);
+			}
+	    }
+	}
+	
 	/**
 	 * Loads answers contained in AnswerList answers to the ListView UI.
 	 */
-	private void loadAnswersToUI() {
+	private void loadAnswersToUI(Answer[] answers) {
 		AnswerArrayAdapter answerAdapter = (AnswerArrayAdapter) mListView.getAdapter();
+		answerAdapter.clear();
+		answerAdapter.addAll(answers);
 		answerAdapter.notifyDataSetChanged();
-		/*AnswerArrayAdapter answerAdapter = 
-				new AnswerArrayAdapter(getApplicationContext(),
-						R.layout.activity_answer, 
-						mAnswers.getAnswers());
-		mListView.setAdapter(answerAdapter);*/
 	}
+	
+	//pulled from OpenAnswerActivity
+	public void playAudioInAnswer(String answerId, String audioPath) {
+		new GetAudioInAnswer().execute("");
+		mAnswerIdPosted = answerId;
+		mAnswerAudioPath = audioPath;
+		
+	}
+	
+	private class GetAudioInAnswer extends AsyncTask<String, Integer, Boolean>{
+
+		// @Override
+		protected Boolean doInBackground(String... params) {
+			if (mApi.getAudio(mAnswerIdPosted, mFileName, "answer")) {			
+				return true;
+			}
+			Log.d("Confluence ****", "GetAudio failed");
+			return false;
+		}
+		
+		@Override
+		protected void onPostExecute(Boolean result) {
+			if (result) {
+				mPlayer = new MediaPlayer();
+				try {
+					playButton.setClickable(false);
+					mPlayer.setDataSource(mFileName);
+					mPlayer.prepare();
+					mPlayer.start();					
+				} catch (IllegalArgumentException e) { 
+					e.printStackTrace();
+				} catch (SecurityException e) {
+					e.printStackTrace();
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				mCountDownTimer = new CountDownTimer(mPlayer.getDuration(), 1000) {
+					public void onTick(long millisUntilFinished) {
+						
+					}
+	
+					public void onFinish() {
+						if (mPlayer != null) {
+							mPlayer.release();
+							mPlayer = null;
+						}
+						playButton.setClickable(true);
+					}
+				}.start();
+			}
+	    }
+	}
+	
+	
 }

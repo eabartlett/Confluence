@@ -13,6 +13,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginRight="6dp"
         android:contentDescription="@string/profile_picture"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:src="@drawable/ic_launcher" />
 
     <ImageButton
@@ -23,7 +25,9 @@
         android:layout_alignParentTop="true"
         android:layout_marginBottom="2dp"
         android:contentDescription="@string/upvote_description"
-        android:background="@color/transparent"
+        android:background="@color/light_gray"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:src="@drawable/ic_action_good" />
 
     <ImageButton
@@ -32,8 +36,10 @@
         android:layout_height="30dp"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/answer_upvote"
-        android:background="@color/transparent"
+        android:background="@color/light_gray"
         android:contentDescription="@string/downvote_description"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:src="@drawable/ic_action_bad" />
 
     <TextView
@@ -44,8 +50,9 @@
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/answer_upvote"
         android:gravity="center_vertical"
-        android:text="@string/answer_title"
         android:textColor="#000000"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:textSize="16sp" />
 
     <TextView
@@ -59,6 +66,8 @@
         android:singleLine="false"
         android:text="@string/answer_description"
         android:textColor="#000000"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:textSize="12sp" />
 
     <TextView
@@ -67,6 +76,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/answer_upvote"
         android:layout_alignRight="@+id/answer_firstLine"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:layout_marginRight="15dp" />
 
     <ImageButton
@@ -78,7 +89,9 @@
         android:layout_marginRight="2dp"
         android:background="@color/light_gray"
         android:src="@drawable/ic_action_play_active"
-        android:contentDescription="@string/attachment_description"
+        android:contentDescription="@string/attachment_description" 
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:visibility="gone" />
 
 </RelativeLayout>

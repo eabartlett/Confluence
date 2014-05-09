@@ -3,7 +3,8 @@ package com.example.confluence.dbtypes;
 import java.util.Date;
 
 import org.json.JSONException;
-import org.json.JSONObject;
+import org.json.JSONObject; 
+import android.util.Log;
 
 /**
  * Class that holds the information for an Answer to a question.
@@ -17,6 +18,7 @@ public class Answer {
 	// TODO: implement list of responses to answer
 	private String mUserId;
 	private String mQId;
+	private String mAId;
 	private String mUserName, mAnswerText, mAudioPath;
 	private boolean mHasRecording;
 	private Date mAnswerDate;
@@ -30,15 +32,21 @@ public class Answer {
 		mAudioPath = recordFilePath;
 		mRating = rating;
 		mQId = qId;
+		mAId = id;
 	}
 	
 	public Answer(JSONObject q) throws JSONException {
 		// TODO Auto-generated constructor stub
 		this(q.getString("_id"), q.getString("user"), q.getString("answer"), q.getString("audio"), /*QId*/q.getString(""), Integer.parseInt(q.getString("rating")).intValue());
+		Log.d("Confluence JSON", q.toString(1));
 	}
 
 	public String getUserId() {
 		return mUserId;
+	}
+	
+	public String getAnswerId() {
+		return mAId;
 	}
 	
 	public String getUserName() {

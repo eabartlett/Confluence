@@ -13,6 +13,7 @@
             android:id="@+id/question_phrase_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="50dp"
              />
 
         <TextView
@@ -39,7 +40,8 @@
         android:layout_height="fill_parent"
         android:background="@color/light_gray"
         android:layout_above="@+id/answer_question_bar"
-        android:layout_below="@+id/answer_question_box" >
+        android:layout_below="@+id/answer_question_box"
+        android:focusable="true" >
     </ListView>
 
     <EditText
