@@ -39,7 +39,7 @@ like it contact me and I'd be more than happy to provide it.
 > public Answer[] getAnswersByQuestion(String qid):
     @param - qid: Unique ID of the question who's answers are being requested.
     @return - Array of Answers for the given question. Null if error in request or
-        if there is no Question with the given ID.
+        if there is no Answer associated with the given Question ID.
 > public Answer[] getAnswersByUser(String uid):
     @param - uid: Unique ID of the user who's questions are being requested.
     @return - Array of Answers for the given User id. Can be null if error in

@@ -67,7 +67,7 @@ public class AudioFragment extends Fragment {
 		// Inflate the layout for this fragment
 		View v = inflater.inflate(R.layout.record_view, container, false);
 		
-		random = (int) Math.random();
+		random = (int) Math.random() * 100000000;
 		mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + random + ".3gp";
 		progressBar = (ProgressBar) v.findViewById(R.id.progress_bar);
 		//progressBar2 = (ProgressBar) v.findViewById(R.id.progress_bar);

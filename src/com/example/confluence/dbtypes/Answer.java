@@ -3,8 +3,7 @@ package com.example.confluence.dbtypes;
 import java.util.Date;
 
 import org.json.JSONException;
-import org.json.JSONObject;
-
+import org.json.JSONObject; 
 import android.util.Log;
 
 /**
@@ -26,19 +25,19 @@ public class Answer {
 	private int mRating; // rating of an answer
 	private String mLanguage; // Language of question/answer
 
-	public Answer(String id, String userId, String answerText,String recordFilePath, String qId) { 
-		mUserId = userId;
+	public Answer(String id, String userName, String answerText,String recordFilePath, String qId, int rating) { 
+		mUserName = userName;
 		mAnswerText = answerText;
 		mAnswerDate = null;
 		mAudioPath = recordFilePath;
-		mRating = 0;
+		mRating = rating;
 		mQId = qId;
 		mAId = id;
 	}
 	
 	public Answer(JSONObject q) throws JSONException {
 		// TODO Auto-generated constructor stub
-		this(q.getString("_id"), q.getString("user"), q.getString("answer"), q.getString("audio"), q.getString("question"));
+		this(q.getString("_id"), q.getString("user"), q.getString("answer"), q.getString("audio"), /*QId*/q.getString(""), Integer.parseInt(q.getString("rating")).intValue());
 		Log.d("Confluence JSON", q.toString(1));
 	}
 
