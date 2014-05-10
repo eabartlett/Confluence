@@ -39,6 +39,11 @@ public class Answer {
 		mQId = qId;
 		mAId = id;
 		mApi = new ConfluenceAPI();
+		if (recordFilePath == null || recordFilePath.equals("null")) {
+			mHasRecording = false;
+		} else {
+			mHasRecording = true;
+		}
 	}
 	
 	public Answer(JSONObject q) throws JSONException {

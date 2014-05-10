@@ -219,30 +219,40 @@ public class AnswerActivity extends BaseActivity {
 				"nahush", 
 				NewsFeedActivity.mUser.getUsername(), 
 				answerText, 
-				mAudioFooter.getAudioFilePath(), 
+				null, 
 				mQuestionId,
 				0);
 		
-		new callPostAnswer().execute(newAnswer);
-
-		// Reset audioFooter UI
-		mAudioFooter.activateRecordButton(true);
-		mAudioFooter.activatePlayButton(false);
-		mAudioFooter.setHasRecording(false);
+		new callPostAnswer().execute(newAnswer, this);
 		
 		mAnswerEditText.setText(""); 
 	}
 
-	private class callPostAnswer extends AsyncTask<Answer, Integer, Boolean>{
+	private class callPostAnswer extends AsyncTask<Object, Integer, Boolean>{
 
 		// @Override
-		protected Boolean doInBackground(Answer... answer) {
-			JSONObject jAns = mApi.postAnswer(answer[0]);
+		protected Boolean doInBackground(Object... obj) {
+			JSONObject jAns = mApi.postAnswer((Answer) obj[0]);
+			AnswerActivity activity = (AnswerActivity) obj[1];
 			if (jAns != null) {		
 				try {
 					mAnswerId = jAns.getString("_id");
-					if (mApi.postAnswerAudio(mFileName, mAnswerId) != null)
-						return true;
+					if (mAudioFooter.hasRecording()) {
+						Answer response = mApi.postAnswerAudio(mAudioFooter.getAudioFilePath(), mAnswerId);
+					} 
+					
+					activity.runOnUiThread(new Runnable() {
+
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							// Reset audioFooter UI
+							mAudioFooter.activateRecordButton(true);
+							mAudioFooter.activatePlayButton(false);
+							mAudioFooter.setHasRecording(false);
+						} 
+					});
+					return true;
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

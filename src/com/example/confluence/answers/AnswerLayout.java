@@ -51,7 +51,7 @@ public class AnswerLayout extends LinearLayout {
 		// Display playback button if recording exists
 		
 		mPlaybackButton = (ImageButton) findViewById(R.id.answer_attachment);
-		{
+		if (mAnswer.hasRecording()){
 			mPlaybackButton.setVisibility(VISIBLE);
 			mPlaybackButton.setOnClickListener(new OnClickListener() {
 				@Override
