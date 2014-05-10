@@ -195,7 +195,7 @@ public class ConfluenceAPI {
 		List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(5);
 
 		//Build data parameters to send to server
-		nameValuePair.add(new BasicNameValuePair("username", u.getUsername()));
+		nameValuePair.add(new BasicNameValuePair("user", u.getUsername()));
 		nameValuePair.add(new BasicNameValuePair("email", u.getEmail()));
 		nameValuePair.add(new BasicNameValuePair("pw", u.getPassword()));
 		nameValuePair.add(new BasicNameValuePair("firstname", u.getFirst()));
