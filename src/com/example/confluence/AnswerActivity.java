@@ -217,11 +217,11 @@ public class AnswerActivity extends BaseActivity {
 		// boolean answerHasRecording = mAudioFooter.hasRecording();
 		Answer newAnswer = new Answer(
 				"nahush", 
-				NewsFeedActivity.mUser.getId(), 
+				NewsFeedActivity.mUser.getUsername(), 
 				answerText, 
 				mAudioFooter.getAudioFilePath(), 
 				mQuestionId,
-				0 );
+				0);
 		
 		new callPostAnswer().execute(newAnswer);
 
