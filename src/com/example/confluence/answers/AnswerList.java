@@ -11,7 +11,7 @@ import com.example.confluence.dbtypes.Answer;
  *
  */
 public class AnswerList {
-	
+	/*
 	public static ArrayList<Answer> getDummyAnswers() {
 		ArrayList<Answer> dummyAnswers = new ArrayList<Answer>();
 		Answer a0 = new Answer("01", "Greg", 
@@ -23,5 +23,5 @@ public class AnswerList {
 		dummyAnswers.add(a0);
 		dummyAnswers.add(a1);
 		return dummyAnswers;
-	}
+	}*/
 }

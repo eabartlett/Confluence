@@ -338,7 +338,12 @@ public class ConfluenceAPI {
 		//construct URL endpoint
 		String endpoint = String.format(SERVER, "api/answer/inc");
 
-		return new Answer(postKVData(endpoint, nameValuePair));
+		try {
+			return new Answer(postKVData(endpoint, nameValuePair));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} return null;
   }
   
   public Answer decrement(String aid){
@@ -349,7 +354,12 @@ public class ConfluenceAPI {
 		//construct URL endpoint
 		String endpoint = String.format(SERVER, "api/answer/dec");
 
-		return new Answer(postKVData(endpoint, nameValuePair));
+		try {
+			return new Answer(postKVData(endpoint, nameValuePair));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} return null;
   }
   
   public Answer getAnswerById(String aid){

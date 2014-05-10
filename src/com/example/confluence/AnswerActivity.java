@@ -220,7 +220,8 @@ public class AnswerActivity extends BaseActivity {
 				NewsFeedActivity.mUser.getId(), 
 				answerText, 
 				mAudioFooter.getAudioFilePath(), 
-				mQuestionId);
+				mQuestionId,
+				0 );
 		
 		new callPostAnswer().execute(newAnswer);
 

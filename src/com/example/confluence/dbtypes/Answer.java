@@ -4,6 +4,9 @@ import java.util.Date;
 
 import org.json.JSONException;
 import org.json.JSONObject; 
+
+import com.example.confluence.ConfluenceAPI;
+
 import android.util.Log;
 
 /**
@@ -24,6 +27,7 @@ public class Answer {
 	private Date mAnswerDate;
 	private int mRating; // rating of an answer
 	private String mLanguage; // Language of question/answer
+	private ConfluenceAPI mApi;
 
 	public Answer(String id, String userName, String answerText,String recordFilePath, String qId, int rating) { 
 		mUserName = userName;
@@ -33,11 +37,12 @@ public class Answer {
 		mRating = rating;
 		mQId = qId;
 		mAId = id;
+		mApi = new ConfluenceAPI();
 	}
 	
 	public Answer(JSONObject q) throws JSONException {
 		// TODO Auto-generated constructor stub
-		this(q.getString("_id"), q.getString("user"), q.getString("answer"), q.getString("audio"), /*QId*/q.getString(""), Integer.parseInt(q.getString("rating")).intValue());
+		this(q.getString("_id"), q.getString("user"), q.getString("answer"), q.getString("audio"), /*QId*/q.getString(""), Integer.parseInt(q.getString("rating")));
 		Log.d("Confluence JSON", q.toString(1));
 	}
 
@@ -67,10 +72,12 @@ public class Answer {
 	
 	public void incrementRating() {
 		mRating++;
+		mApi.increment(mAId);
 	}
 	
 	public void decrementRating() {
 		mRating--;
+		mApi.decrement(mAId);
 	}
 	
 	public String getAudioPath() {
