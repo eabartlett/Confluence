@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import com.example.confluence.ConfluenceAPI;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
 /**
@@ -71,13 +72,15 @@ public class Answer {
 	}
 	
 	public void incrementRating() {
+		IncrementRating req = new IncrementRating();
+		req.execute(mAId);
 		mRating++;
-		mApi.increment(mAId);
 	}
 	
 	public void decrementRating() {
+		DecrementRating req = new DecrementRating();
+		req.execute(mAId);
 		mRating--;
-		mApi.decrement(mAId);
 	}
 	
 	public String getAudioPath() {
@@ -101,4 +104,28 @@ public class Answer {
 	public String getQId(){
 		return mQId;
 	}
+	
+	private class IncrementRating extends AsyncTask<String, Integer, Void>{
+
+		@Override
+		protected Void doInBackground(String... params) {
+			String aid = params[0];
+			mApi.increment(aid);
+			return null;
+		}
+		
+	}
+	
+	private class DecrementRating extends AsyncTask<String, Integer, Void>{
+
+		@Override
+		protected Void doInBackground(String... params) {
+			String aid = params[0];
+			mApi.decrement(aid);
+			return null;
+		}
+		
+	}
+	
+	
 }
