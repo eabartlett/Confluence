@@ -7,16 +7,17 @@ import java.text.ParseException;
 
 public class NewsFeedQuestion {
 	
-	public NewsFeedQuestion(String id, String lang, String q, String audio, String user) throws ParseException{
+	public NewsFeedQuestion(String id, String lang, String q, String audio, String user, String numAnswers) throws ParseException{
 		mId = id;
 		mLanguage = lang;
 		mQuestionPhrase = q;
 		mAudio = audio;
 		mUser = user;
+		mNumAnswers = Integer.parseInt(numAnswers);
 	}
 	
 	public NewsFeedQuestion(JSONObject q) throws JSONException, ParseException{
-		this(q.getString("_id"), q.getString("lang"), q.getString("question"), "na", q.getString("user"));
+		this(q.getString("_id"), q.getString("lang"), q.getString("question"), "na", q.getString("user"), q.getString("numAnswers"));
 	}
 	
 	/**
@@ -84,6 +85,7 @@ public class NewsFeedQuestion {
 		
 		return val;
 	}
+	
 	
 	/* Unique id for this question */
 	private String mId;

@@ -395,9 +395,9 @@ public class ConfluenceAPI {
 		return null;
 	}
 
-	public Answer[] getAnswersByUser(String uid){
+	public Answer[] getAnswersByUser(String uname){
 		String url = String.format(SERVER, "api/answer?%s=%s");
-		url = constructGetUrl(url, "user", uid);
+		url = constructGetUrl(url, "user", uname);
 		try {
 			JSONArray data = (JSONArray) getRequest(url, true, false);
 			Answer[] answers = new Answer[data.length()];
