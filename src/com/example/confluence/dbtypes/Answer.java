@@ -42,7 +42,7 @@ public class Answer {
 	
 	public Answer(JSONObject q) throws JSONException {
 		// TODO Auto-generated constructor stub
-		this(q.getString("_id"), q.getString("user"), q.getString("answer"), q.getString("audio"), /*QId*/q.getString(""), Integer.parseInt(q.getString("rating")));
+		this(q.getString("_id"), q.getString("user"), q.getString("answer"), q.getString("audio"), /*QId*/q.getString("question"), Integer.parseInt(q.getString("rating")));
 		Log.d("Confluence JSON", q.toString(1));
 	}
 

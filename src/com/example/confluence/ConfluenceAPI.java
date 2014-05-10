@@ -180,7 +180,7 @@ public class ConfluenceAPI {
 		// key and value pair
 		List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(4);
 		nameValuePair.add(new BasicNameValuePair("answer", a.getText()));
-		nameValuePair.add(new BasicNameValuePair("user", a.getUserId()));
+		nameValuePair.add(new BasicNameValuePair("user", a.getUserName()));
 		nameValuePair.add(new BasicNameValuePair("lang", a.getLanguage()));
 		nameValuePair.add(new BasicNameValuePair("question", a.getQId()));
 
