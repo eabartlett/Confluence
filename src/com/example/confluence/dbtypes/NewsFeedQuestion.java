@@ -72,17 +72,10 @@ public class NewsFeedQuestion {
 	}
 	
 	public String toString(){
-		String val = getQuestion() + "\n" + getLanguage()+ "\t\t\t\t\t\t\t\t\t\t\t\t\t";
+		String val = getQuestion() + "\n" + getLanguage()+ "\t\t\t\t\t\t\t\t\t\t\t\t\t" + numResponses() + " answers";
 		
 		/*= String.format("%s\nLanguage: %s\nAnswered: %s \t\t\tResponses: %d", 
 				getQuestion(), getLanguage(), (isVerified())?"Yes":"No", numResponses());*/
-		
-		if (isVerified()) {
-			val += numResponses() + " answers";
-		} else {
-			val += "0 answers";
-		}
-		
 		return val;
 	}
 	

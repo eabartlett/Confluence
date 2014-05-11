@@ -135,7 +135,8 @@ public class AskQuestionActivity extends BaseActivity {
 						chosenLang, 
 						questionText, 
 						mAudioFooter.getAudioFilePath(), 
-						user);
+						user,
+						"0");
 				new PostQuestion().execute(Question);				
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
